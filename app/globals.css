@@ -1,0 +1,531 @@
+@import 'tailwindcss';
+
+/* =========================================================
+   ASSANCH — Sistema de diseño
+   Base blanca, degradados hacia el azul de marca, formas
+   redondeadas y sombras difusas. El oro del logo se reserva
+   como acento puntual, no como color de superficie.
+   ========================================================= */
+
+@theme {
+  /* Superficies */
+  --color-white: #ffffff;
+  --color-canvas: #fbfcfd; /* blanco con una gota de azul */
+  --color-line: #e8edf2;
+  --color-line-soft: #f1f5f8;
+
+  /* Azules de marca — derivados del negro corporativo del manual */
+  --color-navy: #131b21; /* oficial 131B21 — texto principal y bandas */
+  --color-blue-900: #12324c;
+  --color-blue-700: #1e5480;
+  --color-blue-500: #2f80c2;
+  --color-blue-300: #7db6e3;
+  --color-blue-100: #dcebf7;
+  --color-blue-50: #eff6fc;
+
+  /* Texto. `tinta` es el negro de lectura: el 131B21 del manual es el color de
+     marca y en parrafos largos resulta duro. Este tono ejecutivo mantiene
+     12.3:1 sobre blanco, muy por encima del minimo AA. */
+  --color-tinta: #2b3742;
+  --color-slate: #55697c; /* secundario sobre blanco — 6.4:1 */
+  --color-slate-soft: #8397a9;
+  --color-mist: #a9c0d4; /* secundario sobre banda oscura */
+
+  /* Acento de marca — valores oficiales del manual */
+  --color-gold: #ffb600; /* oficial FFB600 */
+  --color-goldink: #7a5800; /* oro oscurecido: legible como texto sobre blanco */
+  --color-signal: #e52421; /* oficial E52421 */
+
+  --font-display: var(--font-instrument), system-ui, sans-serif;
+  --font-body: var(--font-inter), system-ui, sans-serif;
+  /* Montserrat sólo para el logotipo: el manual lo fija como tipografía de marca */
+  --font-marca: var(--font-montserrat), system-ui, sans-serif;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-suave: cubic-bezier(0.32, 0.72, 0, 1);
+
+  /* Sombras difusas: la clave del aspecto "limpio" de la referencia */
+  --shadow-suave: 0 2px 6px rgb(11 27 43 / 0.04), 0 12px 32px -12px rgb(11 27 43 / 0.1);
+  --shadow-media: 0 4px 12px rgb(11 27 43 / 0.05), 0 24px 56px -20px rgb(11 27 43 / 0.16);
+  --shadow-boton: 0 4px 14px rgb(11 27 43 / 0.16), 0 12px 30px -10px rgb(11 27 43 / 0.28);
+  --shadow-boton-claro: 0 2px 8px rgb(11 27 43 / 0.06), 0 14px 32px -14px rgb(11 27 43 / 0.18);
+}
+
+/* ---------- Base ---------- */
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-white);
+  color: var(--color-tinta);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Los titulares tambien pasan al tono de lectura: el negro de marca se reserva
+   para el logotipo y las superficies oscuras. */
+h1,
+h2,
+h3,
+h4,
+.text-navy {
+  color: var(--color-tinta);
+}
+
+.banda-oscura h1,
+.banda-oscura h2,
+.banda-oscura h3,
+.banda-oscura h4,
+.banda-oscura .text-navy {
+  color: var(--color-white);
+}
+
+/* ---------- Justificado ----------
+   Con `hyphens: auto` y lang="es-DO" el navegador parte palabras y evita los
+   rios de espacio en blanco que el justificado produce en columna estrecha.
+   Los parrafos ya centrados conservan su alineacion. */
+p {
+  text-align: justify;
+  hyphens: auto;
+  -webkit-hyphens: auto;
+}
+
+[class*='text-center'] p,
+p[class*='text-center'],
+p.pildora,
+.pildora,
+td p,
+li p {
+  text-align: center;
+  hyphens: none;
+  -webkit-hyphens: none;
+}
+
+/* Las listas y el texto corto no se justifican: con pocas palabras por linea
+   el justificado deja huecos enormes. */
+li,
+dd,
+dt,
+label,
+button,
+a {
+  text-align: inherit;
+  hyphens: none;
+}
+
+:focus-visible {
+  outline: 3px solid var(--color-blue-700);
+  outline-offset: 3px;
+  border-radius: 12px;
+}
+
+.banda-oscura :focus-visible {
+  outline-color: var(--color-gold);
+}
+
+::selection {
+  background: var(--color-blue-100);
+  color: var(--color-navy);
+}
+
+/* ---------- Composición ---------- */
+
+.section {
+  width: 100%;
+  max-width: 1180px;
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+}
+
+@media (min-width: 768px) {
+  .section {
+    padding-inline: 2.5rem;
+  }
+}
+
+/* Banda oscura: sólo para el pie y el campo interactivo */
+.banda-oscura {
+  background-color: var(--color-navy);
+  color: var(--color-white);
+}
+
+/* ---------- Píldora de etiqueta ----------
+   El "eyebrow" de la referencia: cápsula clara con punto y texto en versalitas. */
+.pildora {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.45rem 1rem 0.45rem 0.85rem;
+  border-radius: 9999px;
+  border: 1px solid var(--color-line);
+  background: rgb(255 255 255 / 0.75);
+  backdrop-filter: blur(12px);
+  box-shadow: var(--shadow-suave);
+  font-family: var(--font-body);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-slate);
+}
+
+.pildora::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 9999px;
+  background: var(--color-blue-500);
+}
+
+.banda-oscura .pildora {
+  border-color: rgb(255 255 255 / 0.14);
+  background: rgb(255 255 255 / 0.07);
+  color: var(--color-mist);
+}
+
+/* ---------- Cápsula de cristal del titular ----------
+   El recurso de "ease now": la palabra clave dentro de un marco esmerilado. */
+.cristal {
+  position: relative;
+  display: inline-block;
+  padding: 0.05em 0.42em 0.12em;
+  border-radius: 9999px;
+  border: 1px solid rgb(47 128 194 / 0.22);
+  background: linear-gradient(
+    135deg,
+    rgb(255 255 255 / 0.9),
+    rgb(220 235 247 / 0.55)
+  );
+  backdrop-filter: blur(8px);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.85),
+    0 8px 28px -12px rgb(30 84 128 / 0.4);
+  background-clip: padding-box;
+}
+
+/* Texto con degradado hacia el azul de marca */
+.texto-degradado {
+  background: linear-gradient(
+    100deg,
+    var(--color-blue-700) 0%,
+    var(--color-blue-500) 45%,
+    var(--color-blue-300) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* ---------- Orbes de fondo ----------
+   Manchas difuminadas que dan el degradado hacia el azul. Se desplazan con el
+   cursor mediante --mx / --my, que escribe el componente Cursor. */
+.orbe {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(90px);
+  pointer-events: none;
+  will-change: transform;
+  transform: translate3d(
+    calc(var(--mx, 0) * var(--orbe-tiro, 24px)),
+    calc(var(--my, 0) * var(--orbe-tiro, 24px)),
+    0
+  );
+  transition: transform 1000ms var(--ease-suave);
+}
+
+/* Velo blanco que funde los orbes con el fondo */
+.velo-blanco {
+  background: linear-gradient(
+    180deg,
+    rgb(255 255 255 / 0.6) 0%,
+    rgb(255 255 255 / 0.15) 40%,
+    rgb(255 255 255 / 0.85) 100%
+  );
+}
+
+/* ---------- Botones tipo píldora ---------- */
+
+.btn,
+.btn-claro {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  min-height: 3.25rem;
+  padding: 0 1.75rem;
+  border-radius: 9999px;
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    transform 400ms var(--ease-suave),
+    box-shadow 400ms var(--ease-suave),
+    background-color 300ms var(--ease-suave),
+    color 300ms var(--ease-suave);
+}
+
+/* Principal. El relieve se construye por capas, no con una sombra suelta:
+   brillo interior arriba (la luz que incide), sombra interior abajo (el canto),
+   contacto corto y difusión larga. Es lo que separa un botón "plano con sombra"
+   de uno que parece tener volumen. */
+.btn {
+  background-image: linear-gradient(180deg, #1d4a70 0%, #0b1b2b 100%);
+  color: var(--color-white);
+  border: 1px solid rgb(11 27 43 / 0.9);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.22),
+    inset 0 -1px 0 rgb(0 0 0 / 0.35),
+    0 1px 2px rgb(11 27 43 / 0.22),
+    0 6px 14px -4px rgb(11 27 43 / 0.34),
+    0 18px 36px -14px rgb(11 27 43 / 0.45);
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.3),
+    inset 0 -1px 0 rgb(0 0 0 / 0.35),
+    0 2px 4px rgb(11 27 43 / 0.2),
+    0 12px 24px -6px rgb(11 27 43 / 0.32),
+    0 28px 52px -16px rgb(11 27 43 / 0.5);
+}
+
+.btn:active {
+  transform: translateY(1px);
+  box-shadow:
+    inset 0 2px 5px rgb(0 0 0 / 0.4),
+    0 1px 2px rgb(11 27 43 / 0.25);
+}
+
+/* Secundario: papel elevado — canto claro arriba, apoyo corto abajo. */
+.btn-claro {
+  background-image: linear-gradient(180deg, #ffffff 0%, #f4f7fa 100%);
+  color: var(--color-navy);
+  border: 1px solid var(--color-line);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 1),
+    0 1px 2px rgb(11 27 43 / 0.06),
+    0 6px 14px -6px rgb(11 27 43 / 0.16),
+    0 16px 32px -18px rgb(11 27 43 / 0.24);
+}
+
+.btn-claro:hover {
+  transform: translateY(-2px);
+  border-color: var(--color-blue-300);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 1),
+    0 2px 4px rgb(11 27 43 / 0.07),
+    0 12px 24px -8px rgb(11 27 43 / 0.2),
+    0 26px 48px -20px rgb(11 27 43 / 0.3);
+}
+
+.btn-claro:active {
+  transform: translateY(1px);
+  box-shadow: inset 0 2px 5px rgb(11 27 43 / 0.12);
+}
+
+.banda-oscura .btn-claro {
+  background: rgb(255 255 255 / 0.07);
+  border-color: rgb(255 255 255 / 0.16);
+  color: var(--color-white);
+  box-shadow: none;
+}
+
+.btn:active,
+.btn-claro:active {
+  transform: translateY(0) scale(0.985);
+}
+
+/* ---------- Barrido de inspección (portada) ----------
+   Anillos en rombo — la forma del logo — recorridos por un haz que gira.
+   Es la metáfora del peritaje: se rastrea la escena hasta que aparece el dato. */
+.radar-haz {
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    rgb(47 128 194 / 0.22) 26deg,
+    rgb(47 128 194 / 0.05) 58deg,
+    transparent 84deg
+  );
+  animation: girar 9s linear infinite;
+  will-change: transform;
+}
+
+.radar-pulso {
+  animation: pulso 4.5s var(--ease-suave) infinite;
+  will-change: transform, opacity;
+}
+
+@keyframes girar {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes pulso {
+  0% {
+    transform: scale(0.72);
+    opacity: 0;
+  }
+  35% {
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(1.28);
+    opacity: 0;
+  }
+}
+
+/* ---------- Tarjetas ---------- */
+
+/* La tarjeta flota: sube en vertical y crece muy poco. Deliberadamente NO se
+   desplaza en horizontal — la imanacion hacia el cursor hacia que dos tarjetas
+   contiguas se acercaran hasta parecer pegadas. El iman queda para los botones,
+   que estan aislados. */
+.tarjeta {
+  border-radius: 1.5rem;
+  border: 1px solid var(--color-line);
+  background: var(--color-white);
+  box-shadow: var(--shadow-suave);
+  transition:
+    transform 620ms var(--ease-suave),
+    box-shadow 620ms var(--ease-suave),
+    border-color 620ms var(--ease-suave);
+  will-change: transform;
+}
+
+.tarjeta:hover,
+.tarjeta:focus-within {
+  transform: translateY(-10px) scale(1.012);
+  border-color: var(--color-blue-100);
+  box-shadow:
+    0 2px 8px rgb(19 27 33 / 0.04),
+    0 18px 34px -14px rgb(19 27 33 / 0.16),
+    0 40px 70px -30px rgb(30 84 128 / 0.3);
+}
+
+/* Al elevarse una, las hermanas se apagan ligeramente: refuerza el foco sin
+   moverlas de sitio. */
+.rejilla-flotante:hover > *:not(:hover) .tarjeta {
+  opacity: 0.72;
+  transform: translateY(2px) scale(0.994);
+}
+
+/* ---------- Cursor propio ---------- */
+@media (pointer: fine) {
+  .cursor-halo {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+    pointer-events: none;
+    width: 30px;
+    height: 30px;
+    margin: -15px 0 0 -15px;
+    border-radius: 9999px;
+    border: 1.5px solid rgb(47 128 194 / 0.55);
+    will-change: transform;
+  }
+
+  .banda-oscura-activa .cursor-halo {
+    border-color: rgb(252 192 24 / 0.7);
+  }
+
+  .cursor-punto {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+    pointer-events: none;
+    width: 5px;
+    height: 5px;
+    margin: -2.5px 0 0 -2.5px;
+    border-radius: 9999px;
+    background: var(--color-blue-500);
+    will-change: transform;
+  }
+
+  .banda-oscura-activa .cursor-punto {
+    background: var(--color-gold);
+  }
+}
+
+/* ---------- Carrusel de aliados ---------- */
+.desfile {
+  animation: desfile 46s linear infinite;
+}
+
+.desfile[data-pausa='true'],
+.desfile:hover,
+.grupo-desfile:focus-within .desfile {
+  animation-play-state: paused;
+}
+
+@keyframes desfile {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+/* ---------- Revelado ----------
+   Con transicion CSS y no con tweens por JS: si el navegador congela el rAF, el
+   elemento igualmente termina en su estado final en vez de quedarse invisible. */
+.js-reveal .reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 760ms var(--ease-suave),
+    transform 760ms var(--ease-suave);
+  will-change: opacity, transform;
+}
+
+.js-reveal .reveal.visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* ---------- Movimiento reducido ---------- */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .js-reveal .reveal {
+    opacity: 1;
+    transform: none;
+  }
+
+  .orbe {
+    transform: none;
+  }
+
+  .desfile,
+  .radar-haz,
+  .radar-pulso {
+    animation: none;
+  }
+
+  .radar-pulso {
+    opacity: 0.28;
+  }
+
+  .cursor-halo,
+  .cursor-punto {
+    display: none;
+  }
+}

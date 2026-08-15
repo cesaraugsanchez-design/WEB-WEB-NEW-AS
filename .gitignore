@@ -1,0 +1,26 @@
+# Dependencias — se reinstalan desde package-lock.json, nunca se suben
+/node_modules
+
+# Salida de compilación
+/.next
+/out
+/build
+
+# Entorno: aquí irán las claves del proveedor de correo cuando se conecte
+# el formulario. NUNCA subir estos archivos.
+.env
+.env*.local
+.env.production
+
+# Sistema y editores
+.DS_Store
+*.pem
+Thumbs.db
+
+# Registros
+npm-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# Vercel
+.vercel
