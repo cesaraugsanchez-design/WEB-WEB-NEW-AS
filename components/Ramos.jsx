@@ -295,7 +295,7 @@ export default function Ramos() {
             complejidad de foco de un dialogo modal. */}
         <div id="detalle-ramo" role="region" aria-live="polite">
           {activo && (
-            <article className="mt-8 overflow-hidden rounded-[2rem] border border-line bg-white shadow-media">
+            <article className="mt-8 overflow-hidden rounded-[2.5rem] border border-line bg-white shadow-media">
               <header className="flex items-start justify-between gap-6 border-b border-line bg-canvas p-7 md:p-9">
                 <div className="flex items-start gap-4">
                   <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-700 to-blue-500 text-white">

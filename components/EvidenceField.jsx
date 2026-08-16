@@ -214,7 +214,7 @@ export default function EvidenceField() {
   const puntos = cadena.map((id) => PIEZAS.find((p) => p.id === id))
 
   return (
-    <section id="campo" className="scroll-mt-28 bg-canvas py-24 md:py-32" data-reveal-group>
+    <section id="campo" className="scroll-mt-28 py-24 md:py-32" data-reveal-group>
       <div className="section">
         <div className="reveal mx-auto max-w-2xl text-center">
           <p className="pildora">Campo de evidencia</p>
@@ -230,7 +230,7 @@ export default function EvidenceField() {
 
         <div
           ref={wrapRef}
-          className="reveal relative mt-14 h-[460px] overflow-hidden rounded-[2rem] border border-line bg-white shadow-suave md:h-[520px]"
+          className="reveal relative mt-14 h-[460px] overflow-hidden rounded-[2.5rem] border border-line bg-white shadow-suave md:h-[520px]"
         >
           <canvas ref={canvasRef} aria-hidden="true" className="absolute inset-0 block h-full w-full" />
 
@@ -321,7 +321,7 @@ export default function EvidenceField() {
           <article
             ref={premioRef}
             tabIndex={-1}
-            className="reveal visible mt-6 overflow-hidden rounded-[2rem] border border-line bg-white shadow-media"
+            className="reveal visible mt-6 overflow-hidden rounded-[2.5rem] border border-line bg-white shadow-media"
           >
             <header className="flex items-start justify-between gap-6 border-b border-line bg-canvas p-7 md:p-9">
               <div className="flex items-start gap-4">

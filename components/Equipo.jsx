@@ -83,7 +83,7 @@ export default function Equipo() {
                 <h3 className="mt-5 font-display text-base leading-snug font-semibold tracking-[-0.01em] text-navy">
                   {p.nombre}
                 </h3>
-                <p className="mt-1.5 font-body text-[13px] leading-relaxed text-slate">{p.cargo}</p>
+                <p className="mt-1.5 text-left font-body text-[13px] leading-relaxed text-slate">{p.cargo}</p>
 
                 <a
                   href={`mailto:${p.correo}`}

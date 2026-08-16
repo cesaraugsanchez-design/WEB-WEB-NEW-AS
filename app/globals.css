@@ -67,10 +67,27 @@ body {
 
 body {
   background-color: var(--color-white);
+  position: relative;
   color: var(--color-tinta);
   font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+}
+
+/* Capa de color continua: sustituye a los fondos alternos que dibujaban
+   lineas divisorias entre secciones. Muy tenue — debe leerse como luz, no
+   como color. */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(58rem 40rem at 10% 4%, rgb(125 182 227 / 0.20), transparent 62%),
+    radial-gradient(46rem 34rem at 92% 22%, rgb(255 182 0 / 0.09), transparent 64%),
+    radial-gradient(54rem 40rem at 4% 58%, rgb(125 182 227 / 0.16), transparent 62%),
+    radial-gradient(44rem 32rem at 96% 82%, rgb(255 182 0 / 0.07), transparent 64%);
 }
 
 /* Los titulares tambien pasan al tono de lectura: el negro de marca se reserva
@@ -94,34 +111,47 @@ h4,
 /* ---------- Justificado ----------
    Con `hyphens: auto` y lang="es-DO" el navegador parte palabras y evita los
    rios de espacio en blanco que el justificado produce en columna estrecha.
-   Los parrafos ya centrados conservan su alineacion. */
-p {
-  text-align: justify;
-  hyphens: auto;
-  -webkit-hyphens: auto;
-}
 
-[class*='text-center'] p,
-p[class*='text-center'],
-p.pildora,
-.pildora,
-td p,
-li p {
-  text-align: center;
-  hyphens: none;
-  -webkit-hyphens: none;
-}
+   VA EN @layer base A PROPOSITO. En Tailwind v4 las utilidades viven en la capa
+   `utilities`, y una regla sin capa gana a cualquier capa por muy baja que sea
+   su especificidad. Sin esto, `p { text-align: justify }` anulaba cualquier
+   `text-left` puesto en el marcado. */
+@layer base {
+  p {
+    text-align: justify;
+    hyphens: auto;
+    -webkit-hyphens: auto;
+  }
 
-/* Las listas y el texto corto no se justifican: con pocas palabras por linea
-   el justificado deja huecos enormes. */
-li,
-dd,
-dt,
-label,
-button,
-a {
-  text-align: inherit;
-  hyphens: none;
+  /* Solo se centra lo que pide estar centrado. `li p` y `td p` NO entran aqui:
+     un parrafo dentro de una lista debe heredar la alineacion de su ficha, no
+     centrarse. */
+  [class*='text-center'] p,
+  p[class*='text-center'],
+  p.pildora,
+  .pildora {
+    text-align: center;
+    hyphens: none;
+    -webkit-hyphens: none;
+  }
+
+  li p,
+  td p {
+    text-align: inherit;
+    hyphens: none;
+  }
+
+  /* El texto corto no se justifica: con pocas palabras por linea el
+     justificado deja huecos enormes. */
+  li,
+  dd,
+  dt,
+  label,
+  button,
+  a {
+    text-align: inherit;
+    hyphens: none;
+  }
 }
 
 :focus-visible {
@@ -143,7 +173,7 @@ a {
 
 .section {
   width: 100%;
-  max-width: 1180px;
+  max-width: 1400px;
   margin-inline: auto;
   padding-inline: 1.25rem;
 }
@@ -180,12 +210,14 @@ a {
   color: var(--color-slate);
 }
 
+/* Punto en oro de marca: el toque de color calido en un sistema azul. */
 .pildora::before {
   content: '';
   width: 6px;
   height: 6px;
   border-radius: 9999px;
-  background: var(--color-blue-500);
+  background: var(--color-gold);
+  box-shadow: 0 0 0 3px rgb(255 182 0 / 0.18);
 }
 
 .banda-oscura .pildora {
@@ -395,7 +427,8 @@ a {
    contiguas se acercaran hasta parecer pegadas. El iman queda para los botones,
    que estan aislados. */
 .tarjeta {
-  border-radius: 1.5rem;
+  position: relative;
+  border-radius: 1.75rem;
   border: 1px solid var(--color-line);
   background: var(--color-white);
   box-shadow: var(--shadow-suave);
@@ -404,6 +437,25 @@ a {
     box-shadow 620ms var(--ease-suave),
     border-color 620ms var(--ease-suave);
   will-change: transform;
+}
+
+/* Hilo de oro en el canto superior al elevarse. Aparece solo en la
+   interaccion: es un acento, no decoracion permanente. */
+.tarjeta::after {
+  content: '';
+  position: absolute;
+  inset-inline: 12%;
+  top: -1px;
+  height: 1px;
+  border-radius: 9999px;
+  background: linear-gradient(90deg, transparent, var(--color-gold), transparent);
+  opacity: 0;
+  transition: opacity 620ms var(--ease-suave);
+}
+
+.tarjeta:hover::after,
+.tarjeta:focus-within::after {
+  opacity: 0.85;
 }
 
 .tarjeta:hover,

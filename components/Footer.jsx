@@ -3,7 +3,7 @@ import BanderaRD from './BanderaRD'
 
 export default function Footer() {
   return (
-    <footer className="border-t border-line bg-canvas py-14">
+    <footer className="py-16">
       <div className="section grid gap-10 md:grid-cols-12">
         <div className="md:col-span-5">
           <LogoLockup height={34} />

@@ -38,7 +38,7 @@ const rol = [
 
 export default function Servicios() {
   return (
-    <section id="servicios" className="relative scroll-mt-28 bg-canvas py-24 md:py-32" data-reveal-group>
+    <section id="servicios" className="relative scroll-mt-28 py-24 md:py-32" data-reveal-group>
       <div className="section">
         <div className="reveal mx-auto max-w-2xl text-center">
           <p className="pildora">Qué ofrecemos</p>
@@ -65,7 +65,7 @@ export default function Servicios() {
           })}
         </div>
 
-        <div className="reveal mt-20 grid gap-10 rounded-[2rem] border border-line bg-white p-10 shadow-suave md:grid-cols-3 md:p-12">
+        <div className="reveal mt-20 grid gap-10 rounded-[2.5rem] border border-line bg-white p-10 shadow-suave md:grid-cols-3 md:p-12">
           {rol.map((r) => {
             const Icon = r.icon
             return (

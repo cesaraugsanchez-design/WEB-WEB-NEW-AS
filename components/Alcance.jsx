@@ -15,7 +15,7 @@ const capacidades = [
 
 export default function Alcance() {
   return (
-    <section id="alcance" className="scroll-mt-28 bg-canvas py-24 md:py-32" data-reveal-group>
+    <section id="alcance" className="scroll-mt-28 py-24 md:py-32" data-reveal-group>
       <div className="section">
         <div className="reveal mx-auto max-w-2xl text-center">
           <p className="pildora">Alcance operativo</p>

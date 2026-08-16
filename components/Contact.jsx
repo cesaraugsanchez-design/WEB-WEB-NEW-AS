@@ -103,7 +103,7 @@ export default function Contact() {
               El relieve se construye por capas — halo interior arriba, resplandor
               radial y sombra larga — igual que en los botones. */}
           <div className="reveal banda-oscura lg:col-span-5">
-            <div className="relative h-full overflow-hidden rounded-[2rem] bg-navy p-8 shadow-[inset_0_1px_0_rgb(255_255_255/0.14),0_2px_6px_rgb(19_27_33/0.3),0_28px_60px_-24px_rgb(19_27_33/0.7)] md:p-9">
+            <div className="relative h-full overflow-hidden rounded-[2.5rem] bg-navy p-8 shadow-[inset_0_1px_0_rgb(255_255_255/0.14),0_2px_6px_rgb(19_27_33/0.3),0_28px_60px_-24px_rgb(19_27_33/0.7)] md:p-9">
               {/* Resplandor y marca de agua */}
               <div
                 aria-hidden
@@ -176,7 +176,7 @@ export default function Contact() {
             <form
               onSubmit={onSubmit}
               noValidate
-              className="rounded-[2rem] border border-line bg-white p-7 shadow-suave md:p-9"
+              className="rounded-[2.5rem] border border-line bg-white p-7 shadow-suave md:p-9"
             >
               {listaErrores.length > 1 && (
                 <div

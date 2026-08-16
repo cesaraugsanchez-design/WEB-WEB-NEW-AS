@@ -357,7 +357,7 @@ export default function GloboCobertura({ className = '' }) {
         tabIndex={0}
         role="img"
         aria-label="Globo terráqueo interactivo. Señala República Dominicana, Puerto Rico, El Salvador y Colombia. Use las flechas para girarlo y las teclas más y menos para acercar."
-        className="block h-full w-full cursor-grab touch-none rounded-[2rem] active:cursor-grabbing"
+        className="block h-full w-full cursor-grab touch-none rounded-[2.5rem] active:cursor-grabbing"
       />
 
       <p className="pointer-events-none absolute bottom-5 left-1/2 -translate-x-1/2 text-center font-body text-[11px] font-semibold tracking-[0.12em] text-slate-soft uppercase">

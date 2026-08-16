@@ -78,7 +78,7 @@ export default function Aliados() {
 
         {/* Se detiene al pasar el cursor, al enfocar con teclado y con el boton;
             con movimiento reducido no se anima en absoluto. */}
-        <div className="reveal grupo-desfile relative mt-14 overflow-hidden rounded-[2rem] border border-line bg-white py-10 shadow-suave">
+        <div className="reveal grupo-desfile relative mt-14 overflow-hidden rounded-[2.5rem] border border-line bg-white py-10 shadow-suave">
           <div className="desfile flex w-max gap-4" data-pausa={enPausa}>
             {[...piezas, ...piezas].map((p, i) => (
               <div
