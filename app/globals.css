@@ -185,8 +185,10 @@ h4,
 }
 
 /* Banda oscura: sólo para el pie y el campo interactivo */
+/* Solo contexto de color, SIN fondo propio. Pintaba el contenedor exterior,
+   que no tiene esquinas redondeadas, y su rectangulo asomaba por detras de la
+   caja redondeada interior. El fondo lo pone el elemento que si va redondeado. */
 .banda-oscura {
-  background-color: var(--color-navy);
   color: var(--color-white);
 }
 

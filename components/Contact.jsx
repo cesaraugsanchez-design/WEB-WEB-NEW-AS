@@ -103,7 +103,7 @@ export default function Contact() {
               El relieve se construye por capas — halo interior arriba, resplandor
               radial y sombra larga — igual que en los botones. */}
           <div className="reveal banda-oscura lg:col-span-5">
-            <div className="relative h-full overflow-hidden rounded-[2.5rem] bg-navy p-8 shadow-[inset_0_1px_0_rgb(255_255_255/0.14),0_2px_6px_rgb(19_27_33/0.3),0_28px_60px_-24px_rgb(19_27_33/0.7)] md:p-9">
+            <div className="relative flex h-full flex-col overflow-hidden rounded-[2.5rem] bg-gradient-to-br from-[#22323F] via-[#1A2833] to-[#16212A] p-8 shadow-[inset_0_1px_0_rgb(255_255_255/0.16),0_2px_6px_rgb(19_27_33/0.24),0_28px_60px_-24px_rgb(19_27_33/0.55)] md:p-9">
               {/* Resplandor y marca de agua */}
               <div
                 aria-hidden
@@ -176,7 +176,10 @@ export default function Contact() {
             <form
               onSubmit={onSubmit}
               noValidate
-              className="rounded-[2.5rem] border border-line bg-white p-7 shadow-suave md:p-9"
+              /* h-full: sin esto el formulario se ajusta a su contenido (645px)
+                 mientras la tarjeta oscura llega a 701px, y los bordes
+                 inferiores de ambas columnas no coinciden. */
+              className="flex h-full flex-col rounded-[2.5rem] border border-line bg-white p-7 shadow-suave md:p-9"
             >
               {listaErrores.length > 1 && (
                 <div
