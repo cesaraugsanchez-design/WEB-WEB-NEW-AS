@@ -20,21 +20,26 @@ export default function Nosotros() {
       />
 
       <div className="section relative">
-        <div className="grid gap-14 md:grid-cols-12 md:items-start">
-          <div className="reveal md:col-span-6">
-            <p className="pildora">Quiénes somos</p>
-            <h2 className="mt-6 font-display text-4xl leading-[1.08] font-medium tracking-[-0.03em] text-navy md:text-5xl">
-              Peritaje, levantamiento y{' '}
-              <span className="texto-degradado font-semibold">ajuste de siniestros</span>.
-            </h2>
-            <p className="mt-7 font-body text-lg leading-relaxed text-slate">
-              ASSANCH es una firma especializada en ajuste y consultoría de seguros, dedicada
-              al peritaje, levantamiento y ajuste de siniestros, con enfoque en eficiencia
-              operativa, rapidez, optimización de costos y calidad técnica, operando en todo
-              el país.
-            </p>
+        {/* Encabezado centrado, igual que el resto de secciones. Antes compartia
+            fila con las tarjetas de vision y mision, y quedaba desalineado
+            respecto a los demas titulos del sitio. */}
+        <div className="reveal mx-auto max-w-2xl text-center">
+          <p className="pildora">Quiénes somos</p>
+          <h2 className="mt-6 font-display text-4xl leading-[1.08] font-medium tracking-[-0.03em] text-navy md:text-5xl">
+            Peritaje, levantamiento y{' '}
+            <span className="texto-degradado font-semibold">ajuste de siniestros</span>.
+          </h2>
+          <p className="mt-6 font-body text-lg leading-relaxed text-slate">
+            ASSANCH es una firma especializada en ajuste y consultoría de seguros, dedicada
+            al peritaje, levantamiento y ajuste de siniestros, con enfoque en eficiencia
+            operativa, rapidez, optimización de costos y calidad técnica, operando en todo
+            el país.
+          </p>
+        </div>
 
-            <ul className="mt-9 flex flex-wrap gap-2.5">
+        <div>
+          <div>
+            <ul className="reveal mt-10 flex flex-wrap justify-center gap-2.5">
               {valores.map((v) => (
                 <li
                   key={v}
@@ -46,7 +51,7 @@ export default function Nosotros() {
             </ul>
           </div>
 
-          <div className="reveal flex flex-col gap-5 md:col-span-6">
+          <div className="reveal mt-14 grid gap-5 md:grid-cols-2">
             {[
               {
                 icon: Eye,

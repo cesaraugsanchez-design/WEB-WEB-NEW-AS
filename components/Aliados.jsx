@@ -49,21 +49,22 @@ export default function Aliados() {
       />
 
       <div className="section relative">
-        <div className="reveal grid gap-10 md:grid-cols-12 md:items-end">
-          <div className="md:col-span-7">
-            <p className="pildora">Aliados</p>
-            <h2 className="mt-6 font-display text-4xl leading-[1.08] font-medium tracking-[-0.03em] text-navy md:text-5xl">
-              Su socio de confianza en{' '}
-              <span className="texto-degradado font-semibold">cada proceso</span>.
-            </h2>
-            <p className="mt-6 font-body text-lg leading-relaxed text-slate">
-              Acompañamiento confiable para aseguradoras y clientes. Trabajamos como
-              extensión técnica de nuestros aliados, no como un proveedor más del
-              expediente.
-            </p>
-          </div>
+        {/* Encabezado centrado, igual que el resto de secciones. */}
+        <div className="reveal mx-auto max-w-2xl text-center">
+          <p className="pildora">Aliados</p>
+          <h2 className="mt-6 font-display text-4xl leading-[1.08] font-medium tracking-[-0.03em] text-navy md:text-5xl">
+            Su socio de confianza en{' '}
+            <span className="texto-degradado font-semibold">cada proceso</span>.
+          </h2>
+          <p className="mt-6 font-body text-lg leading-relaxed text-slate">
+            Acompañamiento confiable para aseguradoras y clientes. Trabajamos como
+            extensión técnica de nuestros aliados, no como un proveedor más del
+            expediente.
+          </p>
+        </div>
 
-          <div className="md:col-span-5">
+        <div>
+          <div className="reveal mx-auto mt-12 max-w-sm">
             <div className="tarjeta flex flex-col items-center gap-2 p-8 text-center">
               <Cifra
                 valor="10+"
