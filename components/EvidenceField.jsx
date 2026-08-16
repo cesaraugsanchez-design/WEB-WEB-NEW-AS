@@ -18,13 +18,15 @@ import { Check, RotateCcw, X } from 'lucide-react'
  * El lienzo de fondo solo aporta la trama ambiental que reacciona al cursor.
  */
 
+/* Las `x` se mantienen dentro de 20-80%: las etiquetas van centradas sobre el
+   nodo y a 375px de ancho cualquier valor mas extremo las saca del recuadro. */
 const PIEZAS = [
-  { id: 'foto', nombre: 'Registro fotográfico', responde: 'Sitúa el daño y su extensión', x: 14, y: 24 },
-  { id: 'acta', nombre: 'Acta o denuncia', responde: 'Fecha y ubica el hecho', x: 42, y: 13 },
-  { id: 'poliza', nombre: 'Póliza y anexos', responde: 'Determina si está cubierto', x: 76, y: 26 },
-  { id: 'facturas', nombre: 'Facturas y valores', responde: 'Cuantifican la pérdida', x: 82, y: 66 },
-  { id: 'tecnico', nombre: 'Informe técnico', responde: 'Explica la causa', x: 50, y: 76 },
-  { id: 'declaraciones', nombre: 'Declaraciones', responde: 'Aportan el contexto', x: 16, y: 62 },
+  { id: 'foto', nombre: 'Registro fotográfico', responde: 'Sitúa el daño y su extensión', x: 22, y: 20 },
+  { id: 'acta', nombre: 'Acta o denuncia', responde: 'Fecha y ubica el hecho', x: 50, y: 11 },
+  { id: 'poliza', nombre: 'Póliza y anexos', responde: 'Determina si está cubierto', x: 78, y: 24 },
+  { id: 'facturas', nombre: 'Facturas y valores', responde: 'Cuantifican la pérdida', x: 78, y: 62 },
+  { id: 'tecnico', nombre: 'Informe técnico', responde: 'Explica la causa', x: 50, y: 80 },
+  { id: 'declaraciones', nombre: 'Declaraciones', responde: 'Aportan el contexto', x: 22, y: 64 },
 ]
 
 const HOME_SPRING = 0.012
@@ -268,7 +270,7 @@ export default function EvidenceField() {
                 }`}
               >
                 <span
-                  className={`flex h-10 w-10 items-center justify-center rounded-full border-2 transition-all duration-500 ${
+                  className={`flex h-9 w-9 items-center justify-center rounded-full border-2 transition-all duration-500 sm:h-10 sm:w-10 ${
                     activa
                       ? 'border-blue-700 bg-blue-700 text-white shadow-[0_0_0_6px_rgba(30,84,128,0.12)]'
                       : 'border-blue-300 bg-white text-blue-700 shadow-suave'
@@ -282,7 +284,7 @@ export default function EvidenceField() {
                 </span>
 
                 <span
-                  className={`max-w-[9.5rem] rounded-full border px-2.5 py-1 text-center font-body text-[11px] leading-tight font-semibold transition-colors duration-500 ${
+                  className={`max-w-[7.5rem] rounded-full border px-2 py-1 text-center font-body text-[10px] leading-tight font-semibold transition-colors duration-500 sm:max-w-[9.5rem] sm:px-2.5 sm:text-[11px] ${
                     activa
                       ? 'border-blue-300 bg-white text-navy'
                       : 'border-line bg-white/90 text-slate'

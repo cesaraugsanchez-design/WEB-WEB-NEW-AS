@@ -55,6 +55,14 @@
 
 html {
   scroll-behavior: smooth;
+  /* Red de seguridad: ningun elemento decorativo puede generar scroll lateral.
+     `clip` y no `hidden` — `hidden` crea un contenedor de scroll y rompe el
+     `position: sticky` de la barra de navegacion. */
+  overflow-x: clip;
+}
+
+body {
+  overflow-x: clip;
 }
 
 body {

@@ -145,14 +145,20 @@ export default function Hero() {
       {/* Elemento firma: el barrido de inspección, por detrás del contenido */}
       <HeroSigil />
 
-      <div className="section relative pt-36 pb-20 text-center md:pt-44 md:pb-28">
+      <div className="section relative pt-32 pb-16 text-center sm:pt-36 sm:pb-20 md:pt-44 md:pb-28">
         <p data-entra className="pildora mx-auto">
           Ajustadores y Consultores de seguros
         </p>
 
         <h1
           data-entra
-          className="mx-auto mt-8 max-w-4xl font-display text-[2.6rem] leading-[1.08] font-medium tracking-[-0.03em] text-navy md:text-[4.4rem]"
+          /* Tamano fluido en vez de fijo por breakpoint. La capsula se
+             dimensiona a la palabra mas larga («responsabilidad civil»), que a
+             41,6px medía 409px y no cabía en los 335px utiles de un iPhone.
+             Con 8.4vw esa palabra entra en toda la gama, desde el iPhone SE
+             (320px → capsula 265px sobre 280 disponibles) hasta escritorio,
+             donde el tope de 4.4rem la deja en su tamano de diseno. */
+          className="mx-auto mt-8 max-w-4xl font-display text-[clamp(1.6rem,8.4vw,4.4rem)] leading-[1.08] font-medium tracking-[-0.03em] text-navy"
         >
           <span className="block">Gestionamos siniestros de</span>
           <span className="mt-2 flex justify-center md:mt-3">
