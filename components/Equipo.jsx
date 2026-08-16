@@ -3,9 +3,14 @@ import { Mail } from 'lucide-react'
 /**
  * Equipo.
  *
- * Datos publicados por la propia firma. Los correos aparecen ya en su web
- * actual, asi que se mantienen; para reducir exposicion a spam lo indicado
- * seria sustituirlos por un formulario por persona.
+ * El orden del array es el que se ve en pantalla: socios, ajustadores de campo
+ * y administracion.
+ *
+ * CORREOS: normalizados a minusculas. El usuario los facilito con mayuscula
+ * inicial en varios casos («Csanchez», «Recepcion»); la parte local de un
+ * correo es tecnicamente sensible a mayusculas, pero ningun proveedor de uso
+ * comun lo aplica, y mostrarlos mezclados se lee como una errata. El `mailto`
+ * funciona igual en ambos casos.
  *
  * FOTOGRAFIAS: cada ficha reserva un circulo de 80 px. Para colocarlas, dejar
  * los archivos en `public/equipo/` (cuadrados, minimo 320x320 px, fondo neutro)
@@ -13,19 +18,20 @@ import { Mail } from 'lucide-react'
  * que identifica sin fingir un retrato.
  */
 const equipo = [
-  { nombre: 'José F. Sánchez', cargo: 'Socio director · Líder de riesgos generales', correo: 'josesanchez@assanch.com', socio: true, foto: null },
-  { nombre: 'Carlos Sánchez', cargo: 'Socio director · Líder de automóvil', correo: 'carlossanchez@assanch.com', socio: true, foto: null },
-  { nombre: 'José R. Sánchez', cargo: 'Socio · Ajustador de riesgos generales', correo: 'josersanchez@assanch.com', socio: true, foto: null },
-  { nombre: 'Julio Medina', cargo: 'Ajustador de riesgos generales y automóvil · Zona Norte', correo: 'juliomedina@assanch.com', foto: null },
-  { nombre: 'Patricio Martínez', cargo: 'Ajustador de automóvil · Distrito Nacional, Este y Sur', correo: 'patriciomartinez@assanch.com', foto: null },
-  { nombre: 'Betzaira Amparo', cargo: 'Oficial de seguimiento de automóvil', correo: 'betzairaamparo@assanch.com', foto: null },
-  { nombre: 'César Sánchez', cargo: 'Marketing y desarrollo de negocios', correo: 'cesarsanchez@assanch.com', foto: null },
-  { nombre: 'Katherine Medina', cargo: 'Asistente administrativa', correo: 'katherinemedina@assanch.com', foto: null },
+  { nombre: 'José F. Sánchez', cargo: 'Socio director · Líder de riesgos generales', correo: 'jf.sanchez@assanch.com', socio: true, foto: null },
+  { nombre: 'Carlos Sánchez', cargo: 'Socio director · Líder de automóvil', correo: 'csanchez@assanch.com', socio: true, foto: null },
+  { nombre: 'José R. Sánchez', cargo: 'Socio · Ajustador de riesgos generales', correo: 'jr.sanchez@assanch.com', socio: true, foto: null },
+  { nombre: 'Julio Medina', cargo: 'Ajustador de riesgos generales y automóvil · Zona Norte', correo: 'reclamos.zonanorte@assanch.com', foto: null },
+  { nombre: 'Betzaira Amparo', cargo: 'Oficial de seguimiento de automóvil', correo: 'oficialdeseguimiento@assanch.com', foto: null },
+  { nombre: 'Patricio Martínez', cargo: 'Ajustador de automóvil · Distrito Nacional, Este y Sur', correo: 'pmartinez@assanch.com', foto: null },
+  { nombre: 'Katherine Medina', cargo: 'Asistente administrativa', correo: 'recepcion@assanch.com', foto: null },
+  { nombre: 'César A. Sánchez', cargo: 'Marketing y desarrollo de negocios', correo: 'ca.sanchez@assanch.com', foto: null },
 ]
 
 function iniciales(nombre) {
   /* Se conserva la inicial intermedia: sin ella «José F. Sánchez» y
-     «José R. Sánchez» compartirian monograma. */
+     «José R. Sánchez» compartirian monograma, igual que «Carlos Sánchez» y
+     «César A. Sánchez». */
   return nombre
     .split(/\s+/)
     .filter(Boolean)
@@ -36,8 +42,6 @@ function iniciales(nombre) {
 }
 
 export default function Equipo() {
-  /* Fondo blanco: la seccion anterior (Alcance) ya usa canvas, y dos bandas
-     iguales seguidas borran la separacion entre secciones. */
   return (
     <section id="equipo" className="scroll-mt-28 py-24 md:py-32" data-reveal-group>
       <div className="section">
@@ -56,14 +60,15 @@ export default function Equipo() {
         <ul className="rejilla-flotante mt-16 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {equipo.map((p) => (
             <li key={p.correo}>
-              {/* text-left explicito: los parrafos del sitio van justificados y
-                  en una ficha estrecha el justificado abre huecos enormes. */}
-              <article className="tarjeta group h-full p-6 text-left [&_p]:text-left">
+              {/* flex-col + mt-auto en el correo: los cargos ocupan una o dos
+                  lineas segun la persona, y sin esto el correo quedaba a
+                  distinta altura en cada ficha de la misma fila. */}
+              <article className="tarjeta group flex h-full flex-col p-6 text-left">
                 <span
-                  className={`flex h-20 w-20 items-center justify-center overflow-hidden rounded-full transition-colors duration-500 ${
+                  className={`flex h-20 w-20 items-center justify-center overflow-hidden rounded-full ring-2 ring-offset-2 ring-offset-white transition-colors duration-500 ${
                     p.socio
-                      ? 'bg-gradient-to-br from-blue-700 to-blue-500 text-white ring-2 ring-gold/40 ring-offset-2 ring-offset-white'
-                      : 'bg-blue-50 text-blue-700 ring-1 ring-line ring-offset-2 ring-offset-white group-hover:bg-blue-100'
+                      ? 'bg-gradient-to-br from-blue-700 to-blue-500 text-white ring-gold/70'
+                      : 'bg-blue-50 text-blue-700 ring-gold/45 group-hover:bg-blue-100'
                   }`}
                 >
                   {p.foto ? (
@@ -83,13 +88,15 @@ export default function Equipo() {
                 <h3 className="mt-5 font-display text-base leading-snug font-semibold tracking-[-0.01em] text-navy">
                   {p.nombre}
                 </h3>
-                <p className="mt-1.5 text-left font-body text-[13px] leading-relaxed text-slate">{p.cargo}</p>
+                <p className="mt-1.5 text-left font-body text-[13px] leading-relaxed text-slate">
+                  {p.cargo}
+                </p>
 
                 <a
                   href={`mailto:${p.correo}`}
-                  className="mt-4 inline-flex min-h-9 items-center gap-2 font-body text-[13px] break-all text-blue-700 transition-colors hover:text-navy"
+                  className="mt-auto flex min-h-9 items-start gap-2 pt-4 font-body text-[13px] break-all text-blue-700 transition-colors hover:text-navy"
                 >
-                  <Mail size={14} aria-hidden className="shrink-0" />
+                  <Mail size={14} aria-hidden className="mt-[3px] shrink-0" />
                   {p.correo}
                 </a>
               </article>
