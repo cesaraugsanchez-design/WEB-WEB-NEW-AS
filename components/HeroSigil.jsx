@@ -45,9 +45,13 @@ export default function HeroSigil() {
       aria-hidden="true"
       className="pointer-events-none absolute inset-0 flex items-center justify-center overflow-hidden"
     >
+      {/* `aspect-square` con un unico ancho, en vez de alto y ancho fijos con
+          `max-w`: `max-w` recorta solo la anchura, asi que en movil el
+          contenedor quedaba en 499x672 y los anillos —que usan `inset` en
+          porcentaje— salian con las diagonales desiguales al rotarlos 45°. */}
       <div
         data-sigil
-        className="relative h-[42rem] w-[42rem] max-w-[128vw] shrink-0"
+        className="relative aspect-square w-[min(42rem,128vw)] shrink-0"
         style={{ transform: 'rotate(0deg)' }}
       >
         {/* Haz giratorio, recortado al rombo por el contenedor */}
