@@ -288,6 +288,35 @@ h4,
   );
 }
 
+/* ---------- Marca de agua ----------
+   El simbolo de marca a gran tamano y muy baja opacidad. Reutiliza las
+   variables --mx / --my que escribe el componente Cursor, asi que se desplaza
+   un poco con el puntero igual que los orbes, pero SIN desenfoque: el rombo
+   debe leerse nitido aunque sea tenue.
+
+   Opacidad al 4,5%: por debajo de ~3% no se percibe en pantallas normales y
+   por encima de ~6% deja de ser marca de agua y compite con el texto. Es el
+   unico valor que hay que tocar para ajustar su presencia. */
+.marca-agua {
+  position: absolute;
+  pointer-events: none;
+  color: var(--color-navy);
+  opacity: 0.045;
+  will-change: transform;
+  transform: translate3d(
+    calc(var(--mx, 0) * var(--agua-tiro, 14px)),
+    calc(var(--my, 0) * var(--agua-tiro, 14px)),
+    0
+  );
+  transition: transform 1200ms var(--ease-suave);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marca-agua {
+    transform: none;
+  }
+}
+
 /* ---------- Botones tipo píldora ---------- */
 
 .btn,

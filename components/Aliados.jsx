@@ -96,7 +96,7 @@ export default function Aliados() {
                   />
                 ) : (
                   <span className="flex flex-col items-center gap-2">
-                    <LogoMarca mono size={22} className="text-slate-soft opacity-30" />
+                    <LogoMarca mono decorativo size={22} className="text-slate-soft opacity-30" />
                     <span className="font-body text-[10px] font-medium tracking-[0.14em] text-slate-soft uppercase">
                       Logo pendiente
                     </span>

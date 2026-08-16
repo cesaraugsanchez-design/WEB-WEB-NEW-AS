@@ -1,10 +1,20 @@
-import { LogoLockup } from './Marca'
+import { LogoLockup, LogoMarca } from './Marca'
 import BanderaRD from './BanderaRD'
 
 export default function Footer() {
   return (
-    <footer className="py-16">
-      <div className="section grid gap-10 md:grid-cols-12">
+    <footer className="relative overflow-hidden py-16">
+      {/* Cierre: la misma marca, mas pequena, sangrando por la izquierda.
+          Junto con la de «Quiénes somos» actua como par de apertura y cierre. */}
+      <LogoMarca
+        mono
+        decorativo
+        size={340}
+        className="marca-agua -bottom-28 -left-24 hidden md:block"
+        style={{ '--agua-tiro': '-10px' }}
+      />
+
+      <div className="section relative grid gap-10 md:grid-cols-12">
         <div className="md:col-span-5">
           <LogoLockup height={34} />
           <p className="mt-3 font-body text-[13px] font-semibold text-slate">

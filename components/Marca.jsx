@@ -12,10 +12,20 @@
  */
 
 /** Solo el simbolo (rombo con la S). Relacion 1:1. */
-export function LogoMarca({ size = 34, className = '', mono = false }) {
+export function LogoMarca({
+  size = 34,
+  className = '',
+  mono = false,
+  /* `decorativo` oculta la marca del arbol de accesibilidad. Obligatorio en
+     filigranas y en los huecos de logo aliado: sin esto un lector de pantalla
+     anuncia «ASSANCH» una vez por cada aparicion. */
+  decorativo = false,
+  style,
+}) {
   return (
     <svg viewBox="282.88 124.46 226.26 226.26" width={size} height={size}
-      className={className} role="img" aria-label="ASSANCH" focusable="false">
+      className={className} style={style} focusable="false"
+      {...(decorativo ? { 'aria-hidden': 'true' } : { role: 'img', 'aria-label': 'ASSANCH' })}>
       <path d="M487.36 244.88 L403.21 328.94 C399.22 332.93 392.81 332.93 388.81 328.94 L304.67 244.88 C300.68 240.89 300.68 234.39 304.67 230.39 L388.81 146.25 C392.81 142.25 399.22 142.25 403.21 146.25 L487.36 230.39 C491.35 234.39 491.35 240.89 487.36 244.88 M497.85 220.83 L412.78 135.75 C403.49 126.46 388.54 126.46 379.25 135.75 L294.17 220.83 C284.88 230.11 284.88 245.07 294.17 254.36 L379.25 339.52 C388.54 348.72 403.49 348.72 412.78 339.52 L497.85 254.36 C507.14 245.07 507.14 230.11 497.85 220.83" fill="currentColor" fillRule="nonzero" />
       <path d="M452.81 261.96 L430.43 284.34 L424.71 290.08 L401.73 313.14 C400.24 314.61 398.36 315.41 396.43 315.49 C396.17 315.51 395.91 315.51 395.65 315.49 C393.72 315.41 391.82 314.61 390.39 313.14 L367.93 290.66 C367.75 290.48 367.57 290.28 367.41 290.08 C364.78 286.93 364.94 282.31 367.93 279.33 C370.98 276.18 376.09 276.18 379.16 279.33 L389.97 290.08 L396.07 296.13 L396.61 295.59 L402.11 290.08 L419.10 273.01 L430.15 261.96 L387.52 219.33 C386.02 217.85 385.20 215.80 385.20 213.68 C385.20 208.84 389.19 205.67 393.28 205.67 C395.23 205.67 397.27 206.41 398.84 208.00 Z" fill="currentColor" fillRule="nonzero" />
       <path d="M424.21 196.30 C421.14 199.47 416.03 199.47 412.96 196.30 L402.01 185.41 L396.07 179.50 L395.51 180.06 L390.17 185.41 L373.02 202.62 L361.97 213.67 L404.59 256.30 C406.10 257.78 406.92 259.83 406.92 261.98 C406.92 266.81 402.93 269.96 398.84 269.96 C396.89 269.96 394.85 269.22 393.28 267.63 L339.30 213.67 L361.69 191.29 L367.55 185.41 L390.39 162.51 C393.56 159.34 398.66 159.34 401.73 162.51 L424.21 184.97 C424.35 185.11 424.49 185.25 424.59 185.41 C427.36 188.58 427.22 193.30 424.21 196.30" fill="currentColor" fillRule="nonzero" />
@@ -35,16 +45,15 @@ export function LogoMarca({ size = 34, className = '', mono = false }) {
 const RATIO_TIPO = 7.1636
 
 /** Solo el logotipo «ASSANCH» en su vector original. */
-export function LogoTipo({ height = 20, className = '' }) {
+export function LogoTipo({ height = 20, className = '', decorativo = false }) {
   return (
     <svg
       viewBox="136.32 363.08 519.36 72.50"
       height={height}
       width={height * RATIO_TIPO}
       className={className}
-      role="img"
-      aria-label="ASSANCH"
       focusable="false"
+      {...(decorativo ? { 'aria-hidden': 'true' } : { role: 'img', 'aria-label': 'ASSANCH' })}
     >
       <path d="M165.72 407.60 L175.48 382.81 L185.04 407.60 Z M184.76 365.81 L167.21 365.81 L138.32 432.77 L155.88 432.77 L160.71 420.51 L190.06 420.51 L194.79 432.77 L213.00 432.77 Z" fill="#FFB600" fillRule="nonzero" />
       <path d="M264.78 395.46 C261.30 394.15 257.82 393.04 254.35 392.11 C250.87 391.19 247.92 390.09 245.50 388.81 C243.08 387.53 241.86 385.84 241.86 383.74 C241.86 380.49 244.32 378.86 249.23 378.86 C251.97 378.86 255.35 379.51 259.37 380.82 C263.39 382.13 267.15 383.80 270.66 385.84 L277.07 372.55 C269.48 367.57 260.68 365.08 250.67 365.08 C242.63 365.08 236.17 366.92 231.29 370.58 C226.41 374.25 223.97 379.15 223.97 385.27 C223.97 388.97 224.85 392.14 226.60 394.79 C228.36 397.44 230.54 399.37 233.16 400.58 C235.77 401.79 238.61 402.91 241.67 403.93 C244.73 404.95 247.57 405.76 250.19 406.36 C252.80 406.97 254.99 407.89 256.74 409.14 C258.49 410.38 259.37 411.93 259.37 413.78 C259.37 415.69 258.61 417.14 257.08 418.13 C255.55 419.12 253.41 419.61 250.67 419.61 C247.09 419.61 243.01 418.67 238.42 416.79 C233.83 414.91 229.84 412.50 226.46 409.57 L219.86 422.68 C223.88 425.99 228.60 428.61 234.02 430.52 C239.44 432.43 244.93 433.39 250.47 433.39 C258.25 433.39 264.66 431.59 269.70 427.99 C274.74 424.38 277.26 419.36 277.26 412.92 C277.26 408.45 276.05 404.75 273.63 401.82 C271.20 398.89 268.25 396.77 264.78 395.46" fill="#FFB600" fillRule="nonzero" />
@@ -66,9 +75,16 @@ export function LogoTipo({ height = 20, className = '' }) {
  */
 export function LogoLockup({ height = 30, className = '' }) {
   return (
-    <span className={`inline-flex items-center gap-2.5 ${className}`} aria-label="ASSANCH">
-      <LogoMarca size={height} />
-      <LogoTipo height={height * 0.44} />
+    /* La etiqueta va solo en el contenedor, y con `role="img"`: un aria-label
+       sobre un <span> sin rol lo ignoran muchos lectores. Las dos piezas van
+       decorativas — si no, la marca se anuncia tres veces seguidas. */
+    <span
+      className={`inline-flex items-center gap-2.5 ${className}`}
+      role="img"
+      aria-label="ASSANCH"
+    >
+      <LogoMarca size={height} decorativo />
+      <LogoTipo height={height * 0.44} decorativo />
     </span>
   )
 }

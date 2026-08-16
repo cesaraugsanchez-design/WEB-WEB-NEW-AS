@@ -115,6 +115,7 @@ export default function Contact() {
               />
               <LogoMarca
                 mono
+                decorativo
                 size={230}
                 className="pointer-events-none absolute -right-14 -bottom-16 text-white/[0.06] opacity-90"
               />

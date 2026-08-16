@@ -218,7 +218,7 @@ export default function Hero() {
           <ul className="mt-7 flex flex-wrap items-center justify-center gap-x-12 gap-y-6 opacity-60">
             {['Aliado 01', 'Aliado 02', 'Aliado 03', 'Aliado 04', 'Aliado 05'].map((a) => (
               <li key={a} data-marca className="flex items-center gap-2 text-slate-soft">
-                <LogoMarca mono size={19} className="opacity-70" />
+                <LogoMarca mono decorativo size={19} className="opacity-70" />
                 <span className="font-display text-sm font-semibold tracking-tight">{a}</span>
               </li>
             ))}
