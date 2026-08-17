@@ -1,6 +1,5 @@
 import { Eye, Target } from 'lucide-react'
 import Cifra from './Cifra'
-import { LogoMarca } from './Marca'
 
 const metricas = [
   ['3+', 'Oficinas en el territorio nacional'],
@@ -20,16 +19,6 @@ export default function Nosotros() {
         style={{ top: '18%', left: '-18%', '--orbe-tiro': '26px' }}
       />
 
-      {/* Marca de agua. Va en «Quiénes somos» a proposito: es la seccion donde
-          la firma se presenta, el unico punto donde el simbolo aporta sentido y
-          no solo decoracion. Sangra por el borde derecho para no quedar detras
-          del texto. La seccion tiene overflow-hidden, asi que no genera scroll. */}
-      <LogoMarca
-        mono
-        decorativo
-        size={620}
-        className="marca-agua -right-40 -bottom-24 hidden lg:block"
-      />
 
       <div className="section relative">
         {/* Encabezado centrado, igual que el resto de secciones. Antes compartia
