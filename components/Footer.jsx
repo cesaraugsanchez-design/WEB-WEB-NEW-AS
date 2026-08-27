@@ -1,11 +1,24 @@
-import { LogoLockup } from './Marca'
+import { LogoLockup, LogoMarca } from './Marca'
 import BanderaRD from './BanderaRD'
 
 export default function Footer() {
   return (
-    <footer className="py-16">
+    <footer className="relative py-16">
+      {/* Marca de agua en la esquina inferior derecha del pie: es el unico
+          rincon de la pagina con hueco real, porque la barra de copyright solo
+          ocupa la mitad izquierda.
 
-      <div className="section grid gap-10 md:grid-cols-12">
+          Va ENTERA dentro del recuadro, no sangrando por el borde — sangrar era
+          lo que la hacia verse cortada. Y al 10% se lee como filigrana pero se
+          ve; al 4% quedaba invisible. */}
+      <LogoMarca
+        mono
+        decorativo
+        size={150}
+        className="pointer-events-none absolute right-8 bottom-8 hidden text-navy opacity-10 md:block lg:right-14"
+      />
+
+      <div className="section relative grid gap-10 md:grid-cols-12">
         <div className="md:col-span-5">
           <LogoLockup height={34} />
           <p className="mt-3 font-body text-[13px] font-semibold text-slate">
@@ -57,7 +70,7 @@ export default function Footer() {
         </div>
       </div>
 
-      <div className="section mt-12 flex flex-wrap items-center gap-x-3 gap-y-2 border-t border-line pt-6">
+      <div className="section relative mt-12 flex flex-wrap items-center gap-x-3 gap-y-2 border-t border-line pt-6">
         <BanderaRD height={13} className="shrink-0" />
         <p className="font-body text-xs text-slate-soft">
           © {new Date().getFullYear()} ASSANCH. Todos los derechos reservados. Santo

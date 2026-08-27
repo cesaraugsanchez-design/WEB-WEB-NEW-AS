@@ -11,7 +11,6 @@ import Alcance from '@/components/Alcance'
 import Equipo from '@/components/Equipo'
 import EvidenceField from '@/components/EvidenceField'
 import Aliados from '@/components/Aliados'
-import MarcaJuguete from '@/components/MarcaJuguete'
 import Contact from '@/components/Contact'
 import Footer from '@/components/Footer'
 
@@ -31,7 +30,6 @@ export default function Home() {
         <Equipo />
         <EvidenceField />
         <Aliados />
-        <MarcaJuguete />
         <Contact />
       </main>
       <Footer />
