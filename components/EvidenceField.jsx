@@ -298,7 +298,7 @@ export default function EvidenceField() {
 
           {/* Barra inferior */}
           <div className="pointer-events-none absolute inset-x-0 bottom-0 z-30 flex flex-wrap items-center justify-between gap-3 bg-gradient-to-t from-white via-white/85 to-transparent p-5">
-            <p aria-live="polite" className="font-body text-[11px] font-semibold tracking-[0.12em] text-slate-soft uppercase">
+            <p aria-live="polite" className="font-body text-[11px] font-semibold tracking-[0.12em] text-slate uppercase">
               {reducido && 'Movimiento reducido · '}
               {completo ? 'Expediente completo' : `${cadena.length} de ${PIEZAS.length} piezas enlazadas`}
             </p>

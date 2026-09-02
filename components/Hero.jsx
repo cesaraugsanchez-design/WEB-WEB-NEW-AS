@@ -1,5 +1,7 @@
 'use client'
 
+import Link from 'next/link'
+
 import { useEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
@@ -181,9 +183,9 @@ export default function Hero() {
         </p>
 
         <div data-entra className="mt-10 flex flex-wrap items-center justify-center gap-4">
-          <a href="#contacto" className="btn" data-iman>
-            Reportar un siniestro <ArrowRight size={17} aria-hidden />
-          </a>
+          <Link href="/someter-reclamo" className="btn" data-iman>
+            Someter un reclamo <ArrowRight size={17} aria-hidden />
+          </Link>
           <a href="#ramos" className="btn-claro" data-iman>
             <Layers size={15} aria-hidden className="text-blue-500" />
             Ver los 10 ramos
@@ -194,7 +196,7 @@ export default function Hero() {
             clic — cuando atienden y hasta donde llegan. Solo datos verificados. */}
         <ul
           data-entra
-          className="mt-6 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 font-body text-[13px] text-slate-soft"
+          className="mt-6 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 font-body text-[13px] text-slate"
         >
           <li className="flex items-center gap-2">
             <Clock size={14} aria-hidden className="text-blue-500" />
@@ -212,12 +214,12 @@ export default function Hero() {
 
         {/* Franja de confianza. Los logos reales sustituyen estas ranuras. */}
         <div className="mt-20">
-          <p className="font-body text-xs tracking-wider text-slate-soft uppercase">
+          <p className="font-body text-xs tracking-wider text-slate uppercase">
             Más de 10 aseguradoras trabajan con nosotros
           </p>
           <ul className="mt-7 flex flex-wrap items-center justify-center gap-x-12 gap-y-6 opacity-60">
             {['Aliado 01', 'Aliado 02', 'Aliado 03', 'Aliado 04', 'Aliado 05'].map((a) => (
-              <li key={a} data-marca className="flex items-center gap-2 text-slate-soft">
+              <li key={a} data-marca className="flex items-center gap-2 text-slate">
                 <LogoMarca mono decorativo size={19} className="opacity-70" />
                 <span className="font-display text-sm font-semibold tracking-tight">{a}</span>
               </li>

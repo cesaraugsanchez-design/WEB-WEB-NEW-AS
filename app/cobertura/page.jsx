@@ -1,9 +1,10 @@
 'use client'
 
 import Link from 'next/link'
-import { ArrowLeft, Building, Clock, MapPin, Phone } from 'lucide-react'
+import { Building, Clock, MapPin, Phone } from 'lucide-react'
+import Footer from '@/components/Footer'
 import GloboCobertura from '@/components/GloboCobertura'
-import { LogoLockup } from '@/components/Marca'
+import Navbar from '@/components/Navbar'
 
 const zonas = [
   {
@@ -26,17 +27,7 @@ const zonas = [
 export default function Cobertura() {
   return (
     <>
-      <header className="fixed inset-x-0 top-0 z-50 border-b border-line bg-white/85 backdrop-blur-xl">
-        <nav aria-label="Navegación" className="section flex h-20 items-center justify-between">
-          <Link href="/" aria-label="ASSANCH — inicio" className="flex min-h-12 items-center">
-            <LogoLockup height={26} />
-          </Link>
-          <Link href="/#alcance" className="btn-claro !min-h-11 !px-5 !text-sm">
-            <ArrowLeft size={15} aria-hidden />
-            Volver al sitio
-          </Link>
-        </nav>
-      </header>
+      <Navbar />
 
       <main id="main" className="relative overflow-hidden pt-32 pb-24 md:pt-40 md:pb-32">
         <div
@@ -101,18 +92,20 @@ export default function Cobertura() {
                 <Phone size={16} aria-hidden />
                 809-792-9384
               </a>
-              <Link href="/#contacto" className="btn-claro">
-                Reportar por formulario
+              <Link href="/someter-reclamo" className="btn-claro">
+                Someter un reclamo
               </Link>
             </div>
           </div>
 
-          <p className="mt-10 text-center font-body text-[13px] leading-relaxed text-slate-soft">
+          <p className="mt-10 text-center font-body text-[13px] leading-relaxed text-slate">
             La esfera es una representación abstracta: sitúa la República Dominicana en
             sus coordenadas reales, sin dibujar contornos costeros.
           </p>
         </div>
       </main>
+
+      <Footer />
     </>
   )
 }

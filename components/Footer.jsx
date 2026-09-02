@@ -31,7 +31,7 @@ export default function Footer() {
         </div>
 
         <div className="md:col-span-4">
-          <p className="font-body text-[11px] font-semibold tracking-[0.12em] text-slate-soft uppercase">
+          <p className="font-body text-[11px] font-semibold tracking-[0.12em] text-slate uppercase">
             Contacto
           </p>
           <ul className="mt-4 font-body text-sm text-slate [&_a]:inline-flex [&_a]:min-h-9 [&_a]:items-center">
@@ -52,7 +52,7 @@ export default function Footer() {
         </div>
 
         <div className="md:col-span-3">
-          <p className="font-body text-[11px] font-semibold tracking-[0.12em] text-slate-soft uppercase">
+          <p className="font-body text-[11px] font-semibold tracking-[0.12em] text-slate uppercase">
             En línea
           </p>
           <ul className="mt-4 font-body text-sm text-slate [&_a]:inline-flex [&_a]:min-h-9 [&_a]:items-center">
@@ -72,7 +72,7 @@ export default function Footer() {
 
       <div className="section relative mt-12 flex flex-wrap items-center gap-x-3 gap-y-2 border-t border-line pt-6">
         <BanderaRD height={13} className="shrink-0" />
-        <p className="font-body text-xs text-slate-soft">
+        <p className="font-body text-xs text-slate">
           © {new Date().getFullYear()} ASSANCH. Todos los derechos reservados. Santo
           Domingo, República Dominicana.
         </p>

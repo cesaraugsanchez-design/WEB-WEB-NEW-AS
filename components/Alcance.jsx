@@ -52,7 +52,7 @@ export default function Alcance() {
               <Globe2 size={16} aria-hidden />
               Ver mapa de cobertura
             </Link>
-            <p className="mt-3 font-body text-[12px] text-slate-soft">
+            <p className="mt-3 font-body text-[12px] text-slate">
               Zonas, oficinas y tiempos de respuesta
             </p>
           </div>

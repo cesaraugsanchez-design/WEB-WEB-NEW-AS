@@ -227,7 +227,7 @@ export default function Contact() {
                     >
                       {c.label}
                       {c.required && (
-                        <span className="text-blue-500" aria-hidden>
+                        <span className="text-blue-700" aria-hidden>
                           {' '}
                           *
                         </span>
@@ -257,7 +257,7 @@ export default function Contact() {
                     className="block font-body text-[11px] font-semibold tracking-[0.12em] text-slate uppercase"
                   >
                     Descripción del caso
-                    <span className="text-blue-500" aria-hidden>
+                    <span className="text-blue-700" aria-hidden>
                       {' '}
                       *
                     </span>
@@ -271,7 +271,7 @@ export default function Contact() {
                     aria-describedby={errores.mensaje ? 'error-mensaje ayuda-mensaje' : 'ayuda-mensaje'}
                     className="mt-2 w-full rounded-2xl border border-line bg-canvas p-4 font-body text-navy transition-colors focus:border-blue-300 focus:bg-white focus:outline-none"
                   />
-                  <p id="ayuda-mensaje" className="mt-2 font-body text-xs text-slate-soft">
+                  <p id="ayuda-mensaje" className="mt-2 font-body text-xs text-slate">
                     Incluya fecha, ubicación y tipo de siniestro si aplica.
                   </p>
                   {errores.mensaje && (
@@ -310,6 +310,20 @@ export default function Contact() {
                   )}
                 </p>
               </div>
+
+              {/* Desvio para el trafico que no viene a pedir cotizacion sino a
+                  asignar un caso: ese visitante necesita el formulario de
+                  reclamo, no este. */}
+              <p className="mt-7 border-t border-line pt-6 font-body text-sm text-slate">
+                ¿Es una aseguradora y viene a asignar un siniestro?{' '}
+                <a
+                  href="/someter-reclamo"
+                  className="font-semibold text-blue-700 underline underline-offset-4 hover:text-blue-500"
+                >
+                  Someta el reclamo aquí
+                </a>
+                .
+              </p>
             </form>
           </div>
         </div>

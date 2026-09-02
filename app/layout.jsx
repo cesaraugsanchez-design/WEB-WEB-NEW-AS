@@ -1,5 +1,6 @@
 import { Instrument_Sans, Inter, Montserrat } from 'next/font/google'
 import './globals.css'
+import { SITIO_URL } from '@/lib/sitio'
 
 /* Montserrat Bold es la tipografía que el manual de marca fija para el
    logotipo. Se carga sólo con los pesos del lockup, no para texto corrido. */
@@ -29,6 +30,10 @@ const inter = Inter({
 })
 
 export const metadata = {
+  /* Base absoluta: sin ella Next no puede resolver las URL de Open Graph y las
+     previsualizaciones al compartir el enlace salen sin imagen. */
+  metadataBase: new URL(SITIO_URL),
+  alternates: { canonical: '/' },
   title: 'ASSANCH — Ajustadores y Consultores de Seguros | República Dominicana',
   description:
     'Firma dominicana especializada en peritaje, levantamiento y ajuste de siniestros. Respuesta inmediata y cobertura nacional para aseguradoras, corredores y empresas.',
