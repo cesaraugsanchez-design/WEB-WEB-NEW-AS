@@ -24,7 +24,11 @@ export default function Cifra({ valor, className = '', duracion = 1500 }) {
   // «98%» -> prefijo '', numero 98, sufijo '%'
   const coincidencia = String(valor).match(/^(\D*)([\d.,]+)(.*)$/)
   const prefijo = coincidencia?.[1] ?? ''
-  const objetivo = coincidencia ? parseFloat(coincidencia[2].replace(',', '.')) : null
+  const crudo = coincidencia?.[2] ?? ''
+  /* La coma es separador de millares, no decimal: «3,603» son tres mil, no
+     tres coma seis. Se retira antes de convertir. */
+  const agrupado = crudo.includes(',')
+  const objetivo = coincidencia ? parseFloat(agrupado ? crudo.replace(/,/g, '') : crudo) : null
   const sufijo = coincidencia?.[3] ?? ''
 
   useEffect(() => {
@@ -76,14 +80,17 @@ export default function Cifra({ valor, className = '', duracion = 1500 }) {
     return <span className={className}>{valor}</span>
   }
 
-  const decimales = String(objetivo).includes('.') ? 1 : 0
+  const decimales = !agrupado && String(objetivo).includes('.') ? 1 : 0
   const enCurso = mostrado === null ? 0 : mostrado
+  const texto = agrupado
+    ? Math.round(enCurso).toLocaleString('es-DO')
+    : enCurso.toFixed(decimales)
 
   return (
     <span ref={ref} className={className}>
       <span aria-hidden="true">
         {prefijo}
-        {enCurso.toFixed(decimales)}
+        {texto}
         {sufijo}
       </span>
       <span className="sr-only">{valor}</span>

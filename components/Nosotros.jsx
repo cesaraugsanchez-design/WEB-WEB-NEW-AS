@@ -1,11 +1,13 @@
 import { Eye, Target } from 'lucide-react'
 import Cifra from './Cifra'
+import ContadorReclamaciones from './ContadorReclamaciones'
+import { aliados } from '@/lib/contenido/aliados'
 
 const metricas = [
   ['3+', 'Oficinas en el territorio nacional'],
   ['98%', 'Casos concluidos con satisfacción'],
   ['5+', 'Ajustadores experimentados'],
-  ['10+', 'Aseguradoras trabajan con nosotros'],
+  [String(aliados.length), 'Aseguradoras trabajan con nosotros'],
 ]
 
 const valores = ['Ética profesional', 'Transparencia total', 'Precisión técnica', 'Rapidez de respuesta']
@@ -77,7 +79,32 @@ export default function Nosotros() {
           </div>
         </div>
 
-        <dl className="reveal mt-20 grid grid-cols-2 gap-5 lg:grid-cols-4">
+        {/* Metrica principal: va sola, centrada y al doble de tamano que las
+            demas. Meterla como quinta tarjeta la habria igualado con «3+
+            oficinas», y no pesan lo mismo. */}
+        <div className="reveal mt-20">
+          <div className="tarjeta mx-auto max-w-2xl px-8 py-12 text-center">
+            {/* En un <dl> el <dt> va SIEMPRE antes que su <dd>. Aqui el numero
+                debe verse encima de la etiqueta, asi que el termino se oculta a
+                la vista y se repite visible dentro del <dd> — el mismo patron
+                que usan las cuatro tarjetas de abajo. */}
+            <dl>
+              <dt className="sr-only">Reclamaciones gestionadas</dt>
+              <dd>
+                <ContadorReclamaciones className="texto-degradado block font-display text-[clamp(3.4rem,11vw,6rem)] leading-none font-semibold tracking-[-0.05em]" />
+                <span className="mt-5 block font-display text-lg font-medium text-navy md:text-xl">
+                  Reclamaciones gestionadas
+                </span>
+              </dd>
+            </dl>
+            <p className="mx-auto mt-3 max-w-md text-center font-body text-sm leading-relaxed text-slate">
+              Expedientes abiertos, peritados y cerrados por la firma en todo el
+              territorio nacional.
+            </p>
+          </div>
+        </div>
+
+        <dl className="reveal mt-6 grid grid-cols-2 gap-5 lg:grid-cols-4">
           {metricas.map(([cifra, etiqueta]) => (
             <div key={etiqueta} className="tarjeta p-7 text-center">
               <dt className="sr-only">{etiqueta}</dt>
