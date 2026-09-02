@@ -84,7 +84,7 @@ export default function Footer() {
                 {item.label}
               </p>
               <ul className="mt-4 space-y-0.5">
-                {item.columnas[0].enlaces.slice(0, 4).map((e) => (
+                {item.columnas.flatMap((c) => c.enlaces).slice(0, 4).map((e) => (
                   <li key={e.href}>
                     <Link
                       href={e.href}
