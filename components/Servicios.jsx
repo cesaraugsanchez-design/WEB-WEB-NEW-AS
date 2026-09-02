@@ -1,22 +1,6 @@
-import { BookOpen, Compass, Gauge, Handshake, Microscope, ScanSearch } from 'lucide-react'
-
-const servicios = [
-  {
-    icon: ScanSearch,
-    titulo: 'Evaluación de siniestros y ajuste de pérdidas',
-    desc: 'Peritaje completo y ajuste profesional de todo tipo de siniestros, con informes detallados y tiempos de respuesta óptimos.',
-  },
-  {
-    icon: Compass,
-    titulo: 'Consultoría de seguros y riesgos',
-    desc: 'Asesoría especializada en gestión de riesgos, análisis de coberturas y optimización de pólizas para empresas e instituciones.',
-  },
-  {
-    icon: BookOpen,
-    titulo: 'Formación en riesgos y seguros',
-    desc: 'Capacitación profesional para equipos y empresas en identificación de riesgos, prevención y gestión de siniestros.',
-  },
-]
+import Link from 'next/link'
+import { ArrowRight, Gauge, Handshake, Microscope } from 'lucide-react'
+import { servicios } from '@/lib/contenido/servicios'
 
 const rol = [
   {
@@ -52,15 +36,29 @@ export default function Servicios() {
           {servicios.map((s) => {
             const Icon = s.icon
             return (
-              <article key={s.titulo} className="reveal tarjeta group flex flex-col p-8">
+              /* La tarjeta entera enlaza a la ficha del servicio, igual que
+                 los ramos: mismo gesto en toda la portada. */
+              <Link
+                key={s.slug}
+                href={`/servicios/${s.slug}`}
+                className="reveal tarjeta group flex flex-col p-8"
+              >
                 <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-700 to-blue-500 text-white shadow-[0_8px_20px_-8px_rgb(30_84_128/0.6)]">
                   <Icon size={21} strokeWidth={1.8} aria-hidden />
                 </span>
                 <h3 className="mt-7 font-display text-xl leading-snug font-semibold tracking-[-0.015em] text-navy">
                   {s.titulo}
                 </h3>
-                <p className="mt-3 font-body text-sm leading-relaxed text-slate">{s.desc}</p>
-              </article>
+                <p className="mt-3 font-body text-sm leading-relaxed text-slate">{s.resumen}</p>
+                <span className="mt-auto flex items-center gap-1.5 pt-6 font-body text-sm font-semibold text-blue-700">
+                  Ver detalle
+                  <ArrowRight
+                    size={14}
+                    aria-hidden
+                    className="transition-transform duration-300 group-hover:translate-x-1"
+                  />
+                </span>
+              </Link>
             )
           })}
         </div>

@@ -1,13 +1,23 @@
-'use client'
-
-import { useState } from 'react'
-import { FileText, Search, X } from 'lucide-react'
+import Link from 'next/link'
+import { ArrowRight } from 'lucide-react'
 import { ramos } from '@/lib/contenido/ramos'
 
+/**
+ * Ramos en la portada.
+ *
+ * Antes cada tarjeta desplegaba un panel de detalle bajo la rejilla. Ese panel
+ * repetia, con menos contenido, lo que ya vive en /ramos/[slug]: la misma
+ * definicion, lo que evalua el ajustador y la documentacion. Mantener dos sitios
+ * con el mismo texto termina siempre igual, con uno de los dos desactualizado.
+ *
+ * Ahora la tarjeta ES un enlace a su ficha, que ademas ofrece lo que el panel no
+ * podia: enlace al formulario con el ramo ya seleccionado, y navegacion a los
+ * demas ramos.
+ *
+ * Al no quedar estado, el componente deja de ser de cliente y su JavaScript sale
+ * del paquete de la portada.
+ */
 export default function Ramos() {
-  const [abierto, setAbierto] = useState(null)
-  const activo = abierto === null ? null : ramos[abierto]
-
   return (
     <section id="ramos" className="relative scroll-mt-28 overflow-hidden py-24 md:py-32" data-reveal-group>
       <div
@@ -25,42 +35,29 @@ export default function Ramos() {
           </h2>
           <p className="mt-6 font-body text-lg leading-relaxed text-slate">
             Ajustamos siniestros en los diez ramos que concentran la cartera del mercado
-            dominicano. Abra cualquiera para ver su alcance técnico y la documentación
+            dominicano. Entre en cualquiera para ver su alcance técnico y la documentación
             que necesitamos para trabajarlo.
           </p>
         </div>
 
         <ul className="rejilla-flotante mt-16 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {ramos.map((r, i) => {
+          {ramos.map((r) => {
             const Icon = r.icon
-            const seleccionado = abierto === i
             return (
-              <li key={r.nombre} className="reveal">
-                <button
-                  type="button"
-                  onClick={() => setAbierto(seleccionado ? null : i)}
-                  aria-expanded={seleccionado}
-                  aria-controls="detalle-ramo"
-                  className={`tarjeta group h-full w-full p-7 text-left ${
-                    seleccionado ? '!border-blue-300 !shadow-media' : ''
-                  }`}
-                >
+              <li key={r.slug} className="reveal">
+                {/* La tarjeta ENTERA es el enlace, no un «ver mas» al pie: un
+                    objetivo de 300 px se acierta mas facil que uno de 60, y el
+                    lector de pantalla anuncia el nombre del ramo. */}
+                <Link href={`/ramos/${r.slug}`} className="tarjeta group flex h-full flex-col p-7">
                   <span className="flex items-start justify-between gap-3">
-                    <span
-                      className={`flex h-11 w-11 items-center justify-center rounded-2xl transition-colors duration-500 ${
-                        seleccionado
-                          ? 'bg-blue-700 text-white'
-                          : 'bg-blue-50 text-blue-700 group-hover:bg-blue-700 group-hover:text-white'
-                      }`}
-                    >
+                    <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-blue-50 text-blue-700 transition-colors duration-500 group-hover:bg-blue-700 group-hover:text-white">
                       <Icon size={20} strokeWidth={1.8} aria-hidden />
                     </span>
-                    <span
+                    <ArrowRight
+                      size={16}
                       aria-hidden
-                      className="mt-1 font-body text-[11px] font-semibold tracking-[0.1em] text-slate uppercase opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-                    >
-                      Ver
-                    </span>
+                      className="mt-3 shrink-0 text-blue-700 opacity-0 transition-all duration-300 group-hover:translate-x-1 group-hover:opacity-100"
+                    />
                   </span>
 
                   <span className="mt-6 block font-display text-lg leading-snug font-semibold tracking-[-0.01em] text-navy">
@@ -69,78 +66,17 @@ export default function Ramos() {
                   <span className="mt-2 block font-body text-sm leading-relaxed text-slate">
                     {r.nota}
                   </span>
-                </button>
+                </Link>
               </li>
             )
           })}
         </ul>
 
-        {/* Panel de detalle bajo la rejilla: mantiene el contexto sin la
-            complejidad de foco de un dialogo modal. */}
-        <div id="detalle-ramo" role="region" aria-live="polite">
-          {activo && (
-            <article className="mt-8 overflow-hidden rounded-[2.5rem] border border-line bg-white shadow-media">
-              <header className="flex items-start justify-between gap-6 border-b border-line bg-canvas p-7 md:p-9">
-                <div className="flex items-start gap-4">
-                  <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-700 to-blue-500 text-white">
-                    <activo.icon size={22} strokeWidth={1.8} aria-hidden />
-                  </span>
-                  <div>
-                    <h3 className="font-display text-2xl leading-tight font-semibold tracking-[-0.02em] text-navy">
-                      {activo.nombre}
-                    </h3>
-                    <p className="mt-1 font-body text-sm text-slate">{activo.nota}</p>
-                  </div>
-                </div>
-
-                <button
-                  type="button"
-                  onClick={() => setAbierto(null)}
-                  aria-label="Cerrar detalle"
-                  className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-line bg-white text-slate shadow-suave transition-colors hover:text-navy"
-                >
-                  <X size={17} aria-hidden />
-                </button>
-              </header>
-
-              <div className="grid gap-8 p-7 md:grid-cols-12 md:p-9">
-                <div className="md:col-span-5">
-                  <h4 className="flex items-center gap-2 font-body text-[11px] font-semibold tracking-[0.12em] text-blue-700 uppercase">
-                    <FileText size={14} aria-hidden /> Alcance de la cobertura
-                  </h4>
-                  <p className="mt-4 font-body leading-relaxed text-slate">{activo.definicion}</p>
-                </div>
-
-                <div className="md:col-span-4">
-                  <h4 className="flex items-center gap-2 font-body text-[11px] font-semibold tracking-[0.12em] text-blue-700 uppercase">
-                    <Search size={14} aria-hidden /> Qué evaluamos
-                  </h4>
-                  <ul className="mt-4 space-y-2.5">
-                    {activo.evaluamos.map((t) => (
-                      <li key={t} className="flex gap-3 font-body text-sm leading-relaxed text-slate">
-                        <span aria-hidden className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-blue-500" />
-                        {t}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                <div className="md:col-span-3">
-                  <h4 className="font-body text-[11px] font-semibold tracking-[0.12em] text-blue-700 uppercase">
-                    Documentación clave
-                  </h4>
-                  <ul className="mt-4 space-y-2.5">
-                    {activo.documentos.map((t) => (
-                      <li key={t} className="flex gap-3 font-body text-sm leading-relaxed text-slate">
-                        <span aria-hidden className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-gold" />
-                        {t}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-            </article>
-          )}
+        <div className="reveal mt-12 text-center">
+          <Link href="/ramos" className="btn-claro">
+            Ver el detalle de los 10 ramos
+            <ArrowRight size={15} aria-hidden className="text-blue-500" />
+          </Link>
         </div>
       </div>
     </section>
