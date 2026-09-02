@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowRight, CalendarDays, FileText, Mail } from 'lucide-react'
 import Navbar from '@/components/Navbar'
@@ -6,18 +7,18 @@ import MigaDePan from '@/components/plantillas/MigaDePan'
 import HeroInterno from '@/components/plantillas/HeroInterno'
 import CtaFinal from '@/components/plantillas/CtaFinal'
 import Revelar from '@/components/Revelar'
-import { informesOrdenados } from '@/lib/contenido/informes'
+import { informesOrdenados, portadaDe } from '@/lib/contenido/informes'
 
 export const metadata = {
   title: 'Mercado asegurador — ASSANCH',
   description:
-    'Informes semanales sobre el mercado asegurador dominicano, elaborados por ASSANCH.',
+    'La Semanal: lectura de riesgos, primas y estrategia para aseguradoras, corredores y reaseguradores en Latinoamérica y el Caribe.',
   alternates: { canonical: '/mercado-asegurador' },
 }
 
 const fmtFecha = new Intl.DateTimeFormat('es-DO', { day: 'numeric', month: 'long', year: 'numeric' })
 
-/* Agrupados por año: con un informe semanal, en dos años son cien entradas y
+/* Agrupados por ano: con un informe semanal, en dos anos son cien entradas y
    una lista plana deja de servir para encontrar nada. */
 function porAno(lista) {
   const grupos = new Map()
@@ -46,65 +47,74 @@ export default function MercadoAsegurador() {
         />
 
         <HeroInterno
-          pildora="Mercado asegurador"
-          titulo="Informes semanales del mercado"
+          pildora="La Semanal"
+          titulo="Lectura semanal del mercado"
           resalte="del mercado"
-          entradilla="Seguimiento del mercado asegurador dominicano, elaborado por ASSANCH y publicado cada semana."
+          entradilla="Riesgos, primas y estrategia para aseguradoras, corredores y reaseguradores en Latinoamérica y el Caribe."
         />
 
         <section className="pb-8" data-reveal-group>
           <div className="section">
             {grupos.length > 0 ? (
-              <div className="mx-auto max-w-3xl space-y-12">
+              <div className="space-y-14">
                 {grupos.map(([ano, items]) => (
                   <div key={ano}>
                     <h2 className="font-body text-[11px] font-semibold tracking-[0.12em] text-slate uppercase">
                       {ano}
                     </h2>
 
-                    <ul className="mt-5 space-y-3">
+                    <ul className="mt-6 grid gap-7 sm:grid-cols-2 lg:grid-cols-3">
                       {items.map((i) => (
                         <li key={i.slug} className="reveal">
-                          {/* Enlace al visor, NO al PDF. El archivo original
-                              no se publica: solo imagenes de sus paginas. */}
                           <Link
                             href={`/mercado-asegurador/${i.slug}`}
-                            className="tarjeta group flex items-center gap-5 p-6"
+                            className="tarjeta group flex h-full flex-col overflow-hidden"
                           >
-                            <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-blue-50 text-blue-700">
-                              <FileText size={21} aria-hidden />
+                            {/* La portada como miniatura. `sizes` evita que el
+                                navegador descargue la version de 1600 px para
+                                una tarjeta de 380. */}
+                            <span className="relative block overflow-hidden border-b border-line bg-canvas">
+                              <Image
+                                src={portadaDe(i)}
+                                alt={`Portada del informe: ${i.titulo}`}
+                                width={1224}
+                                height={1584}
+                                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                                className="h-auto w-full transition-transform duration-700 ease-suave group-hover:scale-[1.03]"
+                              />
                             </span>
 
-                            <span className="min-w-0 flex-1">
-                              <span className="block font-display font-medium text-navy">
+                            <span className="flex flex-1 flex-col p-6">
+                              <span className="font-body text-[11px] font-semibold tracking-[0.12em] text-slate uppercase">
+                                Semana {i.semana}
+                              </span>
+
+                              <span className="mt-3 font-display text-lg leading-snug font-medium text-navy">
                                 {i.titulo}
                               </span>
 
-                              {i.resumen && (
-                                <span className="mt-1 block font-body text-sm leading-relaxed text-slate">
-                                  {i.resumen}
-                                </span>
-                              )}
+                              <span className="mt-3 line-clamp-3 font-body text-sm leading-relaxed text-slate">
+                                {i.resumen}
+                              </span>
 
-                              <span className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 font-body text-xs text-slate">
-                                <span className="flex items-center gap-1.5">
+                              <span className="mt-auto flex items-center justify-between gap-3 pt-6">
+                                <span className="flex items-center gap-1.5 font-body text-xs text-slate">
                                   <CalendarDays size={12} aria-hidden className="text-blue-500" />
                                   <time dateTime={i.fecha}>
                                     {fmtFecha.format(new Date(`${i.fecha}T12:00:00`))}
                                   </time>
                                 </span>
-                                <span>
-                                  {i.paginas.length} {i.paginas.length === 1 ? 'pagina' : 'paginas'}
+
+                                <span className="flex items-center gap-1.5 font-body text-sm font-semibold text-blue-700">
+                                  Leer
+                                  <ArrowRight
+                                    size={14}
+                                    aria-hidden
+                                    className="transition-transform duration-300 group-hover:translate-x-1"
+                                  />
                                 </span>
                               </span>
                             </span>
-
-                            <ArrowRight
-                              size={18}
-                              aria-hidden
-                              className="shrink-0 text-blue-700 transition-transform duration-300 group-hover:translate-x-1"
-                            />
-                            <span className="sr-only">Leer el informe</span>
                           </Link>
                         </li>
                       ))}
@@ -113,22 +123,19 @@ export default function MercadoAsegurador() {
                 ))}
               </div>
             ) : (
-              /* Estado vacío honesto. Un informe de mercado inventado no sería
-                 relleno: sería una afirmación falsa sobre el mercado asegurador
+              /* Estado vacio honesto. Un informe de mercado inventado no seria
+                 relleno: seria una afirmacion falsa sobre el mercado asegurador
                  dominicano publicada bajo la firma de ASSANCH. */
               <div className="tarjeta mx-auto max-w-xl p-12 text-center">
                 <FileText size={34} aria-hidden className="mx-auto text-blue-500" />
-
                 <p className="mt-5 font-display text-xl font-medium text-navy">
                   El primer informe se publica en breve
                 </p>
-
                 <p className="mx-auto mt-4 max-w-md text-center font-body text-sm leading-relaxed text-slate">
                   Esta sección recoge el seguimiento semanal del mercado asegurador
                   dominicano. Si quiere recibirlo en cuanto salga, escríbanos y lo
                   añadimos a la lista de distribución.
                 </p>
-
                 <a
                   href="mailto:recepcion@assanch.com?subject=Informe%20semanal%20del%20mercado%20asegurador"
                   className="btn mt-8"

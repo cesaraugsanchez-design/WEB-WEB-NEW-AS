@@ -45,7 +45,7 @@ export default async function FichaInforme({ params }) {
 
         <div className="section py-12 md:py-16">
           <div className="mx-auto max-w-4xl">
-            <p className="pildora">Mercado asegurador</p>
+            <p className="pildora">La Semanal · Semana {informe.semana}</p>
 
             <h1 className="mt-6 font-display text-[clamp(1.8rem,4.6vw,2.8rem)] leading-[1.1] font-medium tracking-[-0.03em] text-navy">
               {informe.titulo}
