@@ -16,6 +16,10 @@
  * decirle al visitante que llame que darle un «recibido» que no es cierto.
  */
 
+/* SOLO recepción, a diferencia de /api/reclamo, que reparte entre tres buzones.
+   La diferencia es deliberada: por aquí entran consultas y solicitudes de
+   evaluación que recepción tría y encamina; por el otro entran siniestros ya
+   asignados, que los socios necesitan ver sin intermediario. No unificar. */
 const DESTINO = process.env.CONTACTO_DESTINO || 'recepcion@assanch.com'
 const REMITENTE = process.env.CONTACTO_REMITENTE || 'onboarding@resend.dev'
 
