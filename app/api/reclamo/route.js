@@ -7,7 +7,8 @@
  *
  * CONFIGURACIÓN
  *   RESEND_API_KEY      obligatoria
- *   RECLAMOS_DESTINO    opcional. Por defecto recepcion@assanch.com
+ *   RECLAMOS_DESTINO    opcional. Lista separada por comas. Por defecto, los
+ *                       tres buzones de DESTINOS_POR_DEFECTO.
  *   CONTACTO_REMITENTE  opcional. De un dominio verificado en Resend.
  *
  * Sin clave responde 503 y NO finge que registró. Un «recibido» falso en un
@@ -17,7 +18,25 @@
 
 import { MAX_ARCHIVOS, MAX_TOTAL, extensionBloqueada, sanearNombre } from '@/lib/validacion/adjuntos'
 
-const DESTINO = process.env.RECLAMOS_DESTINO || 'recepcion@assanch.com'
+/* Los tres buzones que reciben cada reclamo con sus adjuntos. Van en `to` y no
+   en `cco`: es correo interno del mismo equipo, y ver quién más lo recibió
+   evita que dos personas llamen a la misma aseguradora por el mismo caso.
+
+   Se pueden sustituir sin tocar código con RECLAMOS_DESTINO, separando por
+   comas. Ojo: el buzón lleva «recepcion» sin tilde — una tilde en la parte
+   local de una dirección exige SMTPUTF8 y muchos servidores la rechazan. */
+const DESTINOS_POR_DEFECTO = [
+  'recepcion@assanch.com',
+  'ca.sanchez@assanch.com',
+  'csanchez@assanch.com',
+]
+
+const DESTINOS = (process.env.RECLAMOS_DESTINO || '')
+  .split(',')
+  .map((d) => d.trim())
+  .filter(Boolean)
+
+const PARA = DESTINOS.length ? DESTINOS : DESTINOS_POR_DEFECTO
 const REMITENTE = process.env.CONTACTO_REMITENTE || 'onboarding@resend.dev'
 
 const VENTANA_MS = 60_000
@@ -184,7 +203,7 @@ export async function POST(request) {
       headers: { Authorization: `Bearer ${clave}`, 'Content-Type': 'application/json' },
       body: JSON.stringify({
         from: `ASSANCH Reclamos <${REMITENTE}>`,
-        to: [DESTINO],
+        to: PARA,
         reply_to: d.correo,
         subject: `[${referencia}] ${d.ramo} — ${d.aseguradora} — reclamo ${d.numeroReclamo}`,
         html,
@@ -196,6 +215,50 @@ export async function POST(request) {
       const detalle = await res.text()
       console.error('[reclamo] Resend respondió', res.status, detalle)
       return Response.json({ error: 'No se pudo registrar el reclamo.' }, { status: 502 })
+    }
+
+    /* Acuse al que reporta. La página promete «Acuse de recibo con número de
+       referencia al enviar» y el campo de correo dice «Ahí llega el acuse»:
+       hasta ahora eso no se cumplía, solo se mostraba en pantalla.
+
+       Va DESPUÉS y en su propio try: si el acuse falla, el reclamo ya está en
+       los tres buzones de ASSANCH y sería falso responder con un error. Se
+       registra el fallo y se sigue. */
+    try {
+      const acuse = await fetch('https://api.resend.com/emails', {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${clave}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          from: `ASSANCH <${REMITENTE}>`,
+          to: [d.correo],
+          reply_to: PARA[0],
+          subject: `Reclamo recibido — referencia ${referencia}`,
+          html: `
+            <p style="font:14px/1.65 system-ui;margin:0 0 18px">Estimado/a ${escapar(d.ejecutivo)}:</p>
+            <p style="font:14px/1.65 system-ui;margin:0 0 18px">
+              Hemos recibido el reclamo <strong>${escapar(d.numeroReclamo)}</strong>
+              (${escapar(d.ramo)}) de ${escapar(d.aseguradora)}, a nombre de
+              ${escapar(d.asegurado)}. Un ajustador se comunicará con usted.
+            </p>
+            <p style="font:600 15px system-ui;color:#1e5480;margin:0 0 18px">
+              Referencia: ${referencia}
+            </p>
+            <p style="font:14px/1.65 system-ui;margin:0 0 18px">
+              Cite esa referencia en cualquier consulta. Para asuntos urgentes,
+              llame al <strong>809-792-9384</strong>; atendemos avisos 24/7.
+            </p>
+            <p style="font:13px system-ui;color:#55697c;margin:24px 0 0">
+              ASSANCH — Ajustadores y Consultores de Seguros<br>
+              Santo Domingo, República Dominicana
+            </p>
+          `,
+        }),
+      })
+      if (!acuse.ok) {
+        console.error('[reclamo] acuse no enviado:', acuse.status, await acuse.text())
+      }
+    } catch (e) {
+      console.error('[reclamo] fallo de red al enviar el acuse:', e)
     }
 
     return Response.json({ ok: true, referencia })
