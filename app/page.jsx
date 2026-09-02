@@ -23,9 +23,12 @@ export default function Home() {
       <Navbar />
       <main id="main">
         <Hero />
+        {/* «Quienes somos» va justo tras el hero: quien entra por primera vez
+            necesita saber que firma es esta antes de que le enumeren diez ramos.
+            El orden de las anclas del menu no depende de esto. */}
+        <Nosotros />
         <Ramos />
         <Servicios />
-        <Nosotros />
         <Alcance />
         <Equipo />
         <EvidenceField />
