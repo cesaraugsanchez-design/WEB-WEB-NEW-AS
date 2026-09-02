@@ -5,12 +5,12 @@ import { Menu, X } from 'lucide-react'
 import { LogoLockup } from './Marca'
 
 const links = [
-  { href: '#ramos', label: 'Ramos' },
-  { href: '#servicios', label: 'Servicios' },
-  { href: '#nosotros', label: 'Nosotros' },
-  { href: '#alcance', label: 'Alcance' },
-  { href: '#equipo', label: 'Equipo' },
-  { href: '#aliados', label: 'Aliados' },
+  { href: '/#ramos', label: 'Ramos' },
+  { href: '/#servicios', label: 'Servicios' },
+  { href: '/#nosotros', label: 'Nosotros' },
+  { href: '/#alcance', label: 'Alcance' },
+  { href: '/#equipo', label: 'Equipo' },
+  { href: '/#aliados', label: 'Aliados' },
 ]
 
 export default function Navbar() {
@@ -38,7 +38,7 @@ export default function Navbar() {
       }`}
     >
       <nav aria-label="Navegación principal" className="section flex h-20 items-center justify-between">
-        <a href="#top" aria-label="ASSANCH — inicio" className="flex min-h-12 items-center">
+        <a href="/" aria-label="ASSANCH — inicio" className="flex min-h-12 items-center">
           <LogoLockup height={34} />
         </a>
 
@@ -56,8 +56,8 @@ export default function Navbar() {
           ))}
         </ul>
 
-        <a href="#contacto" className="btn !hidden !min-h-11 !px-5 !text-sm lg:!inline-flex" data-iman>
-          Reportar siniestro
+        <a href="/someter-reclamo" className="btn !hidden !min-h-11 !px-5 !text-sm lg:!inline-flex" data-iman>
+          Someter un reclamo
         </a>
 
         <button
@@ -87,8 +87,8 @@ export default function Navbar() {
               </li>
             ))}
             <li className="pt-3">
-              <a href="#contacto" onClick={() => setOpen(false)} className="btn w-full">
-                Reportar siniestro
+              <a href="/someter-reclamo" onClick={() => setOpen(false)} className="btn w-full">
+                Someter un reclamo
               </a>
             </li>
           </ul>

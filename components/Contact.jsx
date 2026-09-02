@@ -310,6 +310,20 @@ export default function Contact() {
                   )}
                 </p>
               </div>
+
+              {/* Desvio para el trafico que no viene a pedir cotizacion sino a
+                  asignar un caso: ese visitante necesita el formulario de
+                  reclamo, no este. */}
+              <p className="mt-7 border-t border-line pt-6 font-body text-sm text-slate">
+                ¿Es una aseguradora y viene a asignar un siniestro?{' '}
+                <a
+                  href="/someter-reclamo"
+                  className="font-semibold text-blue-700 underline underline-offset-4 hover:text-blue-500"
+                >
+                  Someta el reclamo aquí
+                </a>
+                .
+              </p>
             </form>
           </div>
         </div>
