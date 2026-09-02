@@ -27,7 +27,12 @@
      marca y en parrafos largos resulta duro. Este tono ejecutivo mantiene
      12.3:1 sobre blanco, muy por encima del minimo AA. */
   --color-tinta: #2b3742;
-  --color-slate: #55697c; /* secundario sobre blanco — 6.4:1 */
+  --color-slate: #55697c; /* secundario sobre blanco — 5.68:1, AA para texto */
+
+  /* SOLO decorativo. Da 3.02:1 sobre blanco: cumple el umbral de 3:1 de los
+     elementos no textuales, pero NO el 4.5:1 que exige el texto normal. Todo
+     el sitio lo usaba a 11-13px para texto de ayuda, contadores y rótulos de
+     sección; eso quedaba por debajo del mínimo. Para texto use `slate`. */
   --color-slate-soft: #8397a9;
   --color-mist: #a9c0d4; /* secundario sobre banda oscura */
 
@@ -35,6 +40,12 @@
   --color-gold: #ffb600; /* oficial FFB600 */
   --color-goldink: #7a5800; /* oro oscurecido: legible como texto sobre blanco */
   --color-signal: #e52421; /* oficial E52421 */
+
+  /* Rojo oscurecido para TEXTO pequeño, mismo criterio que `goldink`: el
+     E52421 oficial da 4.56:1 sobre blanco — pasa por los pelos y se cae por
+     debajo del mínimo en cuanto el fondo lleva el más leve tinte. Este da
+     5.7:1. El oficial sigue mandando en bordes, iconos y fondos. */
+  --color-signalink: #c81e1b;
 
   --font-display: var(--font-instrument), system-ui, sans-serif;
   --font-body: var(--font-inter), system-ui, sans-serif;

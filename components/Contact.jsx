@@ -227,7 +227,7 @@ export default function Contact() {
                     >
                       {c.label}
                       {c.required && (
-                        <span className="text-blue-500" aria-hidden>
+                        <span className="text-blue-700" aria-hidden>
                           {' '}
                           *
                         </span>
@@ -257,7 +257,7 @@ export default function Contact() {
                     className="block font-body text-[11px] font-semibold tracking-[0.12em] text-slate uppercase"
                   >
                     Descripción del caso
-                    <span className="text-blue-500" aria-hidden>
+                    <span className="text-blue-700" aria-hidden>
                       {' '}
                       *
                     </span>
@@ -271,7 +271,7 @@ export default function Contact() {
                     aria-describedby={errores.mensaje ? 'error-mensaje ayuda-mensaje' : 'ayuda-mensaje'}
                     className="mt-2 w-full rounded-2xl border border-line bg-canvas p-4 font-body text-navy transition-colors focus:border-blue-300 focus:bg-white focus:outline-none"
                   />
-                  <p id="ayuda-mensaje" className="mt-2 font-body text-xs text-slate-soft">
+                  <p id="ayuda-mensaje" className="mt-2 font-body text-xs text-slate">
                     Incluya fecha, ubicación y tipo de siniestro si aplica.
                   </p>
                   {errores.mensaje && (

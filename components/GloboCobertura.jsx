@@ -360,7 +360,7 @@ export default function GloboCobertura({ className = '' }) {
         className="block h-full w-full cursor-grab touch-none rounded-[2.5rem] active:cursor-grabbing"
       />
 
-      <p className="pointer-events-none absolute bottom-5 left-1/2 -translate-x-1/2 text-center font-body text-[11px] font-semibold tracking-[0.12em] text-slate-soft uppercase">
+      <p className="pointer-events-none absolute bottom-5 left-1/2 -translate-x-1/2 text-center font-body text-[11px] font-semibold tracking-[0.12em] text-slate uppercase">
         {estado === 'cargando' && 'Cargando geografía…'}
         {estado === 'error' && 'No se pudo cargar la geografía'}
         {estado === 'listo' &&

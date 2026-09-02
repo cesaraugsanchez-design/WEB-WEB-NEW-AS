@@ -101,13 +101,13 @@ export default function Cobertura() {
                 <Phone size={16} aria-hidden />
                 809-792-9384
               </a>
-              <Link href="/#contacto" className="btn-claro">
-                Reportar por formulario
+              <Link href="/someter-reclamo" className="btn-claro">
+                Someter un reclamo
               </Link>
             </div>
           </div>
 
-          <p className="mt-10 text-center font-body text-[13px] leading-relaxed text-slate-soft">
+          <p className="mt-10 text-center font-body text-[13px] leading-relaxed text-slate">
             La esfera es una representación abstracta: sitúa la República Dominicana en
             sus coordenadas reales, sin dibujar contornos costeros.
           </p>

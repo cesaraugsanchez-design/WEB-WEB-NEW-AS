@@ -1,4 +1,5 @@
 import { Suspense } from 'react'
+import Link from 'next/link'
 import { Clock, FileCheck2, MapPinned } from 'lucide-react'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
@@ -25,7 +26,7 @@ export default function SometerReclamo() {
       <main id="main" className="pt-32 pb-24">
         <div className="section">
           <div className="mx-auto max-w-2xl text-center">
-            <p className="pildora font-body text-[11px] font-semibold tracking-[0.14em] text-slate-soft uppercase">
+            <p className="pildora font-body text-[11px] font-semibold tracking-[0.14em] text-slate uppercase">
               Canal para aseguradoras
             </p>
             <h1 className="mt-5 font-display text-[clamp(2rem,6vw,3.4rem)] leading-[1.08] font-medium tracking-[-0.03em] text-navy">
@@ -54,13 +55,22 @@ export default function SometerReclamo() {
             </Suspense>
           </div>
 
-          <p className="mx-auto mt-8 max-w-3xl text-center font-body text-sm text-slate">
-            ¿Prefiere reportarlo por teléfono? Llame al{' '}
-            <a href="tel:+18097929384" className="font-semibold text-blue-700 underline underline-offset-4">
-              809-792-9384
-            </a>
-            .
-          </p>
+          <div className="mx-auto mt-8 max-w-3xl space-y-2 text-center font-body text-sm text-slate">
+            <p>
+              ¿Prefiere reportarlo por teléfono? Llame al{' '}
+              <a href="tel:+18097929384" className="font-semibold text-blue-700 underline underline-offset-4">
+                809-792-9384
+              </a>
+              .
+            </p>
+            <p>
+              ¿Es asegurado o corredor y aún no tiene número de reclamo?{' '}
+              <Link href="/#contacto" className="font-semibold text-blue-700 underline underline-offset-4">
+                Escríbanos por aquí
+              </Link>
+              .
+            </p>
+          </div>
         </div>
       </main>
 

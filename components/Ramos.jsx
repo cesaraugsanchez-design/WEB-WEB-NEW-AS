@@ -57,7 +57,7 @@ export default function Ramos() {
                     </span>
                     <span
                       aria-hidden
-                      className="mt-1 font-body text-[11px] font-semibold tracking-[0.1em] text-slate-soft uppercase opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                      className="mt-1 font-body text-[11px] font-semibold tracking-[0.1em] text-slate uppercase opacity-0 transition-opacity duration-300 group-hover:opacity-100"
                     >
                       Ver
                     </span>

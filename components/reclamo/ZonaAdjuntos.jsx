@@ -59,7 +59,7 @@ export default function ZonaAdjuntos({ archivos, onCambio }) {
           desde su dispositivo
         </p>
 
-        <p className="mt-2 font-body text-xs text-slate-soft">
+        <p className="mt-2 font-body text-xs text-slate">
           {FORMATOS_SUGERIDOS} · hasta {MAX_ARCHIVOS} archivos ·{' '}
           {tamanoLegible(MAX_TOTAL)} en total
         </p>
@@ -75,7 +75,7 @@ export default function ZonaAdjuntos({ archivos, onCambio }) {
         />
       </div>
 
-      <p className="mt-3 font-body text-xs leading-relaxed text-slate-soft">
+      <p className="mt-3 font-body text-xs leading-relaxed text-slate">
         Si envía relación de bienes o de pérdidas, adjúntela en Excel: agiliza el
         procesamiento.
       </p>
@@ -89,7 +89,7 @@ export default function ZonaAdjuntos({ archivos, onCambio }) {
             >
               <FileText size={16} aria-hidden className="shrink-0 text-blue-500" />
               <span className="min-w-0 flex-1 truncate font-body text-sm text-navy">{a.name}</span>
-              <span className="shrink-0 font-body text-xs text-slate-soft">
+              <span className="shrink-0 font-body text-xs text-slate">
                 {tamanoLegible(a.size)}
               </span>
               <button
@@ -105,7 +105,7 @@ export default function ZonaAdjuntos({ archivos, onCambio }) {
         </ul>
       )}
 
-      <p aria-live="polite" className="mt-3 font-body text-xs text-slate-soft">
+      <p aria-live="polite" className="mt-3 font-body text-xs text-slate">
         {archivos.length > 0 &&
           `${archivos.length} de ${MAX_ARCHIVOS} archivos · ${tamanoLegible(total)}`}
       </p>
@@ -113,14 +113,14 @@ export default function ZonaAdjuntos({ archivos, onCambio }) {
       {rechazados.length > 0 && (
         <ul className="mt-2 space-y-1">
           {rechazados.map((r, i) => (
-            <li key={i} className="font-body text-xs text-signal">
+            <li key={i} className="font-body text-xs text-signalink">
               {r.nombre} — {r.motivo}
             </li>
           ))}
         </ul>
       )}
 
-      <p className="mt-4 font-body text-xs leading-relaxed text-slate-soft">
+      <p className="mt-4 font-body text-xs leading-relaxed text-slate">
         ¿No puede subirlos? Escríbanos a{' '}
         <a href="mailto:recepcion@assanch.com" className="font-semibold text-blue-700 underline underline-offset-4">
           recepcion@assanch.com

@@ -97,7 +97,7 @@ export default function Aliados() {
                 ) : (
                   <span className="flex flex-col items-center gap-2">
                     <LogoMarca mono decorativo size={22} className="text-slate-soft opacity-30" />
-                    <span className="font-body text-[10px] font-medium tracking-[0.14em] text-slate-soft uppercase">
+                    <span className="font-body text-[10px] font-medium tracking-[0.14em] text-slate uppercase">
                       Logo pendiente
                     </span>
                   </span>
@@ -118,7 +118,7 @@ export default function Aliados() {
         </div>
 
         {!hayLogos && (
-          <p className="reveal mt-6 flex items-start justify-center gap-2.5 font-body text-[13px] leading-relaxed text-slate-soft">
+          <p className="reveal mt-6 flex items-start justify-center gap-2.5 font-body text-[13px] leading-relaxed text-slate">
             <Upload size={15} aria-hidden className="mt-0.5 shrink-0" />
             <span>
               Las marcas de las aseguradoras aliadas se colocan aquí. Requieren el

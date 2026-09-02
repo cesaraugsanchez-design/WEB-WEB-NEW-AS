@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import Link from 'next/link'
 import { Menu, X } from 'lucide-react'
 import { LogoLockup } from './Marca'
 
@@ -56,9 +57,9 @@ export default function Navbar() {
           ))}
         </ul>
 
-        <a href="/someter-reclamo" className="btn !hidden !min-h-11 !px-5 !text-sm lg:!inline-flex" data-iman>
+        <Link href="/someter-reclamo" className="btn !hidden !min-h-11 !px-5 !text-sm lg:!inline-flex" data-iman>
           Someter un reclamo
-        </a>
+        </Link>
 
         <button
           type="button"
@@ -87,9 +88,9 @@ export default function Navbar() {
               </li>
             ))}
             <li className="pt-3">
-              <a href="/someter-reclamo" onClick={() => setOpen(false)} className="btn w-full">
+              <Link href="/someter-reclamo" onClick={() => setOpen(false)} className="btn w-full">
                 Someter un reclamo
-              </a>
+              </Link>
             </li>
           </ul>
         </div>
