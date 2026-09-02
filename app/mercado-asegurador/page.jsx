@@ -1,4 +1,5 @@
-import { CalendarDays, Download, FileText, Mail } from 'lucide-react'
+import Link from 'next/link'
+import { ArrowRight, CalendarDays, FileText, Mail } from 'lucide-react'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import MigaDePan from '@/components/plantillas/MigaDePan'
@@ -64,14 +65,11 @@ export default function MercadoAsegurador() {
                     <ul className="mt-5 space-y-3">
                       {items.map((i) => (
                         <li key={i.slug} className="reveal">
-                          {/* Enlace directo al PDF: el navegador lo abre o lo
-                              descarga según la preferencia de quien lo abre, que
-                              es quien debe decidirlo. */}
-                          <a
-                            href={i.archivo}
+                          {/* Enlace al visor, NO al PDF. El archivo original
+                              no se publica: solo imagenes de sus paginas. */}
+                          <Link
+                            href={`/mercado-asegurador/${i.slug}`}
                             className="tarjeta group flex items-center gap-5 p-6"
-                            target="_blank"
-                            rel="noopener"
                           >
                             <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-blue-50 text-blue-700">
                               <FileText size={21} aria-hidden />
@@ -95,17 +93,19 @@ export default function MercadoAsegurador() {
                                     {fmtFecha.format(new Date(`${i.fecha}T12:00:00`))}
                                   </time>
                                 </span>
-                                <span>PDF{i.peso ? ` · ${i.peso}` : ''}</span>
+                                <span>
+                                  {i.paginas.length} {i.paginas.length === 1 ? 'pagina' : 'paginas'}
+                                </span>
                               </span>
                             </span>
 
-                            <Download
+                            <ArrowRight
                               size={18}
                               aria-hidden
-                              className="shrink-0 text-blue-700 transition-transform duration-300 group-hover:translate-y-0.5"
+                              className="shrink-0 text-blue-700 transition-transform duration-300 group-hover:translate-x-1"
                             />
-                            <span className="sr-only">Abrir el informe en PDF</span>
-                          </a>
+                            <span className="sr-only">Leer el informe</span>
+                          </Link>
                         </li>
                       ))}
                     </ul>
