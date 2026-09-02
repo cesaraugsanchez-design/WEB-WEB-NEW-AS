@@ -20,7 +20,7 @@ export default function Footer() {
 
       <div className="section relative grid gap-10 md:grid-cols-12">
         <div className="md:col-span-5">
-          <LogoLockup height={34} />
+          <LogoLockup height={38} />
           <p className="mt-3 font-body text-[13px] font-semibold text-slate">
             Ajustadores y Consultores de Seguros
           </p>

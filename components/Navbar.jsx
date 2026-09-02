@@ -71,13 +71,16 @@ export default function Navbar() {
           : 'border-b border-transparent'
       }`}
     >
+      {/* El menu de escritorio arranca en 1180 px, no en lg (1024): marca 168 +
+          capsula 680 + boton 173 + relleno 80 + aire no caben en 1024, y la
+          capsula va posicionada en absoluto, asi que no empuja — se solapa. */}
       <nav aria-label="Navegación principal" className="section flex h-20 items-center justify-between">
         <Link href="/" aria-label="ASSANCH — inicio" className="flex min-h-12 items-center">
-          <LogoLockup height={34} />
+          <LogoLockup height={38} />
         </Link>
 
         {/* Cápsula central: se conserva tal cual estaba. */}
-        <ul className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-1 rounded-full border border-line bg-white/70 p-1.5 shadow-suave backdrop-blur-xl lg:flex">
+        <ul className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-1 rounded-full border border-line bg-white/70 p-1.5 shadow-suave backdrop-blur-xl min-[1180px]:flex">
           {navegacion.map((item) => {
             const tienePanel = Boolean(item.columnas?.length)
             const activo = abierto === item.label
@@ -118,7 +121,7 @@ export default function Navbar() {
 
         <Link
           href="/someter-reclamo"
-          className="btn !hidden !min-h-11 !px-5 !text-sm lg:!inline-flex"
+          className="btn !hidden !min-h-11 !px-5 !text-sm min-[1180px]:!inline-flex"
           data-iman
         >
           Asignar un reclamo
@@ -130,7 +133,7 @@ export default function Navbar() {
           aria-expanded={movil}
           aria-controls="menu-movil"
           aria-label={movil ? 'Cerrar menú' : 'Abrir menú'}
-          className="flex h-12 w-12 items-center justify-center rounded-full border border-line bg-white text-navy shadow-suave lg:hidden"
+          className="flex h-12 w-12 items-center justify-center rounded-full border border-line bg-white text-navy shadow-suave min-[1180px]:hidden"
         >
           {movil ? <X size={20} aria-hidden /> : <Menu size={20} aria-hidden />}
         </button>
@@ -148,7 +151,7 @@ export default function Navbar() {
             hidden={!activo}
             onMouseEnter={() => abrir(item.label)}
             onMouseLeave={cerrarConRetardo}
-            className="absolute inset-x-0 top-full hidden justify-center px-6 pb-6 lg:flex"
+            className="absolute inset-x-0 top-full hidden justify-center px-6 pb-6 min-[1180px]:flex"
           >
             {/* El ancho sigue al numero de columnas: un panel de una sola
                 columna a max-w-3xl deja media caja vacia y se lee como un
@@ -196,7 +199,7 @@ export default function Navbar() {
 
       {/* ---------- Acordeón móvil ---------- */}
       {movil && (
-        <div id="menu-movil" className="border-t border-line bg-white lg:hidden">
+        <div id="menu-movil" className="border-t border-line bg-white min-[1180px]:hidden">
           <ul className="section flex max-h-[70vh] flex-col overflow-y-auto py-4">
             {navegacion.map((item) => {
               const tienePanel = Boolean(item.columnas?.length)
