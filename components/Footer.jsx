@@ -1,4 +1,6 @@
+import Link from 'next/link'
 import { LogoLockup, LogoMarca } from './Marca'
+import { navegacion } from '@/lib/contenido/navegacion'
 import BanderaRD from './BanderaRD'
 
 export default function Footer() {
@@ -68,6 +70,41 @@ export default function Footer() {
             </li>
           </ul>
         </div>
+      </div>
+
+      {/* Mapa del sitio. Desde una ficha de ramo el pie era la unica salida y
+          solo ofrecia telefono y direccion; ahora tambien lleva a las secciones.
+          Sale de la misma fuente que el menu, asi no se desincronizan. */}
+      <div className="section relative mt-14 grid gap-8 border-t border-line pt-10 sm:grid-cols-3">
+        {navegacion
+          .filter((item) => item.columnas?.length)
+          .map((item) => (
+            <div key={item.label}>
+              <p className="font-body text-[11px] font-semibold tracking-[0.12em] text-slate uppercase">
+                {item.label}
+              </p>
+              <ul className="mt-4 space-y-0.5">
+                {item.columnas[0].enlaces.slice(0, 4).map((e) => (
+                  <li key={e.href}>
+                    <Link
+                      href={e.href}
+                      className="flex min-h-9 items-center font-body text-sm text-slate transition-colors hover:text-blue-700"
+                    >
+                      {e.label}
+                    </Link>
+                  </li>
+                ))}
+                <li>
+                  <Link
+                    href={item.href}
+                    className="flex min-h-9 items-center font-body text-sm font-semibold text-blue-700 hover:underline"
+                  >
+                    Ver todo
+                  </Link>
+                </li>
+              </ul>
+            </div>
+          ))}
       </div>
 
       <div className="section relative mt-12 flex flex-wrap items-center gap-x-3 gap-y-2 border-t border-line pt-6">
