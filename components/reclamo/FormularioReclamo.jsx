@@ -392,7 +392,7 @@ export default function FormularioReclamo({ inicial = {} }) {
             </>
           ) : (
             <>
-              <Send size={16} aria-hidden /> Someter reclamo
+              <Send size={16} aria-hidden /> Asignar reclamo
             </>
           )}
         </button>

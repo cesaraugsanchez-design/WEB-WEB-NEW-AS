@@ -59,7 +59,7 @@ export default async function FichaRamo({ params }) {
           acciones={
             <>
               <Link href={enlaceReclamo(r.nombre)} className="btn" data-iman>
-                Someter un reclamo de este ramo <ArrowRight size={16} aria-hidden />
+                Asignar un reclamo de este ramo <ArrowRight size={16} aria-hidden />
               </Link>
               <Link href="/ramos" className="btn-claro">
                 <Icono size={15} aria-hidden className="text-blue-500" />

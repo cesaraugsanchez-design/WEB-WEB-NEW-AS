@@ -11,7 +11,7 @@ export const metadata = {
 /* Next sirve por defecto un 404 en inglés y sin marca. En un sitio corporativo
    en español eso rompe la continuidad justo en el momento en que el visitante
    ya está desorientado. Esta versión conserva la navegación y ofrece salidas:
-   volver al inicio, someter un reclamo, o llamar. */
+   volver al inicio, asignar un reclamo, o llamar. */
 export default function NoEncontrada() {
   return (
     <>
@@ -36,7 +36,7 @@ export default function NoEncontrada() {
               Volver al inicio
             </Link>
             <Link href="/someter-reclamo" className="btn-claro">
-              Someter un reclamo <ArrowRight size={15} aria-hidden />
+              Asignar un reclamo <ArrowRight size={15} aria-hidden />
             </Link>
           </div>
 

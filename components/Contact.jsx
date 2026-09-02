@@ -320,7 +320,7 @@ export default function Contact() {
                   href="/someter-reclamo"
                   className="font-semibold text-blue-700 underline underline-offset-4 hover:text-blue-500"
                 >
-                  Someta el reclamo aquí
+                  Asigne el reclamo aquí
                 </a>
                 .
               </p>

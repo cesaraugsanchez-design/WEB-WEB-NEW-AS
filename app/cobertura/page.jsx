@@ -93,7 +93,7 @@ export default function Cobertura() {
                 809-792-9384
               </a>
               <Link href="/someter-reclamo" className="btn-claro">
-                Someter un reclamo
+                Asignar un reclamo
               </Link>
             </div>
           </div>

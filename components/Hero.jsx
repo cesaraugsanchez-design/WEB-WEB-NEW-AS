@@ -184,7 +184,7 @@ export default function Hero() {
 
         <div data-entra className="mt-10 flex flex-wrap items-center justify-center gap-4">
           <Link href="/someter-reclamo" className="btn" data-iman>
-            Someter un reclamo <ArrowRight size={17} aria-hidden />
+            Asignar un reclamo <ArrowRight size={17} aria-hidden />
           </Link>
           <a href="#ramos" className="btn-claro" data-iman>
             <Layers size={15} aria-hidden className="text-blue-500" />

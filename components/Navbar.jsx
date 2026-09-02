@@ -121,7 +121,7 @@ export default function Navbar() {
           className="btn !hidden !min-h-11 !px-5 !text-sm lg:!inline-flex"
           data-iman
         >
-          Someter un reclamo
+          Asignar un reclamo
         </Link>
 
         <button
@@ -251,7 +251,7 @@ export default function Navbar() {
 
             <li className="pt-4">
               <Link href="/someter-reclamo" onClick={() => setMovil(false)} className="btn w-full">
-                Someter un reclamo
+                Asignar un reclamo
               </Link>
             </li>
           </ul>

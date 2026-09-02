@@ -22,7 +22,7 @@ export default function CtaFinal({
 
           <div className="mt-9 flex flex-wrap items-center justify-center gap-4">
             <Link href="/someter-reclamo" className="btn" data-iman>
-              Someter un reclamo <ArrowRight size={16} aria-hidden />
+              Asignar un reclamo <ArrowRight size={16} aria-hidden />
             </Link>
             <a href="tel:+18097929384" className="btn-claro">
               <Phone size={15} aria-hidden className="text-blue-500" />

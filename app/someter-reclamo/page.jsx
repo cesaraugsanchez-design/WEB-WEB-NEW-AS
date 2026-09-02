@@ -6,7 +6,7 @@ import Footer from '@/components/Footer'
 import PrecargaReclamo from '@/components/reclamo/PrecargaReclamo'
 
 export const metadata = {
-  title: 'Someter un reclamo — ASSANCH',
+  title: 'Asignar un reclamo — ASSANCH',
   description:
     'Canal directo para que aseguradoras y corredores asignen un siniestro a ASSANCH. Un ajustador se moviliza tras recibir el reporte.',
   robots: { index: true, follow: true },
@@ -30,7 +30,7 @@ export default function SometerReclamo() {
               Canal para aseguradoras
             </p>
             <h1 className="mt-5 font-display text-[clamp(2rem,6vw,3.4rem)] leading-[1.08] font-medium tracking-[-0.03em] text-navy">
-              Someter un reclamo
+              Asignar un reclamo
             </h1>
             <p className="mx-auto mt-5 max-w-xl text-center font-body text-base leading-relaxed text-slate">
               Complete los datos mínimos para abrir el expediente y movilizar a un
