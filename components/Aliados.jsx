@@ -4,29 +4,20 @@ import { useState } from 'react'
 import { Pause, Play, Upload } from 'lucide-react'
 import { LogoMarca } from './Marca'
 import Cifra from './Cifra'
+import { aliados } from '@/lib/contenido/aliados'
 
 /**
  * Aliados.
  *
- * ⚠️ NO se incluyen logos de aseguradoras, y es deliberado.
+ * La lista y su ORDEN vienen de lib/contenido/aliados.js, fijados por ASSANCH.
+ * Publicar la marca de una aseguradora afirma publicamente una relacion
+ * comercial: la lista la aporto el cliente y responde de ella, incluida la
+ * autorizacion de uso de cada marca.
  *
- * Colocar la marca de una aseguradora en esta pagina afirma publicamente una
- * relacion comercial concreta. Ni consta cuales son los aliados reales de la
- * firma —su web solo publica «10+ aseguradoras»— ni se dispone de autorizacion
- * de uso de marca. Descargar logotipos de internet y publicarlos aqui seria
- * atribuir alianzas no verificadas y usar marcas registradas sin licencia.
- *
- * PARA COMPLETARLO:
- *   1. Pedir a cada aseguradora su kit de marca (suelen publicarlo en prensa o
- *      «brand assets»), preferiblemente en SVG.
- *   2. Dejar los archivos en `public/aliados/`.
- *   3. Rellenar el array `aliados` con { nombre, archivo }.
- * El carrusel se adapta solo al numero de entradas.
+ * Los logos se muestran a color y sin atenuar. Poner un filtro de escala de
+ * grises unificaria la tira, pero altera marcas registradas y casi todos los
+ * manuales de marca lo prohiben expresamente.
  */
-const aliados = [
-  // { nombre: 'Nombre de la aseguradora', archivo: '/aliados/ejemplo.svg' },
-]
-
 const RANURAS_VACIAS = 8
 
 export default function Aliados() {
@@ -67,11 +58,11 @@ export default function Aliados() {
           <div className="reveal mx-auto mt-12 max-w-sm">
             <div className="tarjeta flex flex-col items-center gap-2 p-8 text-center">
               <Cifra
-                valor="10+"
+                valor={String(aliados.length)}
                 className="texto-degradado font-display text-6xl font-semibold tracking-[-0.04em]"
               />
               <span className="font-body text-sm leading-snug text-slate">
-                aseguradoras importantes trabajan con nosotros
+                aseguradoras trabajan con nosotros
               </span>
             </div>
           </div>
@@ -92,7 +83,7 @@ export default function Aliados() {
                     src={p.archivo}
                     alt={p.nombre}
                     loading="lazy"
-                    className="max-h-10 w-auto max-w-full object-contain opacity-70 transition-opacity duration-300 hover:opacity-100"
+                    className="max-h-12 w-auto max-w-full object-contain"
                   />
                 ) : (
                   <span className="flex flex-col items-center gap-2">

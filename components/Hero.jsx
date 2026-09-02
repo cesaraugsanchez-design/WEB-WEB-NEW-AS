@@ -1,12 +1,12 @@
 'use client'
 
 import Link from 'next/link'
+import { aliados } from '@/lib/contenido/aliados'
 
 import { useEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { ArrowRight, BadgeCheck, Clock, Layers, MapPin } from 'lucide-react'
-import { LogoMarca } from './Marca'
 import HeroSigil from './HeroSigil'
 import PalabraRotativa from './PalabraRotativa'
 
@@ -212,16 +212,22 @@ export default function Hero() {
           </li>
         </ul>
 
-        {/* Franja de confianza. Los logos reales sustituyen estas ranuras. */}
+        {/* Franja de confianza con los cinco primeros aliados, en el orden que
+            fija ASSANCH. La cifra sale de la lista, no de un numero escrito a
+            mano que se queda atras en cuanto entra una aseguradora mas. */}
         <div className="mt-20">
           <p className="font-body text-xs tracking-wider text-slate uppercase">
-            Más de 10 aseguradoras trabajan con nosotros
+            {aliados.length} aseguradoras trabajan con nosotros
           </p>
-          <ul className="mt-7 flex flex-wrap items-center justify-center gap-x-12 gap-y-6 opacity-60">
-            {['Aliado 01', 'Aliado 02', 'Aliado 03', 'Aliado 04', 'Aliado 05'].map((a) => (
-              <li key={a} data-marca className="flex items-center gap-2 text-slate">
-                <LogoMarca mono decorativo size={19} className="opacity-70" />
-                <span className="font-display text-sm font-semibold tracking-tight">{a}</span>
+          <ul className="mt-7 flex flex-wrap items-center justify-center gap-x-10 gap-y-6">
+            {aliados.slice(0, 5).map((a) => (
+              <li key={a.nombre} data-marca className="flex items-center">
+                <img
+                  src={a.archivo}
+                  alt={a.nombre}
+                  loading="lazy"
+                  className="h-8 w-auto object-contain md:h-9"
+                />
               </li>
             ))}
           </ul>
