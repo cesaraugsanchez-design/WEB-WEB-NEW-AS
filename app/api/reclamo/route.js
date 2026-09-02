@@ -152,7 +152,7 @@ export async function POST(request) {
         'Definir la variable de entorno para activar el envío.'
     )
     return Response.json(
-      { error: 'El registro no está configurado en el servidor.' },
+      { error: 'No pudimos registrar el reclamo en línea en este momento.' },
       { status: 503 }
     )
   }
@@ -214,7 +214,10 @@ export async function POST(request) {
     if (!res.ok) {
       const detalle = await res.text()
       console.error('[reclamo] Resend respondió', res.status, detalle)
-      return Response.json({ error: 'No se pudo registrar el reclamo.' }, { status: 502 })
+      return Response.json(
+        { error: 'No pudimos registrar el reclamo en línea en este momento.' },
+        { status: 502 }
+      )
     }
 
     /* Acuse al que reporta. La página promete «Acuse de recibo con número de
@@ -264,6 +267,9 @@ export async function POST(request) {
     return Response.json({ ok: true, referencia })
   } catch (e) {
     console.error('[reclamo] fallo de red al enviar:', e)
-    return Response.json({ error: 'No se pudo registrar el reclamo.' }, { status: 502 })
+    return Response.json(
+        { error: 'No pudimos registrar el reclamo en línea en este momento.' },
+        { status: 502 }
+      )
   }
 }

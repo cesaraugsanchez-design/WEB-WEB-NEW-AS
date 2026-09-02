@@ -100,7 +100,7 @@ export async function POST(request) {
         'Definir la variable de entorno para activar el envío.'
     )
     return Response.json(
-      { error: 'El envío no está configurado en el servidor.' },
+      { error: 'No pudimos enviar el mensaje en este momento.' },
       { status: 503 }
     )
   }

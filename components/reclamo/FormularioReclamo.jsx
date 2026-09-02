@@ -410,7 +410,7 @@ export default function FormularioReclamo({ inicial = {} }) {
           </p>
           {/* Toda salida de error necesita camino de salida: aquí, dos. */}
           <p className="mt-2 pl-6 font-body text-sm text-slate">
-            Reporte el siniestro al{' '}
+            El reclamo <strong>no</strong> quedó registrado. Repórtelo al{' '}
             <a href="tel:+18097929384" className="font-semibold text-blue-700 underline underline-offset-2">809-792-9384</a>{' '}
             o a{' '}
             <a href="mailto:recepcion@assanch.com" className="font-semibold text-blue-700 underline underline-offset-2">recepcion@assanch.com</a>.
