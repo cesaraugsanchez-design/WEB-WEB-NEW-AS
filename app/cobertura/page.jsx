@@ -1,10 +1,15 @@
-'use client'
-
 import Link from 'next/link'
 import { Building, Clock, MapPin, Phone } from 'lucide-react'
 import Footer from '@/components/Footer'
 import GloboCobertura from '@/components/GloboCobertura'
 import Navbar from '@/components/Navbar'
+
+export const metadata = {
+  title: 'Cobertura — ASSANCH',
+  description:
+    'Firma dominicana con alcance en Latinoamérica y el Caribe. Tres oficinas y flota dedicada para estar en el sitio del siniestro en cualquier punto del país.',
+  alternates: { canonical: '/cobertura' },
+}
 
 const zonas = [
   {
@@ -50,7 +55,8 @@ export default function Cobertura() {
             </h1>
             <p className="mt-6 font-body text-lg leading-relaxed text-slate">
               Tres oficinas y una flota dedicada nos permiten estar en el sitio del
-              siniestro en cualquier punto del país.
+              siniestro en cualquier punto del país, con alcance en Latinoamérica y el
+              Caribe.
             </p>
           </div>
 
@@ -95,11 +101,12 @@ export default function Cobertura() {
                   Cobertura regional
                 </p>
                 <p className="mt-2 font-display text-xl font-semibold tracking-[-0.015em] text-navy">
-                  Centroamérica y el Caribe
+                  Latinoamérica y el Caribe
                 </p>
                 <p className="mt-2 font-body text-sm leading-relaxed text-slate">
-                  Atendemos encargos fuera del país cuando la aseguradora o el reasegurador
-                  necesita un perito con criterio independiente en la región.
+                  Firma dominicana con alcance regional: atendemos encargos fuera del país
+                  cuando la aseguradora o el reasegurador necesita un perito con criterio
+                  independiente en la región.
                 </p>
               </div>
             </div>
@@ -128,8 +135,8 @@ export default function Cobertura() {
           </div>
 
           <p className="mt-10 text-center font-body text-[13px] leading-relaxed text-slate">
-            La esfera es una representación abstracta: sitúa la República Dominicana en
-            sus coordenadas reales, sin dibujar contornos costeros.
+            La esfera usa geografía real —contornos de Natural Earth simplificados— y
+            sitúa cada punto en sus coordenadas verdaderas.
           </p>
         </div>
       </main>

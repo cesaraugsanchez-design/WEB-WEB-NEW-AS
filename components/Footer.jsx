@@ -26,7 +26,8 @@ export default function Footer() {
           </p>
           <p className="mt-6 max-w-sm font-body text-sm leading-relaxed text-slate">
             Ajustadores y consultores de seguros especializados en ajuste de pérdidas,
-            evaluación de siniestros y consultoría en República Dominicana.
+            evaluación de siniestros y consultoría. Firma dominicana con alcance en
+            Latinoamérica y el Caribe.
           </p>
         </div>
 

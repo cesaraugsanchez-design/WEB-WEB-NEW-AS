@@ -36,7 +36,7 @@ export const metadata = {
   alternates: { canonical: '/' },
   title: 'ASSANCH — Ajustadores y Consultores de Seguros | República Dominicana',
   description:
-    'Firma dominicana especializada en peritaje, levantamiento y ajuste de siniestros. Respuesta inmediata y cobertura nacional para aseguradoras, corredores y empresas.',
+    'Firma dominicana con alcance en Latinoamérica y el Caribe, especializada en peritaje, levantamiento y ajuste de siniestros. Respuesta inmediata para aseguradoras, corredores y empresas.',
   keywords: [
     'ajustadores de seguros',
     'ajuste de pérdidas',
