@@ -60,6 +60,22 @@ export default function Cobertura() {
             </div>
 
             <div className="flex flex-col gap-4 lg:col-span-5">
+              {/* La cobertura se lee en dos niveles, no como una lista plana de
+                  tres oficinas: primero el pais, donde la firma llega a
+                  cualquier punto, y despues la region. */}
+              <div className="tarjeta p-7">
+                <p className="font-body text-[11px] font-semibold tracking-[0.12em] text-blue-700 uppercase">
+                  República Dominicana
+                </p>
+                <p className="mt-2 font-display text-xl font-semibold tracking-[-0.015em] text-navy">
+                  Todo el territorio nacional
+                </p>
+                <p className="mt-2 font-body text-sm leading-relaxed text-slate">
+                  Tres oficinas y una flota dedicada nos ponen en el sitio del siniestro
+                  en cualquier punto del país.
+                </p>
+              </div>
+
               {zonas.map((z) => (
                 <article key={z.nombre} className="tarjeta flex-1 p-7">
                   <h2 className="flex items-center gap-2.5 font-display text-lg font-semibold tracking-[-0.01em] text-navy">
@@ -73,6 +89,19 @@ export default function Cobertura() {
                   </p>
                 </article>
               ))}
+
+              <div className="tarjeta p-7">
+                <p className="font-body text-[11px] font-semibold tracking-[0.12em] text-goldink uppercase">
+                  Cobertura regional
+                </p>
+                <p className="mt-2 font-display text-xl font-semibold tracking-[-0.015em] text-navy">
+                  Centroamérica y el Caribe
+                </p>
+                <p className="mt-2 font-body text-sm leading-relaxed text-slate">
+                  Atendemos encargos fuera del país cuando la aseguradora o el reasegurador
+                  necesita un perito con criterio independiente en la región.
+                </p>
+              </div>
             </div>
           </div>
 

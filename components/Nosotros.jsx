@@ -4,6 +4,7 @@ import ContadorReclamaciones from './ContadorReclamaciones'
 import { aliados } from '@/lib/contenido/aliados'
 
 const metricas = [
+  ['+25', 'Años de experiencia'],
   ['3+', 'Oficinas en el territorio nacional'],
   ['98%', 'Casos concluidos con satisfacción'],
   ['5+', 'Ajustadores experimentados'],
@@ -104,7 +105,7 @@ export default function Nosotros() {
           </div>
         </div>
 
-        <dl className="reveal mt-6 grid grid-cols-2 gap-5 lg:grid-cols-4">
+        <dl className="reveal mt-6 grid grid-cols-2 gap-5 md:grid-cols-3 lg:grid-cols-5">
           {metricas.map(([cifra, etiqueta]) => (
             <div key={etiqueta} className="tarjeta p-7 text-center">
               <dt className="sr-only">{etiqueta}</dt>
