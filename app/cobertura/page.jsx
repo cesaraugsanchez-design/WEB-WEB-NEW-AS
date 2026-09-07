@@ -61,8 +61,26 @@ export default function Cobertura() {
           </div>
 
           <div className="mt-14 grid gap-6 lg:grid-cols-12 lg:items-stretch">
-            <div className="tarjeta overflow-hidden p-0 lg:col-span-7">
+            <div className="tarjeta flex flex-col overflow-hidden p-0 lg:col-span-7">
               <GloboCobertura className="h-[380px] md:h-[520px]" />
+
+              {/* Debajo del globo quedaban casi 400 px en blanco, y el mensaje
+                  regional se entiende mejor pegado al mapa que lo ilustra. */}
+              <div className="banda-oscura m-4 mt-0 flex-1 rounded-[1.75rem] bg-gradient-to-br from-[#22323F] via-[#1A2833] to-[#16212A] p-8 shadow-[inset_0_1px_0_rgb(255_255_255/0.16)] md:p-9">
+                <p className="pildora">Cobertura regional</p>
+
+                <p className="mt-5 font-display text-2xl leading-snug font-medium tracking-[-0.02em] text-white md:text-[1.75rem]">
+                  Latinoamérica y el Caribe
+                </p>
+
+                <p className="mt-4 font-body text-sm leading-relaxed text-mist md:text-[15px]">
+                  Establecemos alianzas estratégicas con firmas de ajustadores aliadas para
+                  coordinar la colaboración en caso de eventos catastróficos y reclamos
+                  complejos. Con ellas conformamos mesas de trabajo para estudiar
+                  antecedentes y hallazgos de siniestros pasados en cada uno de los países
+                  de la región.
+                </p>
+              </div>
             </div>
 
             <div className="flex flex-col gap-4 lg:col-span-5">
@@ -95,20 +113,6 @@ export default function Cobertura() {
                   </p>
                 </article>
               ))}
-
-              <div className="tarjeta p-7">
-                <p className="font-body text-[11px] font-semibold tracking-[0.12em] text-goldink uppercase">
-                  Cobertura regional
-                </p>
-                <p className="mt-2 font-display text-xl font-semibold tracking-[-0.015em] text-navy">
-                  Latinoamérica y el Caribe
-                </p>
-                <p className="mt-2 font-body text-sm leading-relaxed text-slate">
-                  Firma dominicana con alcance regional: atendemos encargos fuera del país
-                  cuando la aseguradora o el reasegurador necesita un perito con criterio
-                  independiente en la región.
-                </p>
-              </div>
             </div>
           </div>
 
