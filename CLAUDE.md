@@ -2,33 +2,87 @@
 
 # Reglas del proyecto ASSANCH
 
-## La Semanal — antes de publicar cualquier informe
+## La Semanal — qué se quita antes de publicar
 
-**Elimina el apartado «Implicaciones para Assanch» antes de convertir el PDF.**
+El informe se publica en un sitio web abierto y debe poder compartirse con
+personal externo. Antes de convertir el PDF hay que retirar dos cosas:
 
-Es la lectura estratégica interna de la firma. El informe se publica en un sitio
-web abierto y debe poder compartirse con personal externo, así que esa sección no
-sale. Se quita **al convertir**, no después: si la página llega a `public/`, ya es
-pública, aunque nadie la enlace.
+**1. El apartado «Implicaciones para Assanch».** Es la lectura estratégica
+interna de la firma.
+
+**2. Cifras e información confidencial de la firma.** Volumen de expedientes,
+tasas de cierre, puntos ciegos operativos y —sobre todo— el rendimiento
+individual de cada ajustador con nombre y apellido. En SEM36 eso vivía en el
+apartado «Balance de medio año · Workshop Assanch».
+
+**El balance de medio año se queda, pero sin números:** solo como información
+de la reunión y visión de cara al cliente. Las páginas de cifras —volumen de
+expedientes, tasas de cierre, reparto de carga por ajustador— se excluyen
+enteras.
+
+**Lo que SÍ se mantiene:** proyectos e iniciativas que fortalecen la relación con
+los clientes. La implementación de IA en las operaciones es el ejemplo: se
+publica. La regla no es «fuera todo lo que hable de la firma», es «fuera lo que
+un cliente o un competidor no debería ver».
+
+Ante la duda: si la página nombra a una persona del equipo junto a una métrica de
+su desempeño, o revela una debilidad operativa, no se publica.
+
+### Cómo hacerlo
 
 ```bash
-# 1. Localizar la sección (aparece dos veces: índice y sección; solo importa la sección)
+# 1. Localizar el apartado interno (aparece en el índice y en la sección;
+#    solo importa la sección).
 swift herramientas/buscar-apartado.swift informe.pdf "Implicaciones para Assanch"
 
-# 2. Convertir excluyéndola. Si continúa en la página siguiente, excluir ambas.
-swift herramientas/pdf-a-imagenes.swift informe.pdf public/informes/AAAA-MM-DD 2.0 7
+# 2. Revisar a ojo las páginas del bloque de balance interno, si lo hay.
+#    El script imprime el texto de una página:
+swift herramientas/pdf-a-imagenes.swift  # ver también buscar-apartado.swift
+
+# 3. Convertir excluyendo todas las páginas afectadas, separadas por comas.
+swift herramientas/pdf-a-imagenes.swift informe.pdf public/informes/AAAA-MM-DD 2.0 10,11,13,14
 ```
+
+### Páginas mixtas: recortar en vez de excluir
+
+A veces una página trae contenido publicable y confidencial a la vez. En SEM36,
+la página de la IA llevaba debajo las seis diapositivas del workshop en
+miniatura, y en ellas se leen números de expediente, nombres de clientes y de
+ajustadores. Excluir la página entera habría tirado también la parte que sí se
+publica.
+
+En ese caso se convierte la página y se recorta después, con Pillow:
+
+```python
+from PIL import Image
+p = 'public/informes/AAAA-MM-DD/10.png'
+im = Image.open(p)
+im.crop((0, 0, im.width, 660)).save(p)   # conserva solo la banda superior
+```
+
+La página queda más corta que las demás. Es una inconsistencia visual menor y
+asumida: preferible a publicar los datos o a perder el contenido bueno.
+
+Se excluye **al convertir**, no borrando el PNG después: si la página llega a
+`public/`, ya es pública aunque nadie la enlace — basta con adivinar la URL. Las
+páginas restantes se renumeran seguidas para que el visor no muestre huecos.
 
 Comprobar después:
 
 - El número de páginas en `lib/contenido/informes.js` es el **resultante**, no el
   del PDF original.
-- Ninguna página publicada menciona «Implicaciones para Assanch».
 - El PDF original **no** entra al repositorio.
 
-Ojo con las páginas mixtas: en SEM36 la sección terminaba en la misma página que
-el pronóstico del tiempo, así que al excluirla se pierde también el pronóstico.
-Es el precio correcto — la exposición pesa más que el recuadro del tiempo.
+Dos efectos conocidos de recortar páginas:
+
+- **Páginas mixtas.** En SEM36 el apartado estratégico terminaba en la misma
+  página que el pronóstico del tiempo, así que se pierde también el pronóstico.
+  La exposición pesa más que el recuadro del tiempo.
+- **Encabezados huérfanos.** Al quitar las primeras páginas de un apartado, la
+  que se conserva aparece sin su título de sección. Se asume mientras el
+  contenido se explique solo.
+- **El índice de la página 2 sigue listando lo retirado.** Eso se arregla en la
+  plantilla del informe, no aquí.
 
 ## Otras reglas ya asentadas
 
