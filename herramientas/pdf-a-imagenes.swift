@@ -9,7 +9,12 @@
 // eso no lo evita ninguna tecnologia. Lo que si consigue es que nadie obtenga
 // el documento original.
 //
-// USO:  swift herramientas/pdf-a-imagenes.swift <entrada.pdf> <carpeta-salida> [escala]
+// USO:  swift herramientas/pdf-a-imagenes.swift <entrada.pdf> <carpeta-salida> [escala] [excluir]
+//
+// `excluir` es una lista de paginas separadas por comas, contando desde 1. Se
+// usa para dejar fuera el apartado «Implicaciones para Assanch», que es lectura
+// interna y no se publica. Las paginas que quedan se renumeran seguidas, para
+// que el visor no muestre huecos.
 //
 // La escala 2.0 da el doble de pixeles que el tamano nominal: nitido en
 // pantallas de alta densidad sin disparar el peso.
@@ -27,6 +32,9 @@ guard args.count >= 3 else {
 let entrada = URL(fileURLWithPath: args[1])
 let salida = URL(fileURLWithPath: args[2])
 let escala = args.count > 3 ? (Double(args[3]) ?? 2.0) : 2.0
+let excluidas: Set<Int> = args.count > 4
+    ? Set(args[4].split(separator: ",").compactMap { Int($0.trimmingCharacters(in: .whitespaces)) })
+    : []
 let MAX_ANCHO = 1600.0
 
 guard let documento = PDFDocument(url: entrada) else {
@@ -40,6 +48,10 @@ var total = 0
 var bytes = 0
 
 for i in 0..<documento.pageCount {
+    if excluidas.contains(i + 1) {
+        print("  p\(i + 1) EXCLUIDA")
+        continue
+    }
     guard let pagina = documento.page(at: i) else { continue }
 
     let caja = pagina.bounds(for: .mediaBox)
@@ -73,11 +85,11 @@ for i in 0..<documento.pageCount {
 
     guard let datos = mapa.representation(using: .png, properties: [:]) else { continue }
 
-    let nombre = String(format: "%02d.png", i + 1)
+    total += 1
+    let nombre = String(format: "%02d.png", total)
     let destino = salida.appendingPathComponent(nombre)
     try? datos.write(to: destino)
 
-    total += 1
     bytes += datos.count
     print("  \(nombre)  \(ancho)x\(alto)  \(datos.count / 1024) KB")
 }
