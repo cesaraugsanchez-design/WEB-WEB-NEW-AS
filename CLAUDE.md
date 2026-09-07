@@ -43,6 +43,33 @@ swift herramientas/pdf-a-imagenes.swift  # ver también buscar-apartado.swift
 swift herramientas/pdf-a-imagenes.swift informe.pdf public/informes/AAAA-MM-DD 2.0 10,11,13,14
 ```
 
+### El apartado de balance se recompone, no se recorta
+
+En SEM36 el balance ocupaba tres páginas y mezclaba lo publicable con lo que no
+lo es. En vez de recortar, se genera una página nueva sin datos:
+
+```bash
+# 1. Convertir el PDF entero a una carpeta temporal (hace falta la página
+#    original del balance para recortar sus miniaturas).
+swift herramientas/pdf-a-imagenes.swift informe.pdf /tmp/orig 2.0
+
+# 2. Convertir el informe excluyendo TODO el balance y la lectura estratégica.
+swift herramientas/pdf-a-imagenes.swift informe.pdf public/informes/AAAA-MM-DD 2.0 10,11,12,13,14
+
+# 3. Componer la página de balance y colocarla en su sitio, corriendo las
+#    posteriores.
+python3 herramientas/pagina-balance.py /tmp/orig /tmp/balance.png
+```
+
+`pagina-balance.py` sólo usa las cuatro miniaturas limpias —portada, agenda,
+estudio de caso y portal web—. Las de «ciclo del expediente» y «casos y
+auditoría» quedan fuera: llevan métricas internas, números de expediente y
+nombres de clientes.
+
+**Esto es un parche.** Lo correcto es que la plantilla del informe genere ese
+apartado ya sin datos; mientras no lo haga, hay que repetirlo cada semana que el
+informe traiga balance.
+
 ### Páginas mixtas: recortar en vez de excluir
 
 A veces una página trae contenido publicable y confidencial a la vez. En SEM36,
