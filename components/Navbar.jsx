@@ -71,20 +71,22 @@ export default function Navbar() {
           : 'border-b border-transparent'
       }`}
     >
-      {/* El menu de escritorio arranca en 1320 px, no en lg (1024): la capsula
+      {/* El menu de escritorio arranca en 1350 px, no en lg (1024): la capsula
           va posicionada en absoluto y centrada en el viewport, asi que no
-          empuja — se solapa. Su borde derecho cae en V/2 + 340, y el grupo de
-          botones (Interna 82 + hueco 8 + reclamo 173 = 263) arranca en
-          V - 40 - 263. Para que no se pisen hace falta V >= 1318; 1320 deja el
-          margen justo. Estaba en 1180 con un solo boton: los 82 px de Interna
-          se pagan aqui, y por debajo de 1320 el acceso vive en el acordeon. */}
+          empuja — se solapa. Medido en el navegador: su borde derecho cae en
+          V/2 + 340, y el grupo de botones (Interna 102 + hueco 8 + reclamo 173)
+          arranca en V - 323. Se tocan en V = 1326 y cada pixel de mas solo
+          reparte medio pixel de holgura, asi que 1340 dejaba 7 px —sin solape,
+          pero rozando—. 1350 da 12. Estaba en 1180 con un solo boton y en 1320
+          con Interna sin icono: el candado son los 20 px de diferencia, y se
+          pagan aqui. Por debajo, el acceso vive en el acordeon movil. */}
       <nav aria-label="Navegación principal" className="section flex h-20 items-center justify-between">
         <Link href="/" aria-label="ASSANCH — inicio" className="flex min-h-12 items-center">
           <LogoLockup height={38} />
         </Link>
 
         {/* Cápsula central: se conserva tal cual estaba. */}
-        <ul className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-1 rounded-full border border-line bg-white/70 p-1.5 shadow-suave backdrop-blur-xl min-[1320px]:flex">
+        <ul className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-1 rounded-full border border-line bg-white/70 p-1.5 shadow-suave backdrop-blur-xl min-[1350px]:flex">
           {navegacion.map((item) => {
             const tienePanel = Boolean(item.columnas?.length)
             const activo = abierto === item.label
@@ -127,11 +129,18 @@ export default function Navbar() {
             es donde lo busca quien entra por primera vez. El apartado está
             cerrado por sesión, así que el enlace no descubre nada — solo evita
             que el equipo tenga que teclear la URL. */}
-        <div className="hidden items-center gap-2 min-[1320px]:flex">
-          {/* Sin icono: el candado cuesta 19 px y en esta barra cada píxel mueve
-              el punto de corte del menú de escritorio. En el acordeón móvil sí
-              va, que ahí sobra sitio. */}
-          <Link href="/interna" className="btn-oro !min-h-11 !px-4 !text-sm">
+        <div className="hidden items-center gap-2 min-[1350px]:flex">
+          {/* El candado es lo que distingue este botón del CTA de al lado: sin él
+              son dos cápsulas de colores distintos y el visitante no sabe cuál
+              es para él. Cuesta unos 20 px de ancho —el precio del corte a
+              1350— y se recuperan en parte apretando el hueco interior de los
+              8,8 px del `.btn-oro` a 6. */}
+          <Link
+            href="/interna"
+            title="Acceso del equipo ASSANCH"
+            className="btn-oro !min-h-11 !gap-1.5 !px-4 !text-sm"
+          >
+            <Lock size={14} aria-hidden />
             Interna
           </Link>
 
@@ -146,7 +155,7 @@ export default function Navbar() {
           aria-expanded={movil}
           aria-controls="menu-movil"
           aria-label={movil ? 'Cerrar menú' : 'Abrir menú'}
-          className="flex h-12 w-12 items-center justify-center rounded-full border border-line bg-white text-navy shadow-suave min-[1320px]:hidden"
+          className="flex h-12 w-12 items-center justify-center rounded-full border border-line bg-white text-navy shadow-suave min-[1350px]:hidden"
         >
           {movil ? <X size={20} aria-hidden /> : <Menu size={20} aria-hidden />}
         </button>
@@ -164,7 +173,7 @@ export default function Navbar() {
             hidden={!activo}
             onMouseEnter={() => abrir(item.label)}
             onMouseLeave={cerrarConRetardo}
-            className="absolute inset-x-0 top-full hidden justify-center px-6 pb-6 min-[1320px]:flex"
+            className="absolute inset-x-0 top-full hidden justify-center px-6 pb-6 min-[1350px]:flex"
           >
             {/* El ancho sigue al numero de columnas: un panel de una sola
                 columna a max-w-3xl deja media caja vacia y se lee como un
@@ -212,7 +221,7 @@ export default function Navbar() {
 
       {/* ---------- Acordeón móvil ---------- */}
       {movil && (
-        <div id="menu-movil" className="border-t border-line bg-white min-[1320px]:hidden">
+        <div id="menu-movil" className="border-t border-line bg-white min-[1350px]:hidden">
           <ul className="section flex max-h-[70vh] flex-col overflow-y-auto py-4">
             {navegacion.map((item) => {
               const tienePanel = Boolean(item.columnas?.length)

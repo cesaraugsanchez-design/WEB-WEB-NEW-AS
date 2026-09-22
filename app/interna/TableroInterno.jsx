@@ -1,9 +1,25 @@
 'use client'
 
 import { useMemo, useState } from 'react'
-import { aplicarFiltros, calcularMetricas, opcionesDeFiltro, DIMENSIONES } from '@/lib/interna/metricas'
+import {
+  aplicarFiltros,
+  calcularMetricas,
+  opcionesDeFiltro,
+  DIMENSIONES,
+  DIAS_ANTIGUO,
+} from '@/lib/interna/metricas'
 import { META_CICLO_DIAS } from '@/lib/interna/esquema'
-import { Panel, Kpi, Ranking, BarrasDobles, Leyenda, n, pct, dec } from './piezas'
+import {
+  Panel,
+  Kpi,
+  Ranking,
+  BarrasDobles,
+  Leyenda,
+  ResumenEjecutivo,
+  n,
+  pct,
+  dec,
+} from './piezas'
 
 const VACIO = Object.fromEntries(DIMENSIONES.map((d) => [d.campo, []]))
 
@@ -83,6 +99,41 @@ export default function TableroInterno({ registros, meta }) {
   const hayFiltros = DIMENSIONES.some((d) => filtros[d.campo].length)
   const ciclo = m.resumen.ciclo
 
+  /**
+   * Las dos frases se redactan sobre la selección, no sobre el universo: si
+   * alguien filtra por ajustador, el resumen habla de ese ajustador. La segunda
+   * compara entradas contra cierres del último año con datos, que es la única
+   * cifra que dice si la cola sube o baja —la tasa de cierre acumulada no lo
+   * dice, porque arrastra todo el histórico—.
+   */
+  const lineas = useMemo(() => {
+    const r = m.resumen
+    const ambito = hayFiltros ? 'En la selección' : 'En toda la matriz'
+    const mediana =
+      r.ciclo.mediana == null
+        ? 'sin cierres suficientes para medir el ciclo'
+        : `mediana de ${dec(r.ciclo.mediana)} días hasta el cierre frente a la meta de ${META_CICLO_DIAS}`
+
+    const primera = `${ambito} hay ${n(r.total)} expedientes: ${n(r.cerrados)} cerrados (${pct(
+      r.tasaCierre,
+    )}) y ${n(r.abiertos)} abiertos, con ${mediana}.`
+
+    const u = m.anios.at(-1)
+    const ritmo = !u
+      ? 'no hay un año con datos suficientes para leer el ritmo'
+      : u.cierres >= u.entradas
+        ? `en ${u.anio} se cerraron ${n(u.cierres)} contra ${n(u.entradas)} entradas, así que la cola bajó`
+        : `en ${u.anio} entraron ${n(u.entradas)} y se cerraron ${n(u.cierres)}, así que la cola siguió creciendo`
+
+    const viejos = r.abiertosViejos
+    const carga = r.abiertos
+      ? `${n(viejos)} de los abiertos (${pct(viejos / r.abiertos)}) pasan de ${DIAS_ANTIGUO} días`
+      : 'no queda nada abierto'
+    const segunda = `${carga} y ${ritmo}.`
+
+    return [primera, segunda.charAt(0).toUpperCase() + segunda.slice(1)]
+  }, [m, hayFiltros])
+
   return (
     <div className="space-y-6">
       <div className="flex flex-wrap items-center gap-2">
@@ -110,10 +161,17 @@ export default function TableroInterno({ registros, meta }) {
         </p>
       </div>
 
+      <ResumenEjecutivo lineas={lineas} />
+
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
         <Kpi etiqueta="Expedientes" valor={n(m.resumen.total)} />
         <Kpi etiqueta="Cerrados" valor={n(m.resumen.cerrados)} tono="bien" />
-        <Kpi etiqueta="Abiertos" valor={n(m.resumen.abiertos)} />
+        <Kpi
+          etiqueta="Abiertos"
+          valor={n(m.resumen.abiertos)}
+          detalle={`${n(m.resumen.abiertosViejos)} pasan de ${DIAS_ANTIGUO} días`}
+          tono={m.resumen.abiertosViejos ? 'alerta' : 'neutro'}
+        />
         <Kpi etiqueta="Tasa de cierre" valor={pct(m.resumen.tasaCierre)} />
         <Kpi
           etiqueta="Ciclo promedio"
@@ -135,7 +193,7 @@ export default function TableroInterno({ registros, meta }) {
         </Panel>
 
         <Panel titulo="Entradas contra cierres por año" nota="El backlog es la diferencia acumulada de cada año.">
-          <BarrasDobles filas={m.anios} claveX="anio" />
+          <BarrasDobles filas={m.anios} claveX="anio" etiquetaCorta={false} />
           <div className="mt-3 flex items-center justify-between">
             <Leyenda />
             <p className="text-xs text-slate">
@@ -163,19 +221,19 @@ export default function TableroInterno({ registros, meta }) {
           </ul>
         </Panel>
         <Panel titulo="Por ramo">
-          <Ranking filas={m.porRamo.slice(0, 7)} />
+          <Ranking filas={m.porRamo} limite={7} />
         </Panel>
       </div>
 
       <div className="grid gap-4 lg:grid-cols-3">
-        <Panel titulo="Carga por ajustador" nota="Barra oscura: cerrados. Barra clara: pendientes.">
+        <Panel titulo="Carga por ajustador" nota="Dorado: cerrados. Azul: pendientes.">
           <Ranking filas={m.porAjustador} columnas={['total', 'cerrados', 'tasa']} />
         </Panel>
         <Panel titulo="Carga por oficial">
-          <Ranking filas={m.porOficial.slice(0, 10)} />
+          <Ranking filas={m.porOficial} limite={10} />
         </Panel>
         <Panel titulo="Aseguradoras">
-          <Ranking filas={m.porAseguradora.slice(0, 10)} />
+          <Ranking filas={m.porAseguradora} limite={10} />
         </Panel>
       </div>
 
@@ -240,7 +298,7 @@ export default function TableroInterno({ registros, meta }) {
 
       <Panel
         titulo="Expedientes abiertos por antigüedad"
-        nota="Los 100 más antiguos dentro de la selección actual."
+        nota={`Los 100 más antiguos dentro de la selección. En rojo, los que pasan de ${DIAS_ANTIGUO} días.`}
       >
         <div className="-mx-2 overflow-x-auto">
           <table className="w-full min-w-[46rem] text-sm">
@@ -258,7 +316,7 @@ export default function TableroInterno({ registros, meta }) {
               {m.abiertos.map((r) => (
                 <tr key={`${r.referencia}-${r.fila ?? r.noReclamo}`} className="border-b border-line-soft">
                   <td
-                    className={`px-2 py-2 font-600 tabular-nums ${r.dias > 180 ? 'text-signalink' : 'text-navy'}`}
+                    className={`px-2 py-2 font-600 tabular-nums ${r.dias > DIAS_ANTIGUO ? 'text-signalink' : 'text-navy'}`}
                   >
                     {n(r.dias)}
                   </td>
