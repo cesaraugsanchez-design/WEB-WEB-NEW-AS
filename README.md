@@ -15,6 +15,7 @@ npm run build    # compilación de producción
 | `/` | Página principal |
 | `/cobertura` | Globo interactivo con la cobertura geográfica |
 | `/api/contacto` | Recepción del formulario — **sin destino configurado** |
+| `/interna` | Tablero de métricas. Cerrado con sesión — ver abajo |
 
 ## Stack
 
@@ -48,6 +49,62 @@ sobre blanco. Para texto sobre claro se usa `goldink` (`#7A5800`).
 
 Tipografía: **Instrument Sans** (titulares), **Inter** (cuerpo), **Montserrat**
 (solo el logotipo, según el manual).
+
+## Interna — quién entra y qué queda registrado
+
+`/interna` muestra rendimiento por ajustador con nombre y apellido. El acceso se
+cierra en dos capas independientes, y conviene no confundirlas:
+
+1. **Entra ID** decide quién puede autenticarse. La aplicación registrada es
+   **ASSANCH Interna** y tiene *asignación requerida*: no basta con tener un
+   correo `@assanch.com`, hay que estar en la lista nominal.
+2. **`proxy.js`** cierra la ruta con una cookie firmada (HMAC, 3 horas). Falla
+   cerrado: si falta `SESION_SECRETO`, no deja pasar a nadie en lugar de dejar
+   pasar a todos.
+
+**Siempre pide la contraseña.** La petición a Microsoft lleva `prompt=login`, así
+que tener abierta la sesión del correo o de Teams no abre el tablero: hay que
+autenticarse cada vez. Sin ese parámetro, el enlace de la barra entra de un clic
+—que es exactamente como se comportaba antes—.
+
+### Dar o quitar acceso a una persona
+
+Portal: **Entra** → Identidad → Aplicaciones → Aplicaciones empresariales →
+*ASSANCH Interna* → **Usuarios y grupos** → Agregar usuario.
+
+Por línea de comandos:
+
+```bash
+az rest --method POST \
+  --url "https://graph.microsoft.com/v1.0/servicePrincipals/26cf144a-b3ff-4c6d-9f16-529529d6040d/appRoleAssignedTo" \
+  --headers "Content-Type=application/json" \
+  --body "{\"principalId\":\"$(az ad user show --id NOMBRE@assanch.com --query id -o tsv)\",\"resourceId\":\"26cf144a-b3ff-4c6d-9f16-529529d6040d\",\"appRoleId\":\"00000000-0000-0000-0000-000000000000\"}"
+```
+
+Quitar a alguien tiene efecto en el siguiente inicio de sesión, **no al
+instante**: su cookie sigue siendo válida hasta 3 horas. Si la baja es urgente,
+hay que rotar `SESION_SECRETO` en Vercel, lo que invalida todas las sesiones
+abiertas de golpe.
+
+### Registro de accesos
+
+No se construyó bitácora propia: **Entra ya la lleva**. La licencia Microsoft 365
+Business Premium incluye Entra ID P1, así que los inicios de sesión se guardan
+**30 días** con usuario, hora, IP, dispositivo y código de error.
+
+Portal: la misma ruta de arriba → **Inicios de sesión**.
+
+```bash
+az rest --url "https://graph.microsoft.com/v1.0/auditLogs/signIns?\$filter=appId%20eq%20'5d3cff86-e7f2-4897-8653-a6360356ef4c'&\$top=20" \
+  --query "value[].{fecha:createdDateTime, usuario:userPrincipalName, ip:ipAddress, error:status.errorCode}" -o table
+```
+
+**Lo que este registro no dice:** cuántas veces alguien abrió el tablero. La
+sesión dura 3 horas, así que quien consulte el tablero toda la jornada aparece
+dos o tres veces, no una por consulta. Mide autenticaciones, no uso. Si algún día hace
+falta lo segundo, hay que escribirlo desde la aplicación a una base de datos;
+`console.log` no sirve, porque Vercel retiene los registros de ejecución días, no
+meses.
 
 ## Datos geográficos
 
