@@ -302,7 +302,8 @@ h4,
 /* ---------- Botones tipo píldora ---------- */
 
 .btn,
-.btn-claro {
+.btn-claro,
+.btn-oro {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -388,8 +389,42 @@ h4,
   box-shadow: none;
 }
 
+/* Oro de marca. Es el acento reservado del manual, así que solo lo lleva el
+   acceso al apartado interno: si hubiera dos botones dorados en pantalla
+   dejaría de señalar nada. El texto va en navy —el oficial FFB600 como texto
+   sobre blanco da 1.8:1, ilegible— y sobre el oro llega a 9.7:1. */
+.btn-oro {
+  background-image: linear-gradient(180deg, #ffc73d 0%, #ffb600 100%);
+  color: var(--color-navy);
+  border: 1px solid rgb(122 88 0 / 0.45);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.55),
+    inset 0 -1px 0 rgb(122 88 0 / 0.28),
+    0 1px 2px rgb(122 88 0 / 0.18),
+    0 6px 14px -4px rgb(122 88 0 / 0.28),
+    0 18px 36px -14px rgb(122 88 0 / 0.36);
+}
+
+.btn-oro:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.65),
+    inset 0 -1px 0 rgb(122 88 0 / 0.28),
+    0 2px 4px rgb(122 88 0 / 0.16),
+    0 12px 24px -6px rgb(122 88 0 / 0.26),
+    0 28px 52px -16px rgb(122 88 0 / 0.4);
+}
+
+.btn-oro:active {
+  transform: translateY(1px);
+  box-shadow:
+    inset 0 2px 5px rgb(122 88 0 / 0.35),
+    0 1px 2px rgb(122 88 0 / 0.2);
+}
+
 .btn:active,
-.btn-claro:active {
+.btn-claro:active,
+.btn-oro:active {
   transform: translateY(0) scale(0.985);
 }
 
