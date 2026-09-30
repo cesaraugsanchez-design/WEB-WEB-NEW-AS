@@ -34,39 +34,43 @@ import { Mail, RotateCcw, RotateCw } from 'lucide-react'
  * No coinciden porque las dos tomas no encuadran igual: la cabeza empieza mas
  * abajo en la segunda. El corte se mide por foto, no se hereda.
  *
- * SEMBLANZAS: TODO(cliente) — redactadas a partir del cargo que facilito
- * ASSANCH y pendientes de que la firma las confirme o las reescriba. Describen
- * la funcion, nada mas: no llevan antiguedad, titulaciones ni cifras, porque
- * eso no se inventa. Cinco lineas es el techo que impone la caja; pasarse
- * empuja el texto fuera de la tarjeta.
+ * SEMBLANZAS: las tres primeras —Jose F., Carlos y Jose R.— las dicto ASSANCH,
+ * y por eso son las unicas que llevan antiguedad y trayectoria: esos datos no
+ * se deducen de un cargo. Las cinco restantes siguen siendo TODO(cliente),
+ * redactadas solo a partir del cargo que la firma facilito, y describen la
+ * funcion y nada mas, sin anos, titulaciones ni cifras.
+ *
+ * Cinco lineas es el techo que impone la caja, y son unas 175 letras medidas en
+ * la rejilla de escritorio, que es la mas estrecha —cuatro columnas de 315 px—.
+ * Pasarse empuja el texto fuera de la tarjeta.
  */
 const equipo = [
   {
     nombre: 'José F. Sánchez',
-    cargo: 'Socio director · Líder de riesgos generales',
+    cargo: 'Presidente',
     correo: 'jf.sanchez@assanch.com',
     socio: true,
     foto: null,
     semblanza:
-      'Dirige la firma y encabeza la práctica de riesgos generales. Interviene en los expedientes de mayor complejidad técnica y responde por el criterio con que se emite cada informe.',
+      'Preside la firma. Más de 25 años como consultor y ajustador de seguros, y asesor y perito en siniestros catastróficos de alto nivel en el país y el Caribe.',
   },
   {
     nombre: 'Carlos Sánchez',
-    cargo: 'Socio director · Líder de automóvil',
+    cargo: 'Gerente general · Líder de automóvil',
     correo: 'csanchez@assanch.com',
     socio: true,
     foto: '/equipo/carlos-sanchez.jpg',
     semblanza:
-      'Dirige la firma y encabeza la práctica de automóvil. Ordena la operación de la cartera de vehículos y fija el criterio de ajuste que siguen los inspectores en calle.',
+      'Gerente general de la firma y responsable de la práctica de automóvil. Fija el criterio de ajuste que sigue el área de operaciones e inspectores.',
   },
   {
     nombre: 'José R. Sánchez',
-    cargo: 'Socio · Ajustador de riesgos generales',
+    cargo: 'Perito especialista · Ajustador de riesgos generales',
     correo: 'jr.sanchez@assanch.com',
     socio: true,
     foto: '/equipo/jose-r-sanchez.jpg',
     semblanza:
-      'Socio y ajustador de riesgos generales. Inspecciona, valora el daño y redacta el informe en siniestros de propiedad, ingeniería y responsabilidad civil.',
+      'Perito especialista y ajustador de riesgos generales, con más de 15 años de experiencia. Ha ocupado cargos importantes en el sector seguros a nivel local y regional.',
   },
   {
     nombre: 'Julio Medina',
