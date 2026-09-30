@@ -126,9 +126,25 @@ function iniciales(nombre) {
 /* El canto y la sombra se escriben a mano en vez de reutilizar `.tarjeta`: esa
    clase levanta la ficha con `transform` al pasar el raton, y aqui el transform
    es el giro. Una regla de hover que pise el `rotateY` deja la cara de atras
-   mirando al reves. El levantamiento se hace en el envoltorio, que no gira. */
+   mirando al reves. El levantamiento se hace en el envoltorio, que no gira.
+
+   LA CARA OCULTA NO SE FIA DE `backface-visibility`. En Safari —iPhone y
+   iPad— esa propiedad deja de descartar la cara que mira al reves cuando el
+   elemento recorta con `overflow: hidden` y esquinas redondeadas, que es
+   justo lo que hace falta aqui para que la foto siga el canto de la ficha. El
+   resultado es que se ve la otra cara del reves, texto espejado incluido.
+
+   Asi que la cara que no toca se apaga ademas con `visibility`, que ningun
+   motor interpreta a su manera. El apagado se retrasa 350 ms —la mitad del
+   giro—: en ese instante la ficha esta de canto y no se ve, de modo que el
+   cambio es invisible venga de donde venga. Se elige `visibility` y no
+   `opacity` porque una opacidad distinta de 1 aplana el contexto 3D en
+   algunos motores, que es el mismo problema por otra puerta.
+
+   `backface-visibility` se queda: donde funciona, el descarte es exacto
+   fotograma a fotograma y esto solo lo respalda. */
 const CARA =
-  'absolute inset-0 overflow-hidden rounded-[1.75rem] border border-line bg-white shadow-suave [backface-visibility:hidden] [-webkit-backface-visibility:hidden]'
+  'absolute inset-0 overflow-hidden rounded-[1.75rem] border border-line bg-white shadow-suave [backface-visibility:hidden] [-webkit-backface-visibility:hidden] transition-[visibility] delay-[350ms] duration-0 motion-reduce:delay-0'
 
 function Ficha({ p }) {
   const [vuelta, setVuelta] = useState(false)
@@ -146,12 +162,15 @@ function Ficha({ p }) {
         }`}
       >
         {/* ---------- Cara delantera ----------
-            `pointer-events-none` en la cara oculta: `backface-visibility` la
-            borra del dibujo, pero no todos los navegadores la sacan del
-            impacto del raton, y el enlace del correo se queda con eventos
-            activos por encima. Sin esto, pulsar el reverso puede abrir el
-            gestor de correo de la cara de delante. */}
-        <article className={`${CARA} ${vuelta ? 'pointer-events-none' : ''}`} aria-hidden={vuelta}>
+            `pointer-events-none` va sin retraso y `invisible` con el: el raton
+            y el teclado tienen que soltar la cara saliente en el acto —si no,
+            durante el giro se puede abrir el correo de la cara que ya se va—,
+            mientras que apagarla a la vista antes de que la ficha se ponga de
+            canto se veria como un parpadeo. */}
+        <article
+          className={`${CARA} ${vuelta ? 'invisible pointer-events-none' : ''}`}
+          aria-hidden={vuelta}
+        >
           {/* El boton cubre la ficha entera para que valga pulsar en cualquier
               sitio, y va DEBAJO del contenido en el orden del DOM: asi el enlace
               del correo, que es lo unico con `pointer-events` activos arriba,
@@ -224,7 +243,7 @@ function Ficha({ p }) {
         <article
           className={`${CARA} banda-oscura [transform:rotateY(180deg)] ${
             p.foto ? 'bg-navy' : 'bg-gradient-to-br from-blue-700 to-navy'
-          } ${vuelta ? '' : 'pointer-events-none'}`}
+          } ${vuelta ? '' : 'invisible pointer-events-none'}`}
           aria-hidden={!vuelta}
         >
           {p.foto ? (
