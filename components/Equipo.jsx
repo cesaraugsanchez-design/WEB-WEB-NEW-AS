@@ -34,11 +34,13 @@ import { Mail, RotateCcw, RotateCw } from 'lucide-react'
  * No coinciden porque las dos tomas no encuadran igual: la cabeza empieza mas
  * abajo en la segunda. El corte se mide por foto, no se hereda.
  *
- * SEMBLANZAS: las tres primeras —Jose F., Carlos y Jose R.— las dicto ASSANCH,
- * y por eso son las unicas que llevan antiguedad y trayectoria: esos datos no
- * se deducen de un cargo. Las cinco restantes siguen siendo TODO(cliente),
- * redactadas solo a partir del cargo que la firma facilito, y describen la
- * funcion y nada mas, sin anos, titulaciones ni cifras.
+ * SEMBLANZAS: las de Jose F., Carlos, Jose R. y Cesar A. las dicto ASSANCH.
+ * Por eso son las unicas que salen del cargo hacia afuera —antiguedad,
+ * trayectoria, de que responde cada quien—: nada de eso se deduce de un titulo.
+ *
+ * Las cuatro restantes —Julio, Betzaira, Patricio y Katherine— siguen siendo
+ * TODO(cliente): estan redactadas solo a partir del cargo que la firma
+ * facilito, describen la funcion y nada mas, y no llevan anos ni cifras.
  *
  * Cinco lineas es el techo que impone la caja, y son unas 175 letras medidas en
  * la rejilla de escritorio, que es la mas estrecha —cuatro columnas de 315 px—.
@@ -110,7 +112,7 @@ const equipo = [
     correo: 'ca.sanchez@assanch.com',
     foto: null,
     semblanza:
-      'Lleva marketing y desarrollo de negocios. Redacta La Semanal, el informe de mercado que la firma publica cada semana, y atiende la relación con aliados y clientes nuevos.',
+      'Abre nuevos negocios y construye la confianza de aliados y clientes comerciales. Mantiene las métricas de operaciones y lleva los proyectos de mejora tecnológica.',
   },
 ]
 
