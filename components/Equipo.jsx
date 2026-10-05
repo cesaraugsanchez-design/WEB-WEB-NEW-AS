@@ -26,13 +26,17 @@ import { Mail, RotateCcw, RotateCw } from 'lucide-react'
  *
  * Los cortes se anotan aqui porque el original no esta en el repositorio: si
  * hay que rehacer el recorte, sin estos numeros hay que volver a medirlos a ojo.
- * Los dos retratos de estudio de 4000x6000 entregados se cortaron asi:
+ * Los retratos de estudio entregados se cortaron asi:
  *
- *   carlos-sanchez.jpg   --techo 0.045 --cintura 0.68
- *   jose-r-sanchez.jpg   --techo 0.07  --cintura 0.80
+ *   carlos-sanchez.jpg   4000x6000   --techo 0.045 --cintura 0.68
+ *   jose-r-sanchez.jpg   4000x6000   --techo 0.07  --cintura 0.80
+ *   jose-f-sanchez.jpg   1435x2000   --techo 0.035 --cintura 0.64
  *
- * No coinciden porque las dos tomas no encuadran igual: la cabeza empieza mas
- * abajo en la segunda. El corte se mide por foto, no se hereda.
+ * No coinciden porque las tomas no encuadran igual —la cabeza empieza a distinta
+ * altura en cada una—. El corte se mide por foto, no se hereda. Lo que si se
+ * iguala es el resultado: en las tres la cabeza ocupa aproximadamente el mismo
+ * tercio superior, porque las fichas se ven juntas en la misma rejilla y un
+ * encuadre suelto canta.
  *
  * SEMBLANZAS: las de Jose F., Carlos, Jose R. y Cesar A. las dicto ASSANCH.
  * Por eso son las unicas que salen del cargo hacia afuera —antiguedad,
@@ -52,7 +56,7 @@ const equipo = [
     cargo: 'Presidente',
     correo: 'jf.sanchez@assanch.com',
     socio: true,
-    foto: null,
+    foto: '/equipo/jose-f-sanchez.jpg',
     semblanza:
       'Preside la firma. Más de 25 años como consultor y ajustador de seguros, y asesor y perito en siniestros catastróficos de alto nivel en el país y el Caribe.',
   },
