@@ -82,7 +82,7 @@ export default function Navbar() {
           pagan aqui. Por debajo, el acceso vive en el acordeon movil. */}
       <nav aria-label="Navegación principal" className="section flex h-20 items-center justify-between">
         <Link href="/" aria-label="ASSANCH — inicio" className="flex min-h-12 items-center">
-          <LogoLockup height={38} />
+          <LogoLockup height={40} />
         </Link>
 
         {/* Cápsula central: se conserva tal cual estaba. */}
