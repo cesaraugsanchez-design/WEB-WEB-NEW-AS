@@ -47,9 +47,11 @@ import { Mail, RotateCcw, RotateCw } from 'lucide-react'
  * TODO(cliente): estan redactadas solo a partir del cargo que la firma
  * facilito, describen la funcion y nada mas, y no llevan anos ni cifras.
  *
- * Cinco lineas es el techo que impone la caja, y son unas 175 letras medidas en
- * la rejilla de escritorio, que es la mas estrecha —cuatro columnas de 315 px—.
- * Pasarse empuja el texto fuera de la tarjeta.
+ * El texto es ejecutivo a proposito: tres lineas, unas 90 letras medidas en la
+ * rejilla de escritorio, que es la mas estrecha —cuatro columnas de 315 px—.
+ * La caja admitiria cinco, pero cada linea de texto es una banda de velo que
+ * tapa el retrato, y se prefiere ver a la persona. Pasarse de tres rompe la
+ * alineacion entre fichas, que es lo que sostiene `min-h-[4lh]`.
  */
 const equipo = [
   {
@@ -59,7 +61,7 @@ const equipo = [
     socio: true,
     foto: '/equipo/jose-f-sanchez.jpg',
     semblanza:
-      'Preside la firma. Más de 25 años como consultor y ajustador de seguros, y asesor y perito en siniestros catastróficos de alto nivel en el país y el Caribe.',
+      'Preside la firma. Más de 25 años como consultor y ajustador, y perito en siniestros catastróficos del país y el Caribe.',
   },
   {
     nombre: 'Carlos Sánchez',
@@ -68,7 +70,7 @@ const equipo = [
     socio: true,
     foto: '/equipo/carlos-sanchez.jpg',
     semblanza:
-      'Gerente general de la firma y responsable de la práctica de automóvil. Fija el criterio de ajuste que sigue el área de operaciones e inspectores.',
+      'Dirige la firma y la práctica de automóvil. Fija el criterio de ajuste que sigue el área de operaciones e inspectores.',
   },
   {
     nombre: 'José R. Sánchez',
@@ -77,7 +79,7 @@ const equipo = [
     socio: true,
     foto: '/equipo/jose-r-sanchez.jpg',
     semblanza:
-      'Perito especialista y ajustador de riesgos generales, con más de 15 años de experiencia. Ha ocupado cargos importantes en el sector seguros a nivel local y regional.',
+      'Más de 15 años en riesgos generales. Ha ocupado cargos importantes en el sector seguros a nivel local y regional.',
   },
   {
     nombre: 'Julio Medina',
@@ -85,7 +87,7 @@ const equipo = [
     correo: 'reclamos.zonanorte@assanch.com',
     foto: null,
     semblanza:
-      'Cubre la Zona Norte en riesgos generales y automóvil. Acude al lugar del siniestro, levanta la evidencia y sostiene el expediente hasta el informe final.',
+      'Cubre la Zona Norte en riesgos generales y automóvil. Acude al siniestro, levanta la evidencia y cierra el expediente.',
   },
   {
     nombre: 'Betzaira Amparo',
@@ -93,7 +95,7 @@ const equipo = [
     correo: 'oficialdeseguimiento@assanch.com',
     foto: null,
     semblanza:
-      'Sigue cada expediente de automóvil desde el aviso hasta el cierre. Mantiene informados al asegurado y a la compañía, y evita que un caso se detenga sin razón.',
+      'Sigue cada expediente de automóvil del aviso al cierre. Mantiene informados al asegurado y a la compañía.',
   },
   {
     nombre: 'Patricio Martínez',
@@ -101,7 +103,7 @@ const equipo = [
     correo: 'pmartinez@assanch.com',
     foto: null,
     semblanza:
-      'Ajusta automóvil en el Distrito Nacional, la región Este y el Sur. Inspecciona el vehículo, documenta los daños y cuantifica la pérdida sobre lo verificado.',
+      'Ajusta automóvil en el Distrito Nacional, Este y Sur. Inspecciona el vehículo y cuantifica la pérdida sobre lo verificado.',
   },
   {
     nombre: 'Katherine Medina',
@@ -109,7 +111,7 @@ const equipo = [
     correo: 'recepcion@assanch.com',
     foto: null,
     semblanza:
-      'Primera voz de la firma: recibe el aviso de siniestro, abre el expediente y encamina cada caso al ajustador que corresponde.',
+      'Primera voz de la firma: recibe el aviso, abre el expediente y encamina cada caso al ajustador que corresponde.',
   },
   {
     nombre: 'César A. Sánchez',
@@ -117,7 +119,7 @@ const equipo = [
     correo: 'ca.sanchez@assanch.com',
     foto: '/equipo/cesar-a-sanchez.jpg',
     semblanza:
-      'Abre nuevos negocios y construye la confianza de aliados y clientes comerciales. Mantiene las métricas de operaciones y lleva los proyectos de mejora tecnológica.',
+      'Abre nuevos negocios y la confianza de aliados y clientes comerciales. Mantiene las métricas de operaciones y la mejora tecnológica.',
   },
 ]
 
@@ -166,10 +168,20 @@ function Ficha({ p }) {
        propio elemento que gira, el punto de fuga se mueve con el y el giro se ve
        plano. Aqui cada ficha tiene el suyo, asi que gira sobre si misma aunque
        este en la esquina de la rejilla. */
-    <li className="h-100 [perspective:1400px]">
+    <li className={`h-100 [perspective:1400px] ${vuelta ? 'relative z-10' : ''}`}>
+      {/* La ficha girada crece un 6 %. Es poco a proposito: lo justo para que
+          se despegue de las hermanas y para que el retrato gane tamano, sin que
+          la rejilla parezca descuadrada. El aumento viaja en el MISMO transform
+          que el giro —`rotateY(180deg) scale(1.06)`— porque dos transforms
+          sobre el mismo elemento no se suman: el ultimo pisa al anterior, y
+          separarlos dejaria la ficha sin girar o sin crecer.
+
+          El `z-10` del <li> no es decorativo: al crecer, la ficha invade unos
+          9 px por lado y sin el quedaria por debajo de la siguiente de la fila,
+          recortada justo por el borde que acaba de rebasar. */}
       <div
         className={`relative h-full transition-transform duration-[700ms] [transform-style:preserve-3d] motion-reduce:duration-0 ${
-          vuelta ? '[transform:rotateY(180deg)]' : ''
+          vuelta ? '[transform:rotateY(180deg)_scale(1.06)]' : ''
         }`}
       >
         {/* ---------- Cara delantera ----------
@@ -280,21 +292,22 @@ function Ficha({ p }) {
           {/* Velo de abajo arriba: el texto va sobre la foto y sin el se pierde
               contra una camisa clara.
 
-              Los topes estan medidos contra el texto, no puestos a ojo. El
-              bloque va del 6 % al 62 % contando desde abajo, y la cara queda por
-              encima del 78 %. De ahi los tres puntos: navy macizo hasta el 55 %,
-              que es casi todo el texto; se apaga entre el 55 % y el 78 %; y por
-              encima del 78 % no hay velo, que es lo que deja ver el retrato.
+              Los topes estan medidos contra el texto, no puestos a ojo, y se
+              mueven con el: entre bajar las semblanzas a cuatro lineas y cerrar
+              los interlineados, el bloque encogio unos 57 px y el velo sube
+              bastante menos. Medido, el texto arranca al 47,5 % contando desde
+              abajo; de ahi navy macizo hasta el 45 %, apagandose hasta el 66 %,
+              y el tercio superior de la ficha sin velo ninguno.
 
-              El reparto importa. Con el velo anterior —que moria al 100 %— el
+              El reparto importa. Con el velo original —que moria al 100 %— el
               nombre caia sobre un 54 % de navy y la cara arrastraba un 28 %
-              inutil. Un primer intento de aclarar moviendo el final al 72 %
-              dejo el nombre en un 27 %, y el cargo dorado de quien lleva camisa
-              blanca se volvio ilegible. Asi se gana en las dos puntas: 62 % bajo
-              el nombre y cero sobre la cara. */}
+              inutil. Un intento de aclarar moviendo el final al 72 % dejo el
+              nombre en un 27 % y volvio ilegible el cargo dorado de quien lleva
+              camisa blanca. Con estos topes el nombre tiene un 78 % debajo y el
+              tercio superior de la ficha queda limpio. */}
           <span
             aria-hidden
-            className="absolute inset-0 bg-gradient-to-t from-navy via-navy/88 via-55% to-transparent to-78%"
+            className="absolute inset-0 bg-gradient-to-t from-navy via-navy/88 via-45% to-transparent to-66%"
           />
 
           <button
@@ -314,21 +327,29 @@ function Ficha({ p }) {
 
               La unidad es `lh`, una linea de ESE elemento: escrito en pixeles
               habria que recalcularlo a mano en cuanto cambie el cuerpo o el
-              interlineado, y nadie se acuerda de hacerlo. */}
-          <div className="pointer-events-none relative z-10 flex h-full flex-col justify-end p-6 text-left">
-            <h3 className="font-display text-base leading-snug font-semibold tracking-[-0.01em] text-white">
+              interlineado, y nadie se acuerda de hacerlo.
+
+              EL BLOQUE VA APRETADO A PROPOSITO, y lo que se aprieta es el aire,
+              no el texto: interlineados mas cerrados —`snug` en la semblanza,
+              `tight` en el cargo—, margenes menores entre piezas y un paso de
+              `p-6` a `p-5`. Son unos 33 px que dejan de tapar el retrato sin
+              quitar ni una palabra. El cargo se queda en dos lineas reservadas
+              porque hay tres que no caben en una y son titulos de la firma, que
+              no se recortan por conveniencia de maquetacion. */}
+          <div className="pointer-events-none relative z-10 flex h-full flex-col justify-end p-5 text-left">
+            <h3 className="font-display text-[15px] leading-tight font-semibold tracking-[-0.01em] text-white">
               {p.nombre}
             </h3>
-            <p className="mt-1 min-h-[2lh] font-body text-[11px] font-semibold tracking-[0.06em] text-gold uppercase">
+            <p className="mt-1 min-h-[2lh] font-body text-[11px] leading-tight font-semibold tracking-[0.06em] text-gold uppercase">
               {p.cargo}
             </p>
-            <p className="mt-3 min-h-[5lh] font-body text-[13px] leading-relaxed text-white/85">
+            <p className="mt-2 min-h-[4lh] font-body text-[13px] leading-snug text-white/85">
               {p.semblanza}
             </p>
 
             <span
               aria-hidden
-              className="mt-4 flex items-center gap-1.5 border-t border-white/15 pt-3 font-body text-[11px] font-semibold tracking-[0.08em] text-white/60 uppercase"
+              className="mt-3 flex items-center gap-1.5 border-t border-white/15 pt-2.5 font-body text-[11px] font-semibold tracking-[0.08em] text-white/60 uppercase"
             >
               <RotateCcw size={12} />
               Volver
