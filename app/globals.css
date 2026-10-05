@@ -11,6 +11,13 @@
   /* Superficies */
   --color-white: #ffffff;
   --color-canvas: #fbfcfd; /* blanco con una gota de azul */
+  /* Campo de la pagina. NO es lo mismo que `canvas`: canvas es superficie
+     hundida DENTRO de una tarjeta —campos de formulario, cajas de imagen—, y
+     por eso es mas clara que esta. El orden de profundidad que sostiene la
+     interfaz es: lienzo (el fondo) < tarjeta blanca < canvas (el hueco dentro
+     de la tarjeta). Con el body en blanco puro ese orden se perdia: las
+     tarjetas eran blancas sobre blanco y solo las separaba un filete de 1 px. */
+  --color-lienzo: #f1f5f9;
   --color-line: #e8edf2;
   --color-line-soft: #f1f5f8;
 
@@ -77,7 +84,7 @@ body {
 }
 
 body {
-  background-color: var(--color-white);
+  background-color: var(--color-lienzo);
   position: relative;
   color: var(--color-tinta);
   font-family: var(--font-body);

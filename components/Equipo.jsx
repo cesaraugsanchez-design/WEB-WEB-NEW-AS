@@ -31,6 +31,7 @@ import { Mail, RotateCcw, RotateCw } from 'lucide-react'
  *   carlos-sanchez.jpg   4000x6000   --techo 0.045 --cintura 0.68
  *   jose-r-sanchez.jpg   4000x6000   --techo 0.07  --cintura 0.80
  *   jose-f-sanchez.jpg   1435x2000   --techo 0.035 --cintura 0.64
+ *   cesar-a-sanchez.jpg  1333x2000   --techo 0.055 --cintura 0.64
  *
  * No coinciden porque las tomas no encuadran igual —la cabeza empieza a distinta
  * altura en cada una—. El corte se mide por foto, no se hereda. Lo que si se
@@ -114,7 +115,7 @@ const equipo = [
     nombre: 'César A. Sánchez',
     cargo: 'Marketing y desarrollo de negocios',
     correo: 'ca.sanchez@assanch.com',
-    foto: null,
+    foto: '/equipo/cesar-a-sanchez.jpg',
     semblanza:
       'Abre nuevos negocios y construye la confianza de aliados y clientes comerciales. Mantiene las métricas de operaciones y lleva los proyectos de mejora tecnológica.',
   },
@@ -261,7 +262,11 @@ function Ficha({ p }) {
               src={p.foto}
               alt={`Retrato de ${p.nombre}`}
               loading="lazy"
-              className="absolute inset-0 h-full w-full object-cover object-top"
+              /* `brightness` y `contrast` son de la foto, no del velo: el velo
+                 tiene que seguir siendo opaco donde va el texto o el nombre se
+                 pierde contra una camisa blanca. Lo que se aclara es la imagen
+                 debajo, que es lo que se pedia ver mejor. */
+              className="absolute inset-0 h-full w-full object-cover object-top brightness-[1.12] contrast-[1.04]"
             />
           ) : (
             <span
@@ -273,11 +278,23 @@ function Ficha({ p }) {
           )}
 
           {/* Velo de abajo arriba: el texto va sobre la foto y sin el se pierde
-              contra una camisa clara. Arranca opaco en el pie y muere antes de
-              llegar a la cara. */}
+              contra una camisa clara.
+
+              Los topes estan medidos contra el texto, no puestos a ojo. El
+              bloque va del 6 % al 62 % contando desde abajo, y la cara queda por
+              encima del 78 %. De ahi los tres puntos: navy macizo hasta el 55 %,
+              que es casi todo el texto; se apaga entre el 55 % y el 78 %; y por
+              encima del 78 % no hay velo, que es lo que deja ver el retrato.
+
+              El reparto importa. Con el velo anterior —que moria al 100 %— el
+              nombre caia sobre un 54 % de navy y la cara arrastraba un 28 %
+              inutil. Un primer intento de aclarar moviendo el final al 72 %
+              dejo el nombre en un 27 %, y el cargo dorado de quien lleva camisa
+              blanca se volvio ilegible. Asi se gana en las dos puntas: 62 % bajo
+              el nombre y cero sobre la cara. */}
           <span
             aria-hidden
-            className="absolute inset-0 bg-gradient-to-t from-navy via-navy/85 via-40% to-transparent"
+            className="absolute inset-0 bg-gradient-to-t from-navy via-navy/88 via-55% to-transparent to-78%"
           />
 
           <button
@@ -288,14 +305,26 @@ function Ficha({ p }) {
             className="absolute inset-0 z-0 cursor-pointer rounded-[1.75rem] focus-visible:outline-2 focus-visible:-outline-offset-4 focus-visible:outline-gold"
           />
 
+          {/* El bloque va anclado abajo, asi que mientras el cargo ocupe una o
+              dos lineas y la semblanza cuatro o cinco, el nombre cae a distinta
+              altura en cada ficha y la fila se lee desordenada. Se reserva la
+              altura del caso mayor en las dos piezas que varian —dos lineas de
+              cargo y cinco de semblanza—, y con eso todas las fichas tienen el
+              mismo alto de texto y arrancan al mismo nivel.
+
+              La unidad es `lh`, una linea de ESE elemento: escrito en pixeles
+              habria que recalcularlo a mano en cuanto cambie el cuerpo o el
+              interlineado, y nadie se acuerda de hacerlo. */}
           <div className="pointer-events-none relative z-10 flex h-full flex-col justify-end p-6 text-left">
             <h3 className="font-display text-base leading-snug font-semibold tracking-[-0.01em] text-white">
               {p.nombre}
             </h3>
-            <p className="mt-1 font-body text-[11px] font-semibold tracking-[0.06em] text-gold uppercase">
+            <p className="mt-1 min-h-[2lh] font-body text-[11px] font-semibold tracking-[0.06em] text-gold uppercase">
               {p.cargo}
             </p>
-            <p className="mt-3 font-body text-[13px] leading-relaxed text-white/85">{p.semblanza}</p>
+            <p className="mt-3 min-h-[5lh] font-body text-[13px] leading-relaxed text-white/85">
+              {p.semblanza}
+            </p>
 
             <span
               aria-hidden
