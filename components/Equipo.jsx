@@ -43,7 +43,7 @@ import { Mail, RotateCcw, RotateCw } from 'lucide-react'
  * Por eso son las unicas que salen del cargo hacia afuera —antiguedad,
  * trayectoria, de que responde cada quien—: nada de eso se deduce de un titulo.
  *
- * Las cuatro restantes —Julio, Betzaira, Patricio y Katherine— siguen siendo
+ * Las tres restantes —Julio, Patricio y Katherine— siguen siendo
  * TODO(cliente): estan redactadas solo a partir del cargo que la firma
  * facilito, describen la funcion y nada mas, y no llevan anos ni cifras.
  *
@@ -90,14 +90,6 @@ const equipo = [
       'Cubre la Zona Norte en riesgos generales y automóvil. Acude al siniestro, levanta la evidencia y cierra el expediente.',
   },
   {
-    nombre: 'Betzaira Amparo',
-    cargo: 'Oficial de seguimiento de automóvil',
-    correo: 'oficialdeseguimiento@assanch.com',
-    foto: null,
-    semblanza:
-      'Sigue cada expediente de automóvil del aviso al cierre. Mantiene informados al asegurado y a la compañía.',
-  },
-  {
     nombre: 'Patricio Martínez',
     cargo: 'Ajustador de automóvil · Distrito Nacional, Este y Sur',
     correo: 'pmartinez@assanch.com',
@@ -107,11 +99,11 @@ const equipo = [
   },
   {
     nombre: 'Katherine Medina',
-    cargo: 'Asistente administrativa',
-    correo: 'recepcion@assanch.com',
+    cargo: 'Oficial de seguimiento de automóvil',
+    correo: 'oficialdeseguimiento@assanch.com',
     foto: null,
     semblanza:
-      'Primera voz de la firma: recibe el aviso, abre el expediente y encamina cada caso al ajustador que corresponde.',
+      'Sigue cada expediente de automóvil del aviso al cierre. Mantiene informados al asegurado y a la compañía.',
   },
   {
     nombre: 'César A. Sánchez',
