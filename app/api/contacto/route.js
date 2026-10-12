@@ -16,11 +16,24 @@
  * decirle al visitante que llame que darle un «recibido» que no es cierto.
  */
 
-/* SOLO recepción, a diferencia de /api/reclamo, que reparte entre tres buzones.
-   La diferencia es deliberada: por aquí entran consultas y solicitudes de
-   evaluación que recepción tría y encamina; por el otro entran siniestros ya
-   asignados, que los socios necesitan ver sin intermediario. No unificar. */
+/* Recepción responde, dirección se entera. ASSANCH pidió que cada solicitud
+   llegue a recepción y, en copia, a Carlos y a César.
+
+   El reparto entre `to` y `cc` no es cosmético: marca quién contesta. Con los
+   tres en `to`, tres personas pueden responder al mismo solicitante por
+   separado. Con recepción sola en `to`, hay un responsable claro y los otros
+   dos ven el caso sin pisarlo.
+
+   Sigue sin unificarse con /api/reclamo, que lleva los tres buzones en `to`.
+   Allí es correcto: entran siniestros ya asignados y los socios necesitan
+   verlos sin intermediario. Por aquí entran consultas, que recepción tría. */
 const DESTINO = process.env.CONTACTO_DESTINO || 'recepcion@assanch.com'
+
+const COPIA = (process.env.CONTACTO_COPIA || 'csanchez@assanch.com,ca.sanchez@assanch.com')
+  .split(',')
+  .map((d) => d.trim())
+  .filter(Boolean)
+
 const REMITENTE = process.env.CONTACTO_REMITENTE || 'onboarding@resend.dev'
 
 /* Límite por IP. En serverless cada instancia tiene su propia memoria y se
@@ -126,6 +139,11 @@ export async function POST(request) {
       body: JSON.stringify({
         from: `ASSANCH Web <${REMITENTE}>`,
         to: [DESTINO],
+        /* `cc` y no `cco`: es correo interno del mismo equipo y ver quién más
+           lo recibió evita que dos personas contesten al mismo solicitante.
+           Se omite la clave entera si la lista está vacía —Resend rechaza un
+           `cc: []`— para que vaciar CONTACTO_COPIA siga funcionando. */
+        ...(COPIA.length ? { cc: COPIA } : {}),
         // Responder al correo lleva directo al solicitante, no al remitente técnico.
         reply_to: email,
         subject: `Solicitud web — ${nombre}`,
