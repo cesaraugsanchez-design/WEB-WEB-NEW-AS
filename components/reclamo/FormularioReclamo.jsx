@@ -207,14 +207,19 @@ export default function FormularioReclamo({ inicial = {} }) {
         <h2 className="mt-5 font-display text-2xl font-medium text-navy">Reclamo recibido</h2>
         {referencia && (
           <p className="mt-3 font-body text-sm text-slate">
-            Número de referencia:{' '}
+            Acuse temporal:{' '}
             <strong className="font-mono tracking-wide text-navy">{referencia}</strong>
           </p>
         )}
+        {/* Se dice que el acuse es temporal y que llegará otro con la
+            definitiva. Llamarlo «número de referencia» a secas hacía que
+            quien reclama lo citara después como si fuera el del expediente,
+            y en la matriz no existe. */}
         <p className="mx-auto mt-4 max-w-md text-center font-body text-sm leading-relaxed text-slate">
-          Un ajustador se comunicará con usted. Para cualquier consulta llame al{' '}
-          <a href="tel:+18097929384" className="font-semibold text-blue-700">809-792-9384</a>{' '}
-          citando la referencia.
+          Le enviamos este acuse por correo y le responderemos con la referencia
+          definitiva del expediente. Un ajustador se comunicará con usted. Para
+          asuntos urgentes llame al{' '}
+          <a href="tel:+18097929384" className="font-semibold text-blue-700">809-792-9384</a>.
         </p>
       </div>
     )
@@ -284,7 +289,7 @@ export default function FormularioReclamo({ inicial = {} }) {
             </Campo>
           )}
 
-          <Campo id="correo" label="Correo" requerido error={err('correo')} ayuda="Ahí llega el acuse con el número de referencia.">
+          <Campo id="correo" label="Correo" requerido error={err('correo')} ayuda="Ahí llega el acuse y, después, la referencia definitiva.">
             {(p) => (
               <input {...p} type="email" inputMode="email" autoComplete="email" value={datos.correo} onChange={set('correo')} onBlur={alSalir('correo')} />
             )}

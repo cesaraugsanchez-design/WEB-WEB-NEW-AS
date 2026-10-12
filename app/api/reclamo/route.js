@@ -65,9 +65,16 @@ function escapar(texto = '') {
     .replace(/"/g, '&quot;')
 }
 
-/* ASN-AAAAMMDD-XXXX. El sufijo es aleatorio, no correlativo: no hay base de
-   datos donde llevar la cuenta, y un correlativo revelaría el volumen de la
-   firma a quien mire dos referencias. */
+/* ASN-AAAAMMDD-XXXX. Es un ACUSE TEMPORAL, no la referencia del expediente.
+   La definitiva es «Nuestra referencia» de la matriz, y la asigna recepción al
+   cargar el caso: la matriz es un Excel compartido que el equipo edita a mano,
+   así que si el sitio repartiera correlativos sin poder reservarlos, dos
+   reclamos del mismo día —o uno de la web y otro cargado a mano— acabarían con
+   el mismo número. Mientras no haya una única autoridad sobre esa secuencia,
+   el sitio no la toca.
+
+   El sufijo es aleatorio y no correlativo, además, porque un correlativo
+   revelaría el volumen de la firma a quien compare dos acuses. */
 function generarReferencia() {
   const f = new Date()
   const dia = `${f.getFullYear()}${String(f.getMonth() + 1).padStart(2, '0')}${String(f.getDate()).padStart(2, '0')}`
@@ -167,7 +174,16 @@ export async function POST(request) {
 
   const html = `
     <h2 style="font:600 18px system-ui;margin:0 0 6px">Nuevo reclamo — ${escapar(d.aseguradora)}</h2>
-    <p style="font:600 13px system-ui;color:#1e5480;margin:0 0 20px">Referencia ${referencia}</p>
+    <p style="font:600 13px system-ui;color:#1e5480;margin:0 0 16px">Referencia temporal ${referencia}</p>
+
+    <div style="border:1px solid #ffb600;background:#fffaf0;border-radius:10px;padding:14px 16px;margin:0 0 22px">
+      <p style="font:600 13px system-ui;color:#7a5800;margin:0 0 5px">Recepción: responder con la referencia definitiva</p>
+      <p style="font:13px/1.6 system-ui;color:#55697c;margin:0">
+        ${referencia} es un acuse del sitio web, no la referencia de la matriz.
+        Al cargar el caso, responda a este correo con «Nuestra referencia»:
+        el botón de responder escribe directamente a ${escapar(d.correo)}.
+      </p>
+    </div>
 
     <table style="font:14px system-ui;border-collapse:collapse;margin-bottom:22px">
       ${fila('Aseguradora', d.aseguradora)}
@@ -205,7 +221,7 @@ export async function POST(request) {
         from: `ASSANCH Reclamos <${REMITENTE}>`,
         to: PARA,
         reply_to: d.correo,
-        subject: `[${referencia}] ${d.ramo} — ${d.aseguradora} — reclamo ${d.numeroReclamo}`,
+        subject: `[temp ${referencia}] ${d.ramo} — ${d.aseguradora} — reclamo ${d.numeroReclamo}`,
         html,
         ...(adjuntos.length ? { attachments: adjuntos } : {}),
       }),
@@ -235,7 +251,7 @@ export async function POST(request) {
           from: `ASSANCH <${REMITENTE}>`,
           to: [d.correo],
           reply_to: PARA[0],
-          subject: `Reclamo recibido — referencia ${referencia}`,
+          subject: `Reclamo recibido — acuse ${referencia}`,
           html: `
             <p style="font:14px/1.65 system-ui;margin:0 0 18px">Estimado/a ${escapar(d.ejecutivo)}:</p>
             <p style="font:14px/1.65 system-ui;margin:0 0 18px">
@@ -243,12 +259,18 @@ export async function POST(request) {
               (${escapar(d.ramo)}) de ${escapar(d.aseguradora)}, a nombre de
               ${escapar(d.asegurado)}. Un ajustador se comunicará con usted.
             </p>
-            <p style="font:600 15px system-ui;color:#1e5480;margin:0 0 18px">
-              Referencia: ${referencia}
+            <p style="font:600 15px system-ui;color:#1e5480;margin:0 0 6px">
+              Acuse temporal: ${referencia}
             </p>
             <p style="font:14px/1.65 system-ui;margin:0 0 18px">
-              Cite esa referencia en cualquier consulta. Para asuntos urgentes,
-              llame al <strong>809-792-9384</strong>; atendemos avisos 24/7.
+              Le responderemos a este mismo correo con la <strong>referencia
+              definitiva del expediente</strong> en cuanto quede registrado.
+              Hasta entonces puede usar el acuse temporal para identificar su
+              envío.
+            </p>
+            <p style="font:14px/1.65 system-ui;margin:0 0 18px">
+              Para asuntos urgentes, llame al <strong>809-792-9384</strong>;
+              atendemos avisos 24/7.
             </p>
             <p style="font:13px system-ui;color:#55697c;margin:24px 0 0">
               ASSANCH — Ajustadores y Consultores de Seguros<br>
