@@ -6,7 +6,8 @@ import Footer from '@/components/Footer'
 import MigaDePan from '@/components/plantillas/MigaDePan'
 import CtaFinal from '@/components/plantillas/CtaFinal'
 import VisorInforme from '@/components/informes/VisorInforme'
-import { informes, informePorSlug } from '@/lib/contenido/informes'
+import CompartirInforme from '@/components/informes/CompartirInforme'
+import { informes, informePorSlug, portadaDe } from '@/lib/contenido/informes'
 
 export function generateStaticParams() {
   return informes.map((i) => ({ slug: i.slug }))
@@ -16,10 +17,39 @@ export async function generateMetadata({ params }) {
   const { slug } = await params
   const i = informePorSlug[slug]
   if (!i) return { title: 'Informe no encontrado — ASSANCH' }
+
+  /* La portada va en los metadatos y no en el botón de compartir, porque es
+     así como funciona: LinkedIn y X no aceptan una imagen por parámetro —sería
+     un agujero evidente, cualquiera podría adjuntar lo que quisiera a un
+     enlace ajeno—. Van a buscar el `og:image` de la página que se comparte.
+     Sin esto, compartir un informe mostraba una tarjeta sin imagen.
+
+     Es la página 1 del propio informe, a tamaño completo. Viene vertical
+     (1224x1584) y las dos redes recortan a horizontal, así que se ve la banda
+     central de la portada; se asume antes que fabricar una imagen distinta de
+     lo que el lector va a encontrar al entrar. */
+  const portada = portadaDe(i)
+
   return {
     title: `${i.titulo} — ${i.fecha} — ASSANCH`,
     description: i.resumen,
     alternates: { canonical: `/mercado-asegurador/${i.slug}` },
+    openGraph: {
+      type: 'article',
+      publishedTime: i.fecha,
+      title: `La Semanal · Semana ${i.semana} — ${i.titulo}`,
+      description: i.resumen,
+      url: `/mercado-asegurador/${i.slug}`,
+      siteName: 'ASSANCH',
+      locale: 'es_DO',
+      images: [{ url: portada, width: 1224, height: 1584, alt: `Portada del informe del ${i.fecha}` }],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `La Semanal · Semana ${i.semana}`,
+      description: i.resumen,
+      images: [portada],
+    },
   }
 }
 
@@ -74,6 +104,8 @@ export default async function FichaInforme({ params }) {
             <div className="mt-10">
               <VisorInforme informe={informe} />
             </div>
+
+            <CompartirInforme informe={informe} />
 
             <p className="mt-6 font-body text-sm leading-relaxed text-slate">
               Este informe se publica para consulta en línea. Si necesita el
