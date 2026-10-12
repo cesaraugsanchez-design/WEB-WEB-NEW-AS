@@ -1,7 +1,7 @@
 'use client'
 
 import { useRef, useState } from 'react'
-import { AlertCircle, CheckCircle2, Instagram, Loader2, Mail, MapPin, MessageCircle, Phone, Send } from 'lucide-react'
+import { AlertCircle, CheckCircle2, Clock, Instagram, Loader2, Mail, MapPin, MessageCircle, Phone, Send } from 'lucide-react'
 import { LogoMarca } from './Marca'
 
 const campos = [
@@ -35,7 +35,17 @@ const datosContacto = [
     rotulo: 'Oficina principal',
     valor: 'Av. San Vicente de Paul, Esq. Activo 20/30, Alma Rosa II, Santo Domingo Este',
   },
-  { icon: Instagram, rotulo: 'Redes', valor: '@assanchadsrd' },
+  /* Solo las horas, sin días: es lo que ASSANCH ha confirmado. TODO(cliente):
+     falta saber qué días abre la oficina; hasta entonces no se escriben, ni
+     aquí ni en los datos estructurados, donde Google los mostraría como hecho. */
+  { icon: Clock, rotulo: 'Horario de oficina', valor: '8:00 a. m. – 6:00 p. m.' },
+  {
+    icon: Instagram,
+    rotulo: 'Instagram',
+    valor: '@assanchadsrd',
+    href: 'https://www.instagram.com/assanchadsrd/',
+    externo: true,
+  },
 ]
 
 export default function Contact() {
@@ -128,12 +138,16 @@ export default function Contact() {
                 </p>
 
                 <ul className="mt-8 space-y-2">
-                  {datosContacto.map(({ icon: Icon, rotulo, valor, href }) => {
+                  {datosContacto.map(({ icon: Icon, rotulo, valor, href, externo }) => {
                     const Fila = href ? 'a' : 'div'
                     return (
                       <li key={rotulo}>
                         <Fila
                           {...(href ? { href } : {})}
+                          /* `tel:` y `mailto:` se quedan en la pestaña; un
+                             perfil externo abre otra para no sacar a nadie del
+                             formulario que tiene a medio llenar al lado. */
+                          {...(externo ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
                           className={`flex items-start gap-4 rounded-2xl border border-white/[0.07] bg-white/[0.04] p-4 transition-colors duration-300 ${
                             href ? 'hover:border-gold/40 hover:bg-white/[0.08]' : ''
                           }`}

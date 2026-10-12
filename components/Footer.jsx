@@ -57,7 +57,17 @@ export default function Footer() {
             En línea
           </p>
           <ul className="mt-4 font-body text-sm text-slate [&_a]:inline-flex [&_a]:min-h-9 [&_a]:items-center">
-            <li className="flex min-h-9 items-center">@assanchadsrd</li>
+            <li>
+              <a
+                href="https://www.instagram.com/assanchadsrd/"
+                className="hover:text-blue-700"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Instagram de ASSANCH: @assanchadsrd"
+              >
+                @assanchadsrd
+              </a>
+            </li>
             <li>
               <a
                 href="https://assanchconsultores.com"
