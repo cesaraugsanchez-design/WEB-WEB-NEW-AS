@@ -155,20 +155,12 @@ export async function POST(request) {
       const detalle = await res.text()
       console.error('[contacto] Resend respondió', res.status, detalle)
 
-      /* TEMPORAL — quitar cuando el envío funcione.
-         Resend contesta «API key is invalid» y no hay forma de saber desde
-         fuera si lo guardado en Vercel es la clave buena o una copia mutilada.
-         Esto describe la FORMA del valor sin revelarlo: largo, prefijo y si
-         trae espacios pegados. Una clave de Resend mide 36 y empieza por
-         `re_`. Si cuadra, el problema está en Resend; si no, en el pegado.
-         No se registra ningún carácter del secreto ni se devuelve al cliente. */
-      console.error(
-        '[contacto] forma de la clave: largo=%d prefijo=%s espacios_alrededor=%s · remitente=%s',
-        clave.length,
-        clave.slice(0, 3),
-        /^\s|\s$/.test(clave),
-        REMITENTE
-      )
+      /* Si Resend contesta 401 «API key is invalid», el valor guardado en
+         RESEND_API_KEY no es una clave viva. Paso que ahorra media hora: una
+         clave de Resend mide 36 caracteres y empieza por `re_`; si lo guardado
+         mide 14 y empieza por `RES`, lo que se pegó en el campo «Value» fue el
+         NOMBRE de la variable. Ya ocurrió una vez. Describir asi la forma del
+         valor —largo y prefijo, nunca su contenido— lo despeja en un intento. */
       return Response.json({ error: 'No se pudo enviar el mensaje.' }, { status: 502 })
     }
 
