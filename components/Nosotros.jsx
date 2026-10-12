@@ -34,10 +34,10 @@ export default function Nosotros() {
             <span className="texto-degradado font-semibold">ajuste de siniestros</span>.
           </h2>
           <p className="mt-6 font-body text-lg leading-relaxed text-slate">
-            ASSANCH es una firma especializada en ajuste y consultoría de seguros, dedicada
-            al peritaje, levantamiento y ajuste de siniestros, con enfoque en eficiencia
-            operativa, rapidez, optimización de costos y calidad técnica, operando en todo
-            el país.
+            ASSANCH es una firma de ajustadores de seguros y consultores, dedicada al
+            peritaje, levantamiento y ajuste de siniestros en República Dominicana, con
+            enfoque en eficiencia operativa, rapidez, optimización de costos y calidad
+            técnica.
           </p>
         </div>
 

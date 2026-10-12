@@ -9,6 +9,10 @@ export const metadata = {
   title: 'Asignar un reclamo — ASSANCH',
   description:
     'Canal directo para que aseguradoras y corredores asignen un siniestro a ASSANCH. Un ajustador se moviliza tras recibir el reporte.',
+  /* Sin esta línea la página heredaba la canónica del layout raíz, que es «/»:
+     se declaraba duplicado de la portada y Google no la indexaba aparte, pese
+     al `index: true` de abajo. Las dos instrucciones se contradecían. */
+  alternates: { canonical: '/someter-reclamo' },
   robots: { index: true, follow: true },
 }
 

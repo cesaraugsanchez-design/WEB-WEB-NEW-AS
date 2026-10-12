@@ -60,7 +60,7 @@ export default function Footer() {
             <li className="flex min-h-9 items-center">@assanchadsrd</li>
             <li>
               <a
-                href="https://www.assanchconsultores.com"
+                href="https://assanchconsultores.com"
                 className="hover:text-blue-700"
                 rel="noopener noreferrer"
               >
