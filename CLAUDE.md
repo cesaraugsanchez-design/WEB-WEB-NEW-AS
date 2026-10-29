@@ -35,9 +35,9 @@ su desempeño, o revela una debilidad operativa, no se publica.
 #    solo importa la sección).
 swift herramientas/buscar-apartado.swift informe.pdf "Implicaciones para Assanch"
 
-# 2. Revisar a ojo las páginas del bloque de balance interno, si lo hay.
-#    El script imprime el texto de una página:
-swift herramientas/pdf-a-imagenes.swift  # ver también buscar-apartado.swift
+# 2. LEER las páginas, no solo mirar el mapa. Un título inocente puede
+#    llevar las cifras en el cuerpo. Sin rango, imprime el informe entero:
+swift herramientas/texto-paginas.swift informe.pdf 2 8
 
 # 3. Convertir excluyendo todas las páginas afectadas, separadas por comas.
 swift herramientas/pdf-a-imagenes.swift informe.pdf public/informes/AAAA-MM-DD 2.0 10,11,13,14
@@ -110,6 +110,23 @@ Dos efectos conocidos de recortar páginas:
   contenido se explique solo.
 - **El índice de la página 2 sigue listando lo retirado.** Eso se arregla en la
   plantilla del informe, no aquí.
+
+### Aliados señalados en negativo: se consulta antes
+
+Fijado en SEM44. Una página puede traer solo datos públicos —de la
+Superintendencia, de una calificadora— y aun así no convenir publicarla: si
+nombra a una aseguradora ALIADA (las de `lib/contenido/aliados.js`, que el
+sitio exhibe con su logo) junto a un dato desfavorable —solvencia bajo el
+mínimo, sanción, pérdida—, el portal de la firma estaría señalando a su propio
+cliente. No es confidencial, así que la regla de arriba no la cubre; es una
+decisión de relación con el cliente y la toma ASSANCH.
+
+Cómo detectarlo: cruzar los nombres de aseguradoras de cada página con la lista
+de aliados. Si coincide con algo desfavorable, se pregunta antes de convertir.
+
+En SEM44 la página 5 decía que Atlántica Seguros estaba bajo el mínimo legal de
+solvencia, y ASSANCH decidió retirarla entera. El resumen del índice tampoco
+lo menciona: también es texto publicado.
 
 ## Otras reglas ya asentadas
 
