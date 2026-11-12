@@ -29,16 +29,18 @@ export async function generateMetadata({ params }) {
      central de la portada; se asume antes que fabricar una imagen distinta de
      lo que el lector va a encontrar al entrar. */
   const portada = portadaDe(i)
+  // El resumen puede venir en dos párrafos; en los metadatos va en una línea.
+  const descripcion = i.resumen.replace(/\s*\n+\s*/g, ' ')
 
   return {
     title: `${i.titulo} — ${i.fecha} — ASSANCH`,
-    description: i.resumen,
+    description: descripcion,
     alternates: { canonical: `/mercado-asegurador/${i.slug}` },
     openGraph: {
       type: 'article',
       publishedTime: i.fecha,
       title: `La Semanal · Semana ${i.semana} — ${i.titulo}`,
-      description: i.resumen,
+      description: descripcion,
       url: `/mercado-asegurador/${i.slug}`,
       siteName: 'ASSANCH',
       locale: 'es_DO',
@@ -47,7 +49,7 @@ export async function generateMetadata({ params }) {
     twitter: {
       card: 'summary_large_image',
       title: `La Semanal · Semana ${i.semana}`,
-      description: i.resumen,
+      description: descripcion,
       images: [portada],
     },
   }
@@ -96,9 +98,11 @@ export default async function FichaInforme({ params }) {
                 y este texto es la única vía de acceso para quien usa un lector
                 de pantalla. */}
             {informe.resumen && (
-              <p className="mt-7 border-l-2 border-gold pl-5 font-body text-lg leading-relaxed text-tinta">
-                {informe.resumen}
-              </p>
+              <div className="mt-7 space-y-4 border-l-2 border-gold pl-5 font-body text-lg leading-relaxed text-tinta">
+                {informe.resumen.split(/\n\n+/).map((parrafo) => (
+                  <p key={parrafo}>{parrafo}</p>
+                ))}
+              </div>
             )}
 
             <div className="mt-10">
