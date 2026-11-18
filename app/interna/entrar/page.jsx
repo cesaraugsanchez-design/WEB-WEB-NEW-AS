@@ -1,4 +1,6 @@
-import { configurado } from '@/lib/interna/entra'
+import Link from 'next/link'
+import { almacenConfigurado } from '@/lib/interna/almacen'
+import { Tarjeta, Aviso, Campo, Boton } from './piezas'
 
 export const metadata = {
   title: 'Entrar — Interna ASSANCH',
@@ -6,49 +8,56 @@ export const metadata = {
 }
 
 const MENSAJES = {
-  configuracion: 'El acceso con cuenta de Microsoft todavía no está configurado en este entorno.',
-  cancelado: 'Se canceló el inicio de sesión.',
-  estado: 'La sesión de inicio expiró. Inténtalo de nuevo.',
-  microsoft: 'Microsoft no pudo confirmar la identidad. Inténtalo de nuevo.',
-  dominio: 'Esa cuenta no pertenece a ASSANCH.',
+  configuracion: 'El acceso a Interna todavía no está configurado en este entorno.',
+  credenciales: 'Correo o contraseña incorrectos.',
+  limite: 'Demasiados intentos. Espera quince minutos o restablece tu contraseña.',
+  almacen: 'No se pudo verificar el acceso en este momento. Inténtalo de nuevo en unos minutos.',
 }
 
 export default async function EntrarPage({ searchParams }) {
-  const { error } = await searchParams
-  const listo = configurado()
+  const { error, volver } = await searchParams
+
+  if (!almacenConfigurado()) {
+    return (
+      <Tarjeta titulo="Interna">
+        <Aviso>{MENSAJES.configuracion}</Aviso>
+      </Tarjeta>
+    )
+  }
 
   return (
-    <main className="flex min-h-[70vh] items-center justify-center px-6 py-16">
-      <div className="w-full max-w-sm rounded-2xl border border-line bg-white p-8 shadow-media">
-        <p className="text-xs font-600 tracking-widest text-gold uppercase">Uso interno</p>
-        <h1 className="mt-2 font-display text-2xl font-600 text-navy">Interna</h1>
-        <p className="mt-2 text-sm leading-relaxed text-slate">
-          Métricas de expedientes de ASSANCH. Entra con tu cuenta de la firma.
-        </p>
+    <Tarjeta
+      titulo="Interna"
+      descripcion="Métricas de expedientes de ASSANCH. Entra con tu correo de la firma y tu contraseña."
+    >
+      {error ? <Aviso>{MENSAJES[error] ?? 'No se pudo iniciar sesión.'}</Aviso> : null}
 
-        {error ? (
-          <p className="mt-5 rounded-xl border border-signal/30 bg-signal/5 px-3 py-2 text-sm text-signalink">
-            {MENSAJES[error] ?? 'No se pudo iniciar sesión.'}
-          </p>
-        ) : null}
+      <form action="/api/auth/entrar" method="post" className="mt-6 space-y-4">
+        {volver ? <input type="hidden" name="volver" value={volver} /> : null}
+        <Campo
+          etiqueta="Correo de la firma"
+          name="correo"
+          type="email"
+          autoComplete="username"
+          placeholder="nombre@assanch.com"
+          required
+        />
+        <Campo
+          etiqueta="Contraseña"
+          name="clave"
+          type="password"
+          autoComplete="current-password"
+          required
+        />
+        <Boton>Entrar</Boton>
+      </form>
 
-        {listo ? (
-          <a
-            href="/api/auth/entra/inicio"
-            className="mt-6 flex w-full items-center justify-center gap-2 rounded-xl bg-navy px-4 py-3 text-sm font-500 text-white shadow-boton transition hover:bg-blue-900"
-          >
-            Entrar con cuenta de Microsoft
-          </a>
-        ) : (
-          <p className="mt-6 rounded-xl border border-line bg-canvas px-3 py-3 text-sm text-slate">
-            Falta registrar la aplicación en Microsoft Entra ID y definir{' '}
-            <code className="text-tinta">MS_TENANT_ID</code>,{' '}
-            <code className="text-tinta">MS_CLIENT_ID</code>,{' '}
-            <code className="text-tinta">MS_CLIENT_SECRET</code> y{' '}
-            <code className="text-tinta">SESION_SECRETO</code>.
-          </p>
-        )}
-      </div>
-    </main>
+      <p className="mt-6 text-center text-sm text-slate">
+        ¿Primera vez o no recuerdas tu contraseña?{' '}
+        <Link href="/interna/entrar/enlace" className="font-semibold text-blue-700 hover:underline">
+          Crear o restablecer contraseña
+        </Link>
+      </p>
+    </Tarjeta>
   )
 }
